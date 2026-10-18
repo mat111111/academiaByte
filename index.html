@@ -4059,6 +4059,28 @@ const LS = {
   set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 };
 
+/* =======================================================================
+   CONFIG SUPABASE — ranking compartido para la versión en GitHub/Render.
+   Pegá acá las dos claves de tu proyecto Supabase (Settings → API):
+   ======================================================================= */
+const SUPABASE_URL = "";   // ej: https://abcd1234.supabase.co
+const SUPABASE_KEY = "";   // la clave "anon public"
+/* ======================================================================= */
+const SUPA = (SUPABASE_URL && SUPABASE_KEY) ? { url: SUPABASE_URL.replace(/\/+$/,''), key: SUPABASE_KEY } : null;
+async function supaUpsert(row){
+  if(!SUPA) return;
+  try{ await fetch(SUPA.url+'/rest/v1/ranking', { method:'POST',
+    headers:{ 'apikey':SUPA.key, 'Authorization':'Bearer '+SUPA.key, 'Content-Type':'application/json', 'Prefer':'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify([row]) }); }catch(e){}
+}
+async function supaList(){
+  if(!SUPA) return null;
+  try{ const r=await fetch(SUPA.url+'/rest/v1/ranking?select=*&order=xp.desc&limit=50',
+    { headers:{ 'apikey':SUPA.key, 'Authorization':'Bearer '+SUPA.key } });
+    if(!r.ok) return null; return await r.json(); }catch(e){ return null; }
+}
+function clientId(){ let id=LS.get('c8_cid',null); if(!id){ id='u'+Math.random().toString(36).slice(2)+Date.now().toString(36); LS.set('c8_cid',id); } return id; }
+
 /* ---------- estado ---------- */
 const S = {
   view:'home', mod:null, lesson:null, game:null,
@@ -4121,6 +4143,7 @@ function maybeCompleteLesson(mid,lid){
 /* ================= RANKING (db) ================= */
 async function initCaps(){
   S.standalone = !(typeof window.claude !== 'undefined' && window.claude && window.claude.use);
+  if(S.standalone && SUPA){ S.useSupa = true; S.uid = clientId(); }
   try{ S.user = await window.claude?.use?.('user'); }catch(e){}
   try{ S.db = await window.claude?.use?.('db'); }catch(e){}
   try{ S.sample = await window.claude?.use?.('sample'); }catch(e){}
@@ -4147,6 +4170,10 @@ function syncRanking(){
     if(S.db && S.uid && S.isWriter!==false){
       const li=levelInfo(S.prog.xp);
       try{ S.db.doc('ranking/'+S.uid).set({ nick:(S.prog.nick||'Anónimo').slice(0,24), avatar:S.prog.avatar, xp:S.prog.xp, level:li.level, lessons:doneLessonsCount(), updated:Date.now() }); }catch(e){}
+    }
+    else if(S.useSupa && S.uid){
+      const li=levelInfo(S.prog.xp);
+      supaUpsert({ id:S.uid, nick:(S.prog.nick||'Anónimo').slice(0,24), avatar:S.prog.avatar, xp:S.prog.xp, level:li.level, lessons:doneLessonsCount(), updated:new Date().toISOString() });
     }
   }, 900);
 }
@@ -4681,6 +4708,7 @@ async function renderRanking(main){
   v.appendChild(w); main.appendChild(v);
   let rows=[];
   if(S.db){ try{ const snap=await S.db.collection('ranking').orderBy('xp','desc').limit(50).get(); rows=snap.docs.map(d=>({id:d.id,...d.data()})); }catch(e){} }
+  else if(S.useSupa){ const data=await supaList(); if(data && data.length) rows=data.map(d=>({id:d.id,nick:d.nick,avatar:d.avatar,xp:d.xp,level:d.level,lessons:d.lessons})); }
   // asegurar que yo aparezco
   const li=levelInfo(S.prog.xp);
   if(S.uid && !rows.find(r=>r.id===S.uid)) rows.push({id:S.uid, nick:S.prog.nick||'Vos', avatar:S.prog.avatar, xp:S.prog.xp, level:li.level, lessons:doneLessonsCount()});
@@ -4692,7 +4720,7 @@ async function renderRanking(main){
   }
   rows.sort((a,b)=>b.xp-a.xp);
   list.innerHTML='';
-  if(!S.db){ const msg = S.standalone ? 'En esta versión el ranking es local a tu navegador (tu progreso se guarda acá). El ranking compartido entre jugadores funciona en la versión publicada dentro de Claude.' : 'Para competir en el ranking real y guardar tu progreso entre dispositivos, abrí esta página con tu sesión de Claude. Mientras tanto, tu progreso se guarda en este navegador.';
+  if(!S.db && !S.useSupa){ const msg = S.standalone ? 'En esta versión el ranking es local a tu navegador (tu progreso se guarda acá). El ranking compartido entre jugadores funciona en la versión publicada dentro de Claude.' : 'Para competir en el ranking real y guardar tu progreso entre dispositivos, abrí esta página con tu sesión de Claude. Mientras tanto, tu progreso se guarda en este navegador.';
     list.appendChild(el('div','callout info',`<span class="ci">${ICON('info')}</span><span>${msg}</span>`)); }
   rows.forEach((r,idx)=>{ const mine=(r.id===S.uid)||r.me; const row=el('div','rank-row'+(mine?' me-row':'')+(idx<3?' top'+(idx+1):''));
     const pos=el('div','rank-pos', idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':(idx+1));
