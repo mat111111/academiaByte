@@ -12,7 +12,7 @@
   --border:rgba(255,255,255,.09); --border2:rgba(255,255,255,.15);
   --brand:#f6c445; --brand-ink:#3a2c05;
   --redes:#2dd4bf; --ciber:#fb6a73; --sql:#5b9cff; --python:#ffcb47; --cpp:#b78bff; --juegos:#ff74c4; --ranking:#f6c445; --contacto:#57d98a;
-  --matematica:#ff9d52; --programacion:#8fd14f; --ayso:#7d8cf5;
+  --matematica:#ff9d52; --programacion:#8fd14f; --ayso:#7d8cf5; --organizacion:#e06b9c;
   --ok:#4ade80; --bad:#fb6a73; --warn:#fbbf4d; --info:#5b9cff;
   --shadow:0 10px 30px -12px rgba(0,0,0,.6); --shadow-sm:0 4px 14px -6px rgba(0,0,0,.5);
   --r-sm:9px; --r:14px; --r-lg:22px; --r-xl:30px;
@@ -26,7 +26,7 @@
   --border:rgba(20,24,55,.1); --border2:rgba(20,24,55,.18);
   --brand:#e0a512; --brand-ink:#fff;
   --redes:#0d9488; --ciber:#e23744; --sql:#2f6ef0; --python:#c48a06; --cpp:#7c47e0; --juegos:#d6338f; --ranking:#d99a0c; --contacto:#1f9d57;
-  --matematica:#d9772e; --programacion:#5a9e26; --ayso:#4f5fd0;
+  --matematica:#d9772e; --programacion:#5a9e26; --ayso:#4f5fd0; --organizacion:#c23a72;
   --shadow:0 12px 30px -14px rgba(40,50,90,.35); --shadow-sm:0 4px 14px -8px rgba(40,50,90,.3);
   color-scheme:light;
 }
@@ -36,7 +36,7 @@
   --border:rgba(20,24,55,.1); --border2:rgba(20,24,55,.18);
   --brand:#e0a512; --brand-ink:#fff;
   --redes:#0d9488; --ciber:#e23744; --sql:#2f6ef0; --python:#c48a06; --cpp:#7c47e0; --juegos:#d6338f; --ranking:#d99a0c; --contacto:#1f9d57;
-  --matematica:#d9772e; --programacion:#5a9e26; --ayso:#4f5fd0;
+  --matematica:#d9772e; --programacion:#5a9e26; --ayso:#4f5fd0; --organizacion:#c23a72;
   --shadow:0 12px 30px -14px rgba(40,50,90,.35); --shadow-sm:0 4px 14px -8px rgba(40,50,90,.3);
   color-scheme:light;
 }}
@@ -2386,6 +2386,90 @@ window.C8.modules.push({
       { t: 'text', q: '¿Qué resultado da multiplicar cualquier matriz cuadrada A por la identidad I (A·I)?', accept: ['^a$','^la\\s+misma','^misma','^a\\s+misma','igual'], hint: 'La identidad es el "1" de las matrices.', why: 'A·I = A: la identidad no cambia la matriz, igual que multiplicar por 1.' }
     ],
     recap: { remember: ['Producto: (m×n)·(n×p) = (m×p); no es conmutativo.', 'det 2×2 = ad − bc; 3×3 con Sarrus.', 'det = 0 ⇒ no hay inversa ni solución única.'], pitfalls: ['Intentar sumar matrices de distinto tamaño.', 'Multiplicar matrices con dimensiones que no encajan.'] }
+  },
+  /* ---- m8 ---- */
+  {
+    id: 'm8', title: 'Determinantes e inversa', level: 'Avanzado', mins: 24,
+    goal: 'Vas a calcular determinantes de 2×2 y 3×3, y entender para qué sirve la matriz inversa. El determinante es la llave que decide si una matriz tiene inversa y si un sistema tiene solución única.',
+    body: [
+      ['h', 'Determinante 2×2'],
+      ['code', 'text', `| a  b |
+| c  d |   →   det = a·d − b·c`, { title: 'Regla directa' }],
+      ['p', 'Ejemplo: det de {{|3 2 / 1 4|}} = 3·4 − 2·1 = 12 − 2 = <b>10</b>.'],
+      ['h', 'Determinante 3×3: regla de Sarrus'],
+      ['p', 'Se repiten las dos primeras columnas al costado. Se <b>suman</b> las tres diagonales que bajan (↘) y se <b>restan</b> las tres que suben (↗).'],
+      ['code', 'text', `| a b c | a b
+| d e f | d e
+| g h i | g h
+
+det = (a·e·i + b·f·g + c·d·h)   ← diagonales que bajan
+    − (c·e·g + a·f·h + b·d·i)   ← diagonales que suben`, { title: 'Sarrus 3×3' }],
+      ['p', 'Ejemplo con {{|2 1 3 / 1 0 2 / 4 1 1|}}: bajan 2·0·1 + 1·2·4 + 3·1·1 = 0+8+3 = 11; suben 3·0·4 + 2·2·1 + 1·1·1 = 0+4+1 = 5. det = 11 − 5 = <b>6</b>.'],
+      ['h', 'Cofactores (desarrollo por una fila o columna)'],
+      ['p', 'Otra forma, que sirve para cualquier orden: el <b>menor complementario</b> {{Mᵢⱼ}} es el determinante que queda al tachar la fila i y la columna j. El <b>cofactor</b> es {{Cᵢⱼ = (−1)ⁱ⁺ʲ · Mᵢⱼ}} (el signo alterna como un tablero de ajedrez). El determinante es la suma de cada elemento de una fila por su cofactor.'],
+      ['h', 'Propiedades útiles'],
+      ['ul', [
+        'Si una fila o columna es toda ceros, {{det = 0}}.',
+        'Si dos filas (o columnas) son iguales o proporcionales, {{det = 0}}.',
+        '{{det(Aᵀ) = det(A)}} (la transpuesta no cambia el determinante).',
+        'Intercambiar dos filas cambia el <b>signo</b> del determinante.'
+      ]],
+      ['h', 'Matriz inversa'],
+      ['p', 'La <b>inversa</b> {{A⁻¹}} cumple {{A · A⁻¹ = I}}. Solo existe si {{det(A) ≠ 0}} (si det = 0, la matriz es <b>singular</b> y no tiene inversa). Para 2×2 hay una fórmula directa:'],
+      ['code', 'text', `A = | a  b |          A⁻¹ = (1/det) · |  d  −b |
+    | c  d |                            | −c   a |
+
+(se intercambia a con d, se cambian de signo b y c, y se divide por det)`, { title: 'Inversa de una 2×2' }],
+      ['p', 'Para órdenes mayores se usan la <b>matriz adjunta</b> (traspuesta de la de cofactores) dividida por el determinante, o el método de <b>Gauss-Jordan</b> (operar por filas hasta transformar A en la identidad; lo que queda del otro lado es A⁻¹).'],
+      ['key', 'El determinante es un semáforo: {{det ≠ 0}} → hay inversa y el sistema asociado tiene solución única; {{det = 0}} → no hay inversa y el sistema no tiene solución única.']
+    ],
+    tasks: [
+      { t: 'text', q: 'Calculá el determinante de la matriz 2×2 con filas (5, 3) y (2, 4). (solo el número)', a: ['14'], hint: 'a·d − b·c = 5·4 − 3·2.', why: '5·4 − 3·2 = 20 − 6 = 14.' },
+      { t: 'text', q: 'Calculá por Sarrus el determinante de |1 2 0 / 0 3 1 / 2 1 1|. (solo el número)', accept: ['^6$'], hint: 'Diagonales que bajan menos las que suben.', why: 'Bajan: 1·3·1 + 2·1·2 + 0·0·1 = 3 + 4 + 0 = 7. Suben: 0·3·2 + 1·1·1 + 2·0·1 = 0 + 1 + 0 = 1. det = 7 − 1 = 6.' },
+      { t: 'mcq', q: 'Una matriz cuadrada tiene det = 0. ¿Qué podés afirmar?', opts: ['Tiene inversa', 'NO tiene inversa (es singular) y el sistema asociado no tiene solución única', 'Es la identidad', 'Su transpuesta tiene det ≠ 0'], a: 1, why: 'det = 0 ⇒ matriz singular: no existe la inversa, y el sistema no tiene solución única.' },
+      { t: 'mcq', q: '¿Cuándo vale 0 el determinante sin necesidad de calcularlo?', opts: ['Cuando la matriz es 2×2', 'Cuando dos filas son iguales o proporcionales, o hay una fila de ceros', 'Cuando todos los números son positivos', 'Nunca'], a: 1, why: 'Filas (o columnas) iguales/proporcionales, o una fila nula, hacen el determinante 0 directamente.' }
+    ],
+    recap: { remember: ['det 2×2 = ad − bc; 3×3 con Sarrus (bajan − suben).', 'Inversa existe solo si det ≠ 0.', 'Filas iguales/proporcionales o fila de ceros ⇒ det = 0.'], pitfalls: ['Olvidar restar las diagonales que suben en Sarrus.', 'Intentar invertir una matriz con det = 0.'] }
+  },
+  /* ---- m9 ---- */
+  {
+    id: 'm9', title: 'Sistemas de ecuaciones lineales', level: 'Avanzado', mins: 24,
+    goal: 'Vas a resolver sistemas con matrices y clasificarlos según su cantidad de soluciones. Es la aplicación directa de determinantes y el cierre del 2° parcial.',
+    body: [
+      ['p', 'Un <b>sistema de ecuaciones lineales</b> se puede escribir en forma matricial {{A·x = b}}, donde A es la matriz de coeficientes, x el vector de incógnitas y b el de términos independientes.'],
+      ['code', 'text', `2x + y = 5         A = | 2  1 |   x = | x |   b = | 5  |
+ x + 3y = 10           | 1  3 |       | y |       | 10 |`, { title: 'Un sistema 2×2 en forma matricial' }],
+      ['h', 'Regla de Cramer'],
+      ['p', 'Si {{det(A) ≠ 0}}, cada incógnita se obtiene reemplazando su columna en A por el vector b y dividiendo por det(A).'],
+      ['code', 'text', `det(A)  = 2·3 − 1·1 = 5
+det(Ax) = | 5  1 |  = 5·3 − 1·10 = 5     → x = 5/5 = 1
+          | 10 3 |
+det(Ay) = | 2  5 |  = 2·10 − 5·1 = 15    → y = 15/5 = 3
+          | 1 10 |`, { title: 'Cramer paso a paso', out: 'x = 1 ,  y = 3' }],
+      ['p', 'Verificación: {{2·1 + 3 = 5}} ✓ y {{1 + 3·3 = 10}} ✓.'],
+      ['h', 'Otros métodos'],
+      ['ul', [
+        '<b>Por matriz inversa:</b> si A⁻¹ existe, {{x = A⁻¹·b}}.',
+        '<b>Eliminación de Gauss:</b> operar por filas para llegar a una forma escalonada y despejar "de abajo hacia arriba". Es el más general y el que se usa con muchas incógnitas.'
+      ]],
+      ['h', 'Clasificación de un sistema'],
+      ['table', ['Tipo', 'Soluciones', 'Condición'], [
+        ['Compatible determinado', 'Una única solución', 'det(A) ≠ 0'],
+        ['Compatible indeterminado', 'Infinitas soluciones', 'det(A) = 0 y las ecuaciones son compatibles'],
+        ['Incompatible', 'Ninguna solución', 'det(A) = 0 y las ecuaciones se contradicen']
+      ]],
+      ['key', 'El determinante decide el primer corte: si {{det(A) ≠ 0}} el sistema es <b>compatible determinado</b> (solución única, y Cramer funciona). Si {{det(A) = 0}}, hay que mirar las ecuaciones: o son la misma recta (infinitas soluciones, indeterminado) o son paralelas sin cortarse (ninguna solución, incompatible).'],
+      ['tip', 'Geométricamente, en 2 variables cada ecuación es una recta: determinado = las rectas se cruzan en un punto; indeterminado = son la misma recta; incompatible = son paralelas distintas.'],
+      ['warn', 'Cramer solo se puede usar cuando {{det(A) ≠ 0}}. Si da 0, no dividas por cero: pasá a analizar si el sistema es indeterminado o incompatible.']
+    ],
+    tasks: [
+      { t: 'text', q: 'En el sistema 3x + y = 7 ; x + 2y = 9, ¿cuánto vale det(A) (la matriz de coeficientes)? (solo el número)', a: ['5'], hint: 'A = |3 1 / 1 2|, det = 3·2 − 1·1.', why: '3·2 − 1·1 = 6 − 1 = 5. Como es ≠ 0, el sistema es compatible determinado.' },
+      { t: 'text', q: 'Resolvé por Cramer x en: x + y = 6 ; 2x + y = 8. (solo el valor de x)', a: ['2'], hint: 'det(A)=1·1−1·2=−1. det(Ax)=|6 1 / 8 1|=6−8=−2. x = det(Ax)/det(A).', why: 'det(A) = −1; det(Ax) = 6·1 − 1·8 = −2; x = −2 / −1 = 2. (y = 4).' },
+      { t: 'mcq', q: 'Un sistema tiene det(A) ≠ 0. ¿Cómo se clasifica?', opts: ['Incompatible', 'Compatible indeterminado (infinitas)', 'Compatible determinado (única solución)', 'No se puede saber'], a: 2, why: 'det ≠ 0 garantiza solución única: compatible determinado. Cramer y la inversa funcionan.' },
+      { t: 'mcq', q: 'Si det(A) = 0 y las dos ecuaciones representan la MISMA recta, el sistema es:', opts: ['Compatible determinado', 'Compatible indeterminado (infinitas soluciones)', 'Incompatible', 'Imposible de clasificar'], a: 1, why: 'Misma recta ⇒ todos los puntos la cumplen: infinitas soluciones, compatible indeterminado.' },
+      { t: 'mcq', q: '¿Por qué NO se puede aplicar la regla de Cramer cuando det(A) = 0?', opts: ['Porque la matriz es muy grande', 'Porque habría que dividir por cero; hay que analizar si es indeterminado o incompatible', 'Porque Cramer no existe para 2×2', 'Porque el sistema siempre tiene solución'], a: 1, why: 'Cramer divide por det(A); si es 0, la división no está definida. El caso det=0 se resuelve analizando las ecuaciones.' }
+    ],
+    recap: { remember: ['A·x = b; Cramer: xᵢ = det(Aᵢ)/det(A) si det≠0.', 'det≠0 → determinado (única). det=0 → indeterminado (infinitas) o incompatible (ninguna).', 'Gauss sirve para cualquier tamaño.'], pitfalls: ['Usar Cramer con det(A) = 0.', 'Confundir indeterminado (infinitas) con incompatible (ninguna).'] }
   }
   ]
 });
@@ -2628,6 +2712,86 @@ for (int j = 0; j < 4; j++)
       { t: 'bug', q: 'Este intercambio está mal: pierde un valor porque le falta la variable auxiliar. El código correcto usa una variable t. Escribí la primera línea que falta (la que guarda v[j]).', lang: 'cpp', code: '// intercambiar v[j] y v[j+1]\nv[j] = v[j+1];\nv[j+1] = v[j];   // esto ya no sirve: v[j] fue pisado', fix: 'aux', accept: ['int t = v[j]', 'int t=v[j]'], hint: 'Antes de pisar v[j], hay que guardarlo en una auxiliar.', why: 'Falta int t = v[j]; al principio, y luego v[j]=v[j+1]; v[j+1]=t;. Sin guardar v[j] primero, se pierde.' }
     ],
     recap: { remember: ['Burbujeo: compara vecinos e intercambia; el mayor sube al final.', 'Intercambio necesita variable auxiliar.', 'Interno hasta n-1-i; n-1 pasadas; es O(n²).'], pitfalls: ['Intercambiar sin variable auxiliar (se pierde un valor).', 'Creer que una sola pasada ordena todo.'] }
+  },
+  /* ---- pr7 ---- */
+  {
+    id: 'pr7', title: 'Apareo de vectores ordenados', level: 'Avanzado', mins: 20,
+    goal: 'Vas a combinar dos vectores ya ordenados en uno solo ordenado, sin volver a ordenar. Es la base del corte de control y del procesamiento de archivos (Unidad 9).',
+    body: [
+      ['p', 'El <b>apareo (merge)</b> toma dos vectores <b>ya ordenados</b> A (n elementos) y B (m elementos) y genera un tercer vector C, también ordenado, con todos los elementos. Se usan <b>tres índices</b>: {{i}} para A, {{j}} para B y {{k}} para C.'],
+      ['ol', [
+        'Mientras ninguno se agotó ({{i < n && j < m}}): comparar {{A[i]}} con {{B[j]}}, copiar el <b>menor</b> a C y avanzar el índice de ese vector (y k).',
+        'Cuando uno se agota, copiar el <b>resto</b> del otro: como ya está ordenado, va directo al final.'
+      ]],
+      ['code', 'cpp', `int apareo(int a[], int n, int b[], int m, int c[]) {
+    int i = 0, j = 0, k = 0;
+    while (i < n && j < m) {
+        if (a[i] <= b[j]) c[k++] = a[i++];   // copia y avanza
+        else              c[k++] = b[j++];
+    }
+    while (i < n) c[k++] = a[i++];    // resto de A
+    while (j < m) c[k++] = b[j++];    // resto de B
+    return k;                         // tamaño de C (= n + m)
+}`, { note: 'Con A={2,5,9,14} y B={3,5,6,20,25}, C queda: 2 3 5 5 6 9 14 20 25' }],
+      ['key', 'Dos claves: {{c[k++] = a[i++]}} copia y después avanza; y con {{<=}} ante un empate se toma primero el de A (el apareo es <b>estable</b>). Solo uno de los dos bucles del resto hace algo (el otro vector ya se agotó).'],
+      ['warn', 'Errores típicos: olvidar los dos bucles del resto (se pierden elementos); usar {{||}} en vez de {{&&}} en la condición principal (se sale de los límites de un vector); aparear vectores que no están ordenados; o no avanzar un índice (bucle infinito).'],
+      ['h', 'Costo y variantes'],
+      ['p', 'El apareo cuesta {{n + m}} pasos, muchísimo menos que concatenar y ordenar con burbuja (del orden de {{(n+m)²}}). Variantes que se piden: <b>unión sin repetidos</b> (si {{A[i]==B[j]}}, copiar uno solo y avanzar los dos), <b>intersección</b> (copiar solo cuando son iguales), y <b>apareo de registros</b> (comparar por el campo clave: {{a[i].legajo <= b[j].legajo}}).']
+    ],
+    tasks: [
+      { t: 'predict', q: 'Trazá el apareo de A = {1, 3, 5, 7} y B = {2, 3, 8}. ¿Qué vector C resulta? (con empate 3 y 3 se toma primero el de A)', lang: 'cpp', code: 'int A[4] = {1, 3, 5, 7};\nint B[3] = {2, 3, 8};\n// apareo estable (<=): ante empate, primero A\n// resultado:', a: ['1 2 3 3 5 7 8'], hint: 'Compará: 1≤2 toma 1; 3>2 toma 2; 3≤3 toma el de A; 3<... toma el de B; etc.', why: 'El apareo intercala manteniendo el orden: 1, 2, 3(de A), 3(de B), 5, 7, 8.' },
+      { t: 'order', q: 'Ordená los pasos del apareo de dos vectores ordenados.', items: ['Inicializar i=0, j=0, k=0', 'Mientras i<n Y j<m: copiar el menor entre A[i] y B[j] a C y avanzar ese índice', 'Copiar el resto de A (si quedó)', 'Copiar el resto de B (si quedó)'], why: 'Se recorren ambos a la vez copiando el menor; al agotarse uno, se vuelca el resto del otro directo al final.' },
+      { t: 'bug', q: 'Este apareo se sale de los límites de un vector. El error está en la condición del while principal. Escribí la condición correcta.', lang: 'cpp', code: 'while (i < n || j < m) {\n    if (a[i] <= b[j]) c[k++] = a[i++];\n    else c[k++] = b[j++];\n}', fix: 'and', accept: ['i < n && j < m', 'i<n && j<m', 'i < n && j < m'], hint: '¿Qué vale a[i] cuando i ya llegó a n? El bucle principal solo debe correr mientras AMBOS tengan elementos.', why: 'Con || se sigue entrando aunque un vector se haya agotado, y se lee fuera de rango. Debe ser && (y los restos se copian después con los dos while finales).' },
+      { t: 'mcq', q: '¿Por qué el apareo es mucho más rápido que concatenar y ordenar con burbujeo?', opts: ['Porque usa menos memoria', 'Porque aprovecha que ya están ordenados: cuesta n+m pasos en vez de ~(n+m)²', 'Porque no compara elementos', 'Porque ordena al azar'], a: 1, why: 'Al venir ordenados, una sola pasada combinada basta (n+m). Ordenar desde cero con burbuja sería cuadrático.' }
+    ],
+    recap: { remember: ['Apareo: tres índices (i, j, k); copiar el menor y avanzar.', 'Dos while del resto al final; condición principal con &&.', 'Cuesta n+m; exige vectores ordenados.'], pitfalls: ['Usar || en vez de && (fuera de rango).', 'Olvidar copiar el resto.'] }
+  },
+  /* ---- pr8 ---- */
+  {
+    id: 'pr8', title: 'Corte de control', level: 'Avanzado', mins: 20,
+    goal: 'Vas a procesar datos agrupados por una clave (por sucursal, por curso, por cliente) y sacar subtotales y total general. Se repite en casi todos los exámenes de la Unidad 9.',
+    body: [
+      ['p', 'En un <b>corte de control</b> los datos están <b>ordenados por una clave</b> (campo de control) y se procesan por <b>grupos</b> de igual clave. Cuando la clave cambia, se produce el "corte": se muestra el <b>subtotal</b> del grupo, se acumula al <b>total general</b> y se reinicia para el grupo siguiente.'],
+      ['warn', 'Condición necesaria: los datos <b>deben estar ordenados por la clave</b>, para que los registros de un mismo grupo queden consecutivos. Si no, el mismo grupo aparece varias veces.'],
+      ['h', 'Esquema con doble bucle (el más claro)'],
+      ['code', 'cpp', `int i = 0;
+float total = 0;
+while (i < n) {                              // recorre los grupos
+    int actual = v[i].clave;                 // clave del grupo que empieza
+    float sub = 0;                           // acumulador del grupo (se reinicia)
+    while (i < n && v[i].clave == actual) {  // recorre los registros del grupo
+        sub += v[i].monto;
+        i++;
+    }
+    cout << "Clave " << actual << ": " << sub << endl;   // CORTE: subtotal
+    total += sub;
+}
+cout << "Total general: " << total;`, { note: 'La condición i < n va PRIMERO en el while interno, para no salirse del vector.' }],
+      ['p', 'Con ventas por sucursal (1→100, 1→50, 1→25, 2→200, 2→80, 3→60, 3→40) la salida es: <b>Sucursal 1: subtotal 175</b>, <b>Sucursal 2: subtotal 280</b>, <b>Sucursal 3: subtotal 100</b>, y <b>Total general: 555</b>.'],
+      ['h', 'Esquema con variable "anterior" (ojo con el último grupo)'],
+      ['code', 'cpp', `int anterior = v[0].clave;
+float sub = 0, total = 0;
+for (int i = 0; i < n; i++) {
+    if (v[i].clave != anterior) {       // cambió la clave: corte
+        cout << anterior << ": " << sub << endl;
+        total += sub;
+        sub = 0;
+        anterior = v[i].clave;
+    }
+    sub += v[i].monto;
+}
+cout << anterior << ": " << sub << endl;   // ¡CORTE FINAL: el último grupo!
+total += sub;`, { note: 'Sin el corte final, el último grupo nunca se muestra.' }],
+      ['key', 'Los dos errores que más se cobran: olvidar el <b>corte final</b> (en el esquema de "anterior", el último grupo se pierde) y no <b>reiniciar el acumulador</b> del grupo (sub = 0) en cada corte.'],
+      ['tip', 'Se puede llevar más de un nivel de corte (por ejemplo, sucursal y dentro de ella vendedor): un corte mayor y uno menor, cada uno con su acumulador. Y se puede contar la cantidad de registros por grupo con un contador que se reinicia junto con el subtotal.']
+    ],
+    tasks: [
+      { t: 'predict', q: 'Con ventas (sucursal, monto) ordenadas por sucursal: (1,100),(1,50),(2,200),(2,80),(2,20),(3,300), ¿cuáles son los subtotales por sucursal? Escribilos como "s1 s2 s3" (tres números separados por espacio).', lang: 'cpp', code: '// (1,100)(1,50) | (2,200)(2,80)(2,20) | (3,300)\n// subtotal por sucursal:', a: ['150 300 300'], hint: 'Sumá dentro de cada grupo de igual sucursal.', why: 'Sucursal 1: 100+50=150. Sucursal 2: 200+80+20=300. Sucursal 3: 300. → 150 300 300.' },
+      { t: 'mcq', q: 'En el esquema con variable "anterior", ¿qué pasa si olvidás el corte final (fuera del for)?', opts: ['Se cuenta dos veces el primer grupo', 'El último grupo nunca se muestra ni se suma al total', 'Da error de compilación', 'Se ordena mal'], a: 1, why: 'El corte se dispara cuando cambia la clave; el último grupo no tiene un "cambio" después, así que necesita un corte final explícito.' },
+      { t: 'mcq', q: '¿Qué requisito imprescindible tienen los datos para aplicar corte de control?', opts: ['Que sean números', 'Que estén ordenados por la clave de control', 'Que no se repitan', 'Que estén en una matriz'], a: 1, why: 'Sin estar ordenados por la clave, los registros de un mismo grupo no quedan juntos y el mismo grupo aparecería varias veces.' },
+      { t: 'order', q: 'Ordená lo que pasa al procesar UN grupo en el esquema de doble bucle.', items: ['Tomar la clave del grupo que empieza (actual)', 'Reiniciar el acumulador del grupo (sub = 0)', 'Mientras la clave sea igual, acumular y avanzar', 'Mostrar el subtotal y sumarlo al total general'], why: 'Se identifica el grupo, se pone el acumulador en cero, se recorren sus registros y al terminar se corta: subtotal + acumular al total.' }
+    ],
+    recap: { remember: ['Datos ordenados por la clave; subtotal por grupo + total general.', 'Doble bucle: externo por grupos, interno mientras la clave no cambia.', 'Con "anterior": no olvidar el corte final ni reiniciar sub.'], pitfalls: ['Olvidar el corte del último grupo.', 'No reiniciar el acumulador en cada corte.'] }
   }
   ]
 });
@@ -2795,8 +2959,10 @@ signal(mutex)      // devolver el candado`, { title: 'Exclusión mutua con un se
       ['ul', [
         '<b>FCFS (First Come First Served):</b> el primero que llega, primero se atiende. Simple, no apropiativo. Problema: un proceso largo adelante demora a todos (<b>efecto convoy</b>).',
         '<b>SJF (Shortest Job First):</b> primero el de ráfaga más corta. Da el <b>menor tiempo de espera promedio</b>, pero requiere conocer la duración y puede causar inanición de los largos.',
+        '<b>SRTF (Shortest Remaining Time First):</b> es el SJF <b>apropiativo</b>. Cuando llega un proceso nuevo, se compara su ráfaga con lo que le falta al que está ejecutando; si es menor, se lo <b>desaloja</b>. Reduce la espera promedio todavía más que SJF, a costa de más cambios de contexto.',
         '<b>Round Robin (RR):</b> cada proceso usa la CPU por un <b>quantum</b> fijo y, si no terminó, vuelve al final de la cola. Apropiativo, justo, ideal para tiempo compartido. El quantum define todo: muy chico = mucho overhead; muy grande = se parece a FCFS.',
-        '<b>Por prioridades:</b> ejecuta primero el de mayor prioridad. Riesgo de inanición de los de baja prioridad (se mitiga con <b>aging</b>: subir la prioridad con el tiempo de espera).'
+        '<b>Por prioridades:</b> ejecuta primero el de mayor prioridad (convención habitual: <b>número menor = prioridad mayor</b>). Riesgo de inanición de los de baja prioridad (se mitiga con <b>aging</b>: subir la prioridad con el tiempo de espera).',
+        '<b>Colas multinivel:</b> hay varias colas con distinta prioridad (por ejemplo, interactivos vs. por lotes), cada una con su propio algoritmo. En las <b>multinivel con realimentación</b> un proceso puede bajar de cola si consume mucha CPU o subir si espera demasiado.'
       ]],
       ['h', 'Ejemplo de cálculo (FCFS)'],
       ['p', 'Tres procesos llegan juntos en el orden P1, P2, P3 con ráfagas 4, 2, 6. En FCFS se ejecutan en ese orden:'],
@@ -2813,9 +2979,11 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
       { t: 'mcq', q: '¿Qué algoritmo garantiza el MENOR tiempo de espera promedio?', opts: ['FCFS', 'SJF (Shortest Job First)', 'Round Robin', 'Por llegada'], a: 1, why: 'SJF es óptimo para el tiempo de espera promedio, al ejecutar primero las ráfagas más cortas.' },
       { t: 'mcq', q: 'En Round Robin, si el quantum es MUY chico, ¿qué pasa?', opts: ['Se comporta como FCFS', 'Hay demasiados cambios de contexto (mucho overhead)', 'Un proceso monopoliza la CPU', 'No termina ningún proceso'], a: 1, why: 'Un quantum chico provoca muchísimos cambios de contexto; el overhead administrativo se come el tiempo de CPU útil.' },
       { t: 'mcq', q: 'El "efecto convoy" es un problema típico de:', opts: ['Round Robin', 'FCFS (un proceso largo adelante demora a todos)', 'SJF', 'Prioridades con aging'], a: 1, why: 'En FCFS, si un proceso largo llega primero, los cortos que vienen detrás esperan mucho: efecto convoy.' },
-      { t: 'mcq', q: '¿Qué es un algoritmo "apropiativo" (preemptive)?', opts: ['El que nunca cambia de proceso', 'El que puede quitarle la CPU a un proceso para dársela a otro', 'El que ejecuta en orden de llegada', 'El que no usa quantum'], a: 1, why: 'Apropiativo significa que el SO puede expropiar la CPU (por tiempo o prioridad). Round Robin es el ejemplo típico.' }
+      { t: 'mcq', q: '¿Qué es un algoritmo "apropiativo" (preemptive)?', opts: ['El que nunca cambia de proceso', 'El que puede quitarle la CPU a un proceso para dársela a otro', 'El que ejecuta en orden de llegada', 'El que no usa quantum'], a: 1, why: 'Apropiativo significa que el SO puede expropiar la CPU (por tiempo o prioridad). Round Robin es el ejemplo típico.' },
+      { t: 'mcq', q: '¿En qué se diferencia SRTF de SJF?', opts: ['SRTF ordena por llegada', 'SRTF es la versión apropiativa: desaloja al proceso en curso si llega otro con menos tiempo restante', 'SRTF no usa ráfagas', 'Son idénticos'], a: 1, why: 'SRTF (Shortest Remaining Time First) es SJF con desalojo: al llegar un proceso más corto, interrumpe al actual.' },
+      { t: 'mcq', q: 'En planificación por prioridades con la convención habitual, un proceso con prioridad 1 frente a otro con prioridad 5:', opts: ['Tiene menor prioridad', 'Tiene MAYOR prioridad (número menor = prioridad mayor)', 'Tienen la misma', 'No se puede comparar'], a: 1, why: 'Por la convención usual, el número menor indica mayor prioridad: el de prioridad 1 va primero. (Si tu cátedra usa lo contrario, aplicá la suya.)' }
     ],
-    recap: { remember: ['FCFS (orden de llegada, efecto convoy), SJF (óptimo en espera), RR (quantum), prioridades (aging).', 'Espera en FCFS = suma de ráfagas anteriores.', 'Apropiativo = se puede quitar la CPU.'], pitfalls: ['Olvidar que el tiempo de retorno = espera + ráfaga.', 'Quantum mal elegido en RR (muy chico = overhead; muy grande = FCFS).'] }
+    recap: { remember: ['FCFS (orden de llegada, efecto convoy), SJF/SRTF (óptimos en espera), RR (quantum), prioridades (aging), colas multinivel.', 'Espera en FCFS = suma de ráfagas anteriores.', 'Apropiativo = se puede quitar la CPU (RR, SRTF).'], pitfalls: ['Olvidar que el tiempo de retorno = espera + ráfaga.', 'Quantum mal elegido en RR (muy chico = overhead; muy grande = FCFS).'] }
   },
   /* ---- a6 ---- */
   {
@@ -2829,6 +2997,8 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
         '<b>Paginación:</b> se divide la memoria física en marcos (frames) de tamaño fijo y la memoria lógica del proceso en <b>páginas</b> del mismo tamaño. Una <b>tabla de páginas</b> mapea cada página a un marco. Así el proceso no necesita estar contiguo en RAM, eliminando la fragmentación externa.',
         '<b>Segmentación:</b> divide según la lógica del programa (código, datos, pila), en bloques de tamaño variable.'
       ]],
+      ['h', 'Traducción de direcciones y TLB'],
+      ['p', 'El proceso trabaja con <b>direcciones lógicas</b> (página + desplazamiento) y el hardware las convierte en <b>direcciones físicas</b> (marco + desplazamiento) consultando la <b>tabla de páginas</b>. Como esa tabla está en memoria, cada acceso costaría dos lecturas. Para evitarlo existe la <b>TLB</b> (Translation Lookaside Buffer), una pequeña caché de traducciones recientes: si la página está en la TLB (un "acierto"), la traducción es casi instantánea; si no ("fallo de TLB"), se busca en la tabla y se guarda para la próxima.'],
       ['h', 'Memoria virtual'],
       ['p', 'La <b>memoria virtual</b> permite ejecutar procesos que no entran completos en RAM: solo se cargan las páginas que se están usando, y el resto queda en el disco (área de <b>swap</b>). Cada proceso "cree" tener toda la memoria para él.'],
       ['p', 'Cuando un proceso accede a una página que <b>no está en RAM</b>, ocurre un <b>fallo de página (page fault)</b>: el SO la trae del disco a un marco libre y continúa. Si no hay marcos libres, aplica un <b>algoritmo de reemplazo</b> para elegir qué página sacar:'],
@@ -2846,9 +3016,10 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
       { t: 'mcq', q: '¿Qué es un fallo de página (page fault)?', opts: ['Un error que cierra el programa', 'Acceder a una página que no está en RAM, obligando a traerla del disco', 'Quedarse sin disco', 'Un deadlock de memoria'], a: 1, why: 'El page fault no es un error fatal: el SO trae la página faltante desde el disco a RAM y el proceso continúa.' },
       { t: 'mcq', q: 'El algoritmo de reemplazo LRU saca la página que:', opts: ['Entró primero', 'Se usó hace más tiempo (menos recientemente)', 'Es más grande', 'Se usará enseguida'], a: 1, why: 'LRU (Least Recently Used) reemplaza la página usada menos recientemente, apostando a la localidad de referencia.' },
       { t: 'mcq', q: '¿Qué es el thrashing (hiperpaginación)?', opts: ['Un proceso que no termina', 'El sistema pasa más tiempo moviendo páginas entre RAM y disco que ejecutando', 'Un ataque de seguridad', 'Un tipo de deadlock'], a: 1, why: 'Con demasiada demanda y poca RAM, los fallos de página se disparan y el sistema se dedica a paginar, no a computar.' },
-      { t: 'text', q: '¿Cómo se llama el principio por el cual un programa usa, en cada momento, un conjunto acotado de páginas y no toda su memoria por igual?', accept: ['localidad','localidad de referencia','principio de localidad'], why: 'La localidad de referencia es lo que hace eficiente a la memoria virtual: alcanza con tener en RAM el conjunto de trabajo.' }
+      { t: 'text', q: '¿Cómo se llama el principio por el cual un programa usa, en cada momento, un conjunto acotado de páginas y no toda su memoria por igual?', accept: ['localidad','localidad de referencia','principio de localidad'], why: 'La localidad de referencia es lo que hace eficiente a la memoria virtual: alcanza con tener en RAM el conjunto de trabajo.' },
+      { t: 'mcq', q: '¿Para qué sirve la TLB?', opts: ['Para guardar las páginas en disco', 'Es una caché de traducciones página→marco recientes, para no leer la tabla de páginas en cada acceso', 'Para reemplazar la RAM', 'Para contar fallos de página'], a: 1, why: 'La TLB acelera la traducción de direcciones: si la página está cacheada, evita la lectura extra de la tabla de páginas en memoria.' }
     ],
-    recap: { remember: ['Paginación: páginas→marcos; elimina fragmentación externa.', 'Memoria virtual: solo las páginas en uso en RAM, el resto en swap.', 'Fallo de página → traer del disco; reemplazo FIFO/LRU/Óptimo.'], pitfalls: ['Pensar que un page fault es un crash (es normal).', 'Ignorar el thrashing cuando hay poca RAM.'] }
+    recap: { remember: ['Dirección lógica (página+desplazamiento) → física (marco+desplazamiento) vía tabla de páginas; la TLB la acelera.', 'Memoria virtual: solo las páginas en uso en RAM, el resto en swap.', 'Fallo de página → traer del disco; reemplazo FIFO/LRU/Óptimo.'], pitfalls: ['Pensar que un page fault es un crash (es normal).', 'Ignorar el thrashing cuando hay poca RAM.'] }
   },
   /* ---- a7 ---- */
   {
@@ -2882,6 +3053,263 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
       { t: 'mcq', q: 'El objetivo de la planificación de disco (SSTF, SCAN) es:', opts: ['Minimizar el tiempo de búsqueda (movimiento del cabezal)', 'Aumentar el tamaño del disco', 'Cifrar los datos', 'Evitar deadlocks'], a: 0, why: 'Buscan reducir el seek time ordenando los pedidos para mover menos el brazo del disco.' }
     ],
     recap: { remember: ['Buffering, caching y spooling desacoplan la lentitud de la E/S.', 'DMA transfiere a RAM sin ocupar la CPU; interrupciones > polling.', 'Planificación de disco (SSTF, SCAN) minimiza el seek time.'], pitfalls: ['Confundir buffering (zona intermedia) con spooling (cola de trabajos).', 'Creer que la CPU debe controlar cada byte de una transferencia (para eso está el DMA).'] }
+  }
+  ]
+});
+
+</script>
+<script>
+/* ============ MÓDULO: ORGANIZACIÓN EMPRESARIAL (UTN.BA) ============ */
+window.C8.modules.push({
+  id: 'organizacion', name: 'Organización Empresarial', short: 'Org', color: 'organizacion', glyph: 'briefcase',
+  tagline: 'Administración, liderazgo, procesos, gestión del cambio, sistemas y patrimonio.',
+  why: 'Toda empresa (incluida la de software donde vas a trabajar) se administra: alguien planifica, organiza, dirige y controla. Entender cómo funciona una organización, cómo se lidera y cómo se conduce un cambio te sirve tanto para el parcial como para moverte bien en cualquier equipo. Esta materia se aprende explicando con tus palabras y ejemplos propios.',
+  note: 'Las definiciones son las de la teoría general de la administración, que es lo que suelen tomar las cátedras. Cada profesor elige autores y términos: si tu apunte dice algo distinto, esa es la versión que vale en tu parcial.',
+  glossary: [
+    ['Administrar', 'Planificar, organizar, dirigir y controlar recursos para lograr objetivos.'],
+    ['Eficiencia', 'Usar bien los recursos (hacer las cosas bien).'],
+    ['Eficacia', 'Lograr el objetivo (hacer las cosas correctas).'],
+    ['Objetivo SMART', 'Meta Específica, Medible, Alcanzable, Relevante y Temporal.'],
+    ['Pirámide organizacional', 'Niveles estratégico, táctico y operativo.'],
+    ['Liderazgo', 'Capacidad de influir en otros para lograr objetivos comunes.'],
+    ['Proceso', 'Actividades que transforman entradas en salidas con valor para un cliente.'],
+    ['PDCA', 'Ciclo de mejora continua: Planificar, Hacer, Verificar, Actuar.'],
+    ['Resistencia al cambio', 'Respuesta natural de quienes se sienten afectados por un cambio.'],
+    ['Patrimonio', 'Bienes, derechos y obligaciones de la empresa: A = P + PN.'],
+    ['Variación permutativa', 'Cambia la composición del patrimonio sin alterar el PN.'],
+    ['Variación modificativa', 'Altera el Patrimonio Neto (ganancia o pérdida).']
+  ],
+  lessons: [
+  /* ---- org1 ---- */
+  {
+    id: 'org1', title: 'Eficiencia, eficacia y objetivos SMART', level: 'Básico', mins: 18,
+    goal: 'Vas a distinguir tres palabras que se confunden siempre (eficiencia, eficacia, efectividad) y a escribir objetivos que se puedan medir. Aparecen en casi todos los parciales.',
+    body: [
+      ['h', 'Sistemas administrativos y contables'],
+      ['p', 'Una organización necesita ordenar cómo trabaja y registrar lo que le pasa económicamente. De ahí dos sistemas:'],
+      ['ul', [
+        '<b>Sistema administrativo:</b> el conjunto de personas, procedimientos, normas y formularios que organiza el flujo de trabajo y de información. Define <b>quién hace qué, en qué orden y con qué controles</b> (cómo se aprueba una compra, cómo se factura).',
+        '<b>Sistema contable:</b> subsistema de información que <b>registra, clasifica y resume</b> los hechos con efecto económico y produce los estados contables para decidir.'
+      ]],
+      ['p', 'El <b>proceso contable</b> va: hecho económico → comprobante (factura) → Libro Diario → Libro Mayor → balance de comprobación → estados contables. Los dos estados principales son el <b>Estado de Situación Patrimonial</b> (qué tiene y qué debe en una fecha) y el <b>Estado de Resultados</b> (cuánto ganó o perdió en un período).'],
+      ['h', 'Las tres palabras que se confunden'],
+      ['table', ['Concepto', 'Pregunta que responde', 'Frase típica'], [
+        ['Eficiencia', '¿Usé bien los recursos? (medios)', '"Hacer las cosas bien"'],
+        ['Eficacia', '¿Logré el objetivo? (fines)', '"Hacer las cosas correctas"'],
+        ['Efectividad', '¿Logré el objetivo usando bien los recursos?', '"Lograr lo que se debe y hacerlo bien"']
+      ]],
+      ['key', '<b>Cuadro mental:</b> si lográs el objetivo <b>y</b> usás bien los recursos → efectivo. Si lográs el objetivo pero gastaste de más → eficaz pero no eficiente. Si ahorraste pero no llegaste a la meta → eficiente pero no eficaz. Son dos preguntas distintas.'],
+      ['tip', '<b>Ejemplo:</b> una fábrica se propone 1000 sillas a $50 c/u. Produce 900 sillas (eficacia = 900/1000 = 90%) gastando $45 por silla (más barato que lo previsto → eficiente). Fue eficiente pero no del todo eficaz, así que no fue plenamente efectiva.'],
+      ['h', 'Objetivos SMART'],
+      ['p', 'Un buen objetivo no es un deseo ("quiero vender más"): es una meta verificable. El esquema <b>SMART</b> ayuda a redactarlo:'],
+      ['table', ['Letra', 'Significa', 'Pregunta de control'], [
+        ['S', 'Específico', '¿Qué, quién y dónde?'],
+        ['M', 'Medible', '¿Con qué número sé que lo logré?'],
+        ['A', 'Alcanzable', '¿Es posible con nuestros recursos?'],
+        ['R', 'Relevante', '¿Está alineado con la estrategia?'],
+        ['T', 'Temporal', '¿Hasta cuándo?']
+      ]],
+      ['p', 'Ejemplo completo: <i>"Aumentar en un 15% las ventas del producto A en la zona norte entre el 1/10 y el 31/12, para contribuir al crecimiento anual de la empresa."</i> Los objetivos van en <b>cascada</b>: empresa → área → equipo → persona.'],
+      ['warn', 'Errores típicos: "Mejorar la atención" (no es medible ni tiene plazo), "Duplicar las ventas en una semana" (no es alcanzable), "Vender más que la competencia" (falta cuánto y cuándo).']
+    ],
+    tasks: [
+      { t: 'mcq', q: 'Una pizzería cumple el 100% de los pedidos del día, pero tira el 30% de los ingredientes. ¿Cómo se la clasifica?', opts: ['Eficiente pero no eficaz', 'Eficaz pero no eficiente', 'Efectiva', 'Ni eficaz ni eficiente'], a: 1, hint: '¿Cumplió el fin? ¿Usó bien los medios?', why: 'Logró el objetivo (eficaz), pero desperdició recursos (ineficiente): eficaz pero no eficiente.' },
+      { t: 'text', q: 'Una empresa planificó 2000 unidades y produjo 1800. ¿Cuál es su porcentaje de eficacia? (solo el número, sin el símbolo %)', a: ['90'], hint: 'Eficacia = logrado ÷ esperado.', why: '1800 ÷ 2000 = 0,90 = 90%.' },
+      { t: 'mcq', q: 'El objetivo "Reducir los costos de logística un 10% el año que viene". ¿Qué letra de SMART le falta sobre todo?', opts: ['Medible', 'Específico (qué, dónde, cómo)', 'Alcanzable', 'Ninguna, está completo'], a: 1, hint: 'Tiene número (10%) y plazo (el año que viene), pero ¿qué costos, de qué área, dónde?', why: 'Es medible y temporal, pero poco específico: no dice qué costos ni cómo. Le falta sobre todo la S.' },
+      { t: 'mcq', q: '¿Cuál es la diferencia entre sistema administrativo y sistema contable?', opts: ['Son lo mismo', 'El administrativo ordena el trabajo y la información; el contable registra y mide los hechos económicos', 'El contable organiza al personal', 'El administrativo solo emite facturas'], a: 1, why: 'Uno ordena cómo se trabaja (quién hace qué); el otro registra y resume los hechos con efecto económico.' }
+    ],
+    recap: { remember: ['Eficiencia = medios (recursos); eficacia = fines (objetivo); efectividad = ambas.', 'SMART: Específico, Medible, Alcanzable, Relevante, Temporal.', 'Objetivos en cascada: empresa → área → equipo → persona.'], pitfalls: ['Confundir eficiencia con eficacia.', 'Escribir objetivos sin número ni plazo.'] }
+  },
+  /* ---- org2 ---- */
+  {
+    id: 'org2', title: 'Administración: funciones, niveles y decisiones', level: 'Básico', mins: 20,
+    goal: 'Vas a tener claras las cuatro funciones de la administración, los niveles de una organización y cómo se toman las decisiones. Es la base del resto de la materia.',
+    body: [
+      ['p', '<b>Administrar</b> es el proceso de <b>planificar, organizar, dirigir y controlar</b> los recursos de una organización (humanos, materiales, financieros, tecnológicos, información) para alcanzar sus objetivos con eficiencia y eficacia. Se aplica a toda organización: empresas, escuelas, hospitales, ONG.'],
+      ['h', 'Las cuatro funciones'],
+      ['table', ['Función', 'Qué hace', 'Pregunta clave'], [
+        ['Planeamiento', 'Define adónde ir y cómo llegar', '¿Qué queremos lograr y cómo?'],
+        ['Organización', 'Estructura el trabajo y los recursos', '¿Quién hace qué y responde ante quién?'],
+        ['Dirección', 'Conduce e influye en las personas', '¿Cómo logro que den lo mejor?'],
+        ['Control', 'Verifica lo planificado y corrige', '¿Estamos llegando a lo planeado?']
+      ]],
+      ['p', 'El <b>control</b> tiene 4 pasos: (1) fijar estándares, (2) medir el desempeño real, (3) comparar real vs. estándar, (4) corregir desvíos. El proceso administrativo es un <b>ciclo</b>: lo que se aprende al controlar realimenta el próximo planeamiento.'],
+      ['h', 'La pirámide organizacional'],
+      ['diagram', 'piramide'],
+      ['table', ['Nivel', 'Quiénes', 'Horizonte', 'Decisiones', 'Habilidad'], [
+        ['Estratégico', 'Directorio, gerente general', 'Largo plazo (años)', 'No programadas, alto impacto', 'Conceptual'],
+        ['Táctico', 'Gerentes de área, jefes', 'Mediano plazo (meses)', 'Mixtas', 'Humana'],
+        ['Operativo', 'Supervisores, empleados', 'Corto plazo (días)', 'Programadas, rutinarias', 'Técnica']
+      ]],
+      ['p', 'Las <b>habilidades del administrador</b> (Katz) son: <b>técnicas</b> (conocer el trabajo), <b>humanas</b> (trabajar con personas) y <b>conceptuales</b> (ver la organización como un todo). Los niveles altos usan más conceptuales; los operativos, más técnicas; las humanas hacen falta en todos.'],
+      ['h', 'Principios de Fayol (los más citados)'],
+      ['p', 'Henri Fayol propuso 14 principios. Clave para el parcial: <b>unidad de mando</b> (cada persona recibe órdenes de <b>un solo jefe</b>), <b>unidad de dirección</b> (un plan y un jefe por objetivo común), división del trabajo, jerarquía (cadena escalar), autoridad y responsabilidad. Resumió el trabajo del administrador en: prever, organizar, mandar, coordinar y controlar.'],
+      ['h', 'Toma de decisiones'],
+      ['ul', [
+        '<b>Decisiones programadas:</b> rutinarias, con regla o procedimiento ya definido (reponer stock, liquidar sueldos). Nivel operativo.',
+        '<b>Decisiones no programadas:</b> nuevas, de gran impacto, sin procedimiento previo (abrir una sucursal, lanzar un producto). Nivel estratégico.'
+      ]],
+      ['key', 'Herbert Simon: por la <b>racionalidad limitada</b> (poca información y poco tiempo), los decisores suelen elegir la alternativa <b>satisfactoria</b>, no la óptima. Según el conocimiento del resultado, se decide en <b>certeza, riesgo</b> (se conocen probabilidades) o <b>incertidumbre</b>.']
+    ],
+    tasks: [
+      { t: 'mcq', q: '"Comparar las ventas reales de septiembre con el presupuesto y analizar el desvío" es una tarea de:', opts: ['Planeamiento', 'Organización', 'Dirección', 'Control'], a: 3, why: 'Comparar lo real con lo planeado y analizar el desvío es la función de control.' },
+      { t: 'mcq', q: 'Una empleada recibe órdenes contradictorias de dos jefes distintos. ¿Qué principio de Fayol se viola?', opts: ['División del trabajo', 'Unidad de mando', 'Equidad', 'Iniciativa'], a: 1, hint: '¿Cuántos jefes debería tener una persona?', why: 'Se viola la unidad de mando: cada persona debe recibir órdenes de un solo jefe. Se corrige definiendo una única línea de autoridad.' },
+      { t: 'mcq', q: 'Un director general decide ingresar a un nuevo mercado. ¿Qué nivel y tipo de decisión es?', opts: ['Operativo, programada', 'Estratégico, no programada', 'Táctico, programada', 'Operativo, no programada'], a: 1, why: 'Es alta dirección (estratégico), con una decisión nueva y de gran impacto: no programada.' },
+      { t: 'order', q: 'Ordená los cuatro pasos del control.', items: ['Fijar estándares (a partir de los objetivos)', 'Medir el desempeño real', 'Comparar lo real con el estándar', 'Corregir los desvíos'], why: 'Primero se define el estándar, se mide, se compara y recién ahí se corrige.' },
+      { t: 'mcq', q: '¿Qué significa la "racionalidad limitada" de Simon?', opts: ['Que los gerentes son poco inteligentes', 'Que, por falta de información y tiempo, se elige una alternativa satisfactoria y no la óptima', 'Que las decisiones son siempre óptimas', 'Que no se puede decidir'], a: 1, why: 'Simon observó que, con información y tiempo limitados, el decisor elige la primera opción "suficientemente buena", no la perfecta.' }
+    ],
+    recap: { remember: ['Funciones: Planear, Organizar, Dirigir, Controlar (ciclo).', 'Pirámide: estratégico (conceptual), táctico (humana), operativo (técnica).', 'Unidad de mando = un solo jefe por persona.'], pitfalls: ['Mezclar las funciones (control ≠ dirección).', 'Olvidar que el proceso administrativo es un ciclo.'] }
+  },
+  /* ---- org3 ---- */
+  {
+    id: 'org3', title: 'Liderazgo', level: 'Intermedio', mins: 20,
+    goal: 'Vas a identificar el estilo de liderazgo de una situación y distinguir liderar de gestionar. Son preguntas de caso muy frecuentes.',
+    body: [
+      ['p', '<b>Liderazgo</b> es la capacidad de <b>influir</b> en otras personas para que trabajen con entusiasmo en objetivos comunes. A diferencia de la autoridad formal (un cargo), se basa en la influencia: <b>un jefe puede no ser líder, y un líder puede no tener cargo</b>.'],
+      ['key', '<b>Líder vs. gestor:</b> el gestor planifica, organiza y controla para mantener el orden (administra la complejidad); el líder inspira, da visión y moviliza para el cambio. Una organización necesita ambos.'],
+      ['h', 'Fuentes de poder (French y Raven)'],
+      ['p', 'La influencia se apoya en cinco bases de poder: <b>legítimo</b> (lo da el cargo), de <b>recompensa</b>, <b>coercitivo</b> (castigo), <b>experto</b> (conocimiento) y <b>referente</b> (admiración e identificación).'],
+      ['h', 'Estilos clásicos (Lewin)'],
+      ['table', ['Estilo', 'Cómo decide', 'Cuándo sirve'], [
+        ['Autocrático', 'El líder decide solo y ordena', 'Emergencias; rápido pero desmotiva'],
+        ['Democrático', 'Consulta e involucra al equipo', 'Mayor compromiso, pero más lento'],
+        ['Laissez-faire', 'Delega casi todo, interviene poco', 'Equipos muy maduros; si no, desorden']
+      ]],
+      ['h', 'Liderazgo situacional (Hersey y Blanchard)'],
+      ['p', 'No hay un estilo mejor: depende de la <b>madurez del seguidor</b> (competencia + compromiso).'],
+      ['table', ['Madurez del seguidor', 'Estilo recomendado'], [
+        ['Baja (no sabe, inseguro)', 'Dirigir (mucha tarea, poca relación)'],
+        ['Baja-moderada (algo de capacidad)', 'Persuadir / entrenar'],
+        ['Moderada-alta (capaz pero inseguro)', 'Participar / apoyar'],
+        ['Alta (capaz y motivado)', 'Delegar']
+      ]],
+      ['h', 'Transaccional vs. transformacional'],
+      ['table', ['', 'Transaccional', 'Transformacional'], [
+        ['Base', 'Intercambio: premios por desempeño', 'Inspiración: visión compartida'],
+        ['Foco', 'Cumplir metas y normas; estabilidad', 'Cambiar y mejorar; desarrollar personas'],
+        ['Motiva con', 'Recompensas y castigos (extrínseco)', 'Propósito y crecimiento (intrínseco)'],
+        ['Mejor cuando', 'Tareas claras, rutina, corto plazo', 'Hay cambio, crisis, innovación']
+      ]],
+      ['tip', 'Pista para los casos: si hay <b>intercambio y control</b> ("si cumplís la meta, bono doble"; "interviene cuando hay un desvío") es transaccional. Si hay <b>visión, inspiración y desarrollo</b> ("imaginemos juntos ser la mejor empresa", desafía a proponer ideas) es transformacional.']
+    ],
+    tasks: [
+      { t: 'mcq', q: '"El gerente decide el cambio de turnos y lo comunica sin consultar a nadie." ¿Qué estilo es?', opts: ['Democrático', 'Autocrático', 'Laissez-faire', 'Transformacional'], a: 1, why: 'Decide solo y ordena sin consultar: estilo autocrático.' },
+      { t: 'mcq', q: '"Si cumplen el 110% de la meta, el bono es doble." Este liderazgo es:', opts: ['Transformacional', 'Transaccional', 'Laissez-faire', 'Situacional'], a: 1, why: 'Es un intercambio recompensa-por-resultado: liderazgo transaccional.' },
+      { t: 'mcq', q: 'Un practicante en su primer día, sin experiencia. Según Hersey y Blanchard, ¿qué estilo conviene?', opts: ['Delegar', 'Dirigir (mucha tarea, instrucciones paso a paso)', 'Participar', 'Laissez-faire'], a: 1, hint: 'Su madurez es baja: no sabe y está inseguro.', why: 'Con madurez baja conviene dirigir: dar instrucciones claras y mucha estructura de tarea.' },
+      { t: 'mcq', q: '¿Por qué se dice que no hay un estilo de liderazgo "mejor" para todas las situaciones?', opts: ['Porque todos los líderes son iguales', 'Por el enfoque de contingencia: el estilo adecuado depende de la situación y de la madurez del equipo', 'Porque el liderazgo no importa', 'Porque siempre conviene el autocrático'], a: 1, why: 'El enfoque de contingencia/situacional sostiene que el mejor estilo depende del contexto, la tarea y la madurez de los seguidores.' }
+    ],
+    recap: { remember: ['Líder (inspira, visión) vs. gestor (ordena, controla).', 'Estilos Lewin: autocrático, democrático, laissez-faire.', 'Transaccional = intercambio; transformacional = visión e inspiración.'], pitfalls: ['Confundir autoridad formal (cargo) con liderazgo (influencia).', 'Creer que un estilo sirve para toda situación.'] }
+  },
+  /* ---- org4 ---- */
+  {
+    id: 'org4', title: 'Gestión por procesos', level: 'Intermedio', mins: 20,
+    goal: 'Vas a entender cómo trabaja una organización "de punta a punta" y cómo se coordinan las áreas. Suelen dar un caso y pedir que lo analices.',
+    body: [
+      ['p', 'Un <b>proceso</b> es un conjunto de actividades relacionadas y secuenciales que transforman <b>entradas</b> (insumos) en <b>salidas</b> (productos o servicios) con valor para un <b>cliente</b> (interno o externo).'],
+      ['diagram', 'proceso'],
+      ['p', 'Todo proceso tiene: objetivo, <b>responsable (dueño del proceso)</b>, entradas y salidas, proveedores y clientes, actividades, recursos e <b>indicadores</b> para medirlo.'],
+      ['h', 'Funcional vs. por procesos'],
+      ['table', ['', 'Funcional (por áreas)', 'Por procesos'], [
+        ['Foco', 'La tarea y "mi departamento"', 'El resultado para el cliente, de punta a punta'],
+        ['Problema típico', 'Silos: cada área optimiza lo suyo', 'Requiere coordinación y responsables'],
+        ['Ventaja', 'Especialización', 'Menos tiempo de ciclo y reprocesos']
+      ]],
+      ['h', 'Tipos de procesos'],
+      ['ul', [
+        '<b>Estratégicos:</b> definen el rumbo (planificación, control de gestión).',
+        '<b>Operativos o clave:</b> generan el producto/servicio y el valor (venta, producción, logística).',
+        '<b>De apoyo:</b> dan recursos a los demás (RR.HH., compras, sistemas, contabilidad).'
+      ]],
+      ['h', 'Herramientas: SIPOC y PDCA'],
+      ['p', '<b>SIPOC</b> describe un proceso en cinco columnas: <b>S</b>uppliers (proveedores), <b>I</b>nputs (entradas), <b>P</b>rocess (pasos principales), <b>O</b>utputs (salidas), <b>C</b>ustomers (clientes).'],
+      ['p', 'El <b>ciclo PDCA</b> (o de Deming) es la mejora continua:'],
+      ['table', ['Etapa', 'Qué se hace'], [
+        ['Plan (Planificar)', 'Detectar el problema, analizar causas, fijar objetivos y el plan'],
+        ['Do (Hacer)', 'Ejecutar el plan, a escala piloto o completa'],
+        ['Check (Verificar)', 'Medir y comparar con lo esperado'],
+        ['Act (Actuar)', 'Estandarizar lo que funcionó o corregir y volver a empezar']
+      ]],
+      ['key', 'Un indicador sin meta no sirve para controlar. Indicadores típicos de proceso: tiempo de ciclo, costo por transacción, tasa de errores/reprocesos, satisfacción del cliente.'],
+      ['p', 'Las áreas interactúan: <b>las salidas de un área son las entradas de otra</b> (cliente interno). Una venta involucra a comercial, finanzas, logística, facturación, cobranzas y contabilidad. Si una se demora, todo el proceso se resiente. Los <b>controles internos</b> (separar funciones: quien autoriza una compra no es quien la paga ni la registra) reducen errores y fraudes.']
+    ],
+    tasks: [
+      { t: 'mcq', q: 'En una fábrica de muebles, "cortar, armar y terminar los muebles" es un proceso:', opts: ['Estratégico', 'Operativo (clave)', 'De apoyo', 'Externo'], a: 1, why: 'Genera directamente el producto que recibe el cliente: es un proceso operativo o clave.' },
+      { t: 'mcq', q: '"Liquidar los sueldos del personal" es un proceso:', opts: ['Estratégico', 'Operativo (clave)', 'De apoyo', 'De venta'], a: 2, why: 'No genera el producto para el cliente final; sostiene a los demás: es de apoyo.' },
+      { t: 'order', q: 'Ordená las etapas del ciclo PDCA.', items: ['Plan: detectar el problema y fijar el plan', 'Do: ejecutar (piloto o completo)', 'Check: medir y comparar', 'Act: estandarizar o corregir'], why: 'Planificar → Hacer → Verificar → Actuar, y vuelve a empezar: es mejora continua.' },
+      { t: 'mcq', q: 'Comercial promete entregas en 2 días; el depósito necesita 5. Hay reclamos. ¿Cuál es el problema de fondo?', opts: ['El depósito es ineficiente', 'Un problema de traspaso entre áreas (silos): faltan objetivos compartidos y un responsable del proceso completo', 'Comercial vende mal', 'Falta un sistema contable'], a: 1, why: 'No es culpa de un área sino de la falta de coordinación entre áreas: objetivos contradictorios y sin dueño del proceso de punta a punta.' }
+    ],
+    recap: { remember: ['Proceso: entradas → actividades → salidas → cliente.', 'Tipos: estratégicos, operativos (clave) y de apoyo.', 'SIPOC describe un proceso; PDCA lo mejora de forma continua.'], pitfalls: ['Mirar solo "mi área" (silos) y perder la visión de punta a punta.', 'Definir indicadores sin meta.'] }
+  },
+  /* ---- org5 ---- */
+  {
+    id: 'org5', title: 'Gestión del cambio', level: 'Avanzado', mins: 22,
+    goal: 'Vas a entender por qué muchos cambios fracasan y cómo conducirlos. Los modelos de Lewin y Kotter y las causas de la resistencia se preguntan seguido.',
+    body: [
+      ['p', 'El <b>cambio organizacional</b> es la modificación de aspectos de la organización (estrategia, estructura, procesos, tecnología, personas o cultura) para adaptarse al entorno o mejorar. La <b>gestión del cambio</b> es el enfoque estructurado para llevar a las personas desde la situación actual a la deseada, minimizando la resistencia.'],
+      ['h', 'Modelo de Lewin: 3 etapas'],
+      ['table', ['Etapa', 'Qué ocurre', 'Qué hace el líder'], [
+        ['1. Descongelar', 'Se genera conciencia de la necesidad; se rompen hábitos', 'Comunica el porqué, muestra los problemas, reduce temores'],
+        ['2. Cambiar', 'Se implementa la nueva forma; hay aprendizaje', 'Capacita, acompaña, da apoyo'],
+        ['3. Recongelar', 'Se consolida lo nuevo como rutina', 'Refuerza con incentivos, normas y reconocimiento']
+      ]],
+      ['p', '<b>Campo de fuerzas (Lewin):</b> hay fuerzas <b>impulsoras</b> (empujan el cambio) y <b>restrictivas</b> (lo frenan). Si se equilibran, no hay cambio. Es más efectivo <b>reducir las restrictivas</b> que sumar impulsoras.'],
+      ['h', 'Modelo de Kotter: 8 pasos'],
+      ['ol', ['Crear sentido de urgencia.', 'Formar una coalición guía.', 'Desarrollar una visión y estrategia.', 'Comunicar la visión.', 'Eliminar obstáculos y empoderar.', 'Generar triunfos a corto plazo.', 'Consolidar logros y seguir cambiando.', 'Anclar los cambios en la cultura.']],
+      ['p', 'Los pasos 1-4 ≈ <b>descongelar</b> (crear el clima), 5-7 ≈ <b>cambiar</b> (involucrar y habilitar) y 8 ≈ <b>recongelar</b> (consolidar). Kotter se relaciona directamente con Lewin.'],
+      ['h', 'ADKAR: el cambio en cada persona'],
+      ['p', 'Diagnostica dónde se traba una persona: <b>A</b>wareness (conciencia), <b>D</b>esire (deseo), <b>K</b>nowledge (conocimiento), <b>A</b>bility (capacidad), <b>R</b>einforcement (refuerzo). Si el <b>deseo</b> es bajo, no sirve capacitar más: hay que trabajar la motivación.'],
+      ['h', 'Resistencia al cambio'],
+      ['p', 'La resistencia es una <b>respuesta natural</b> de quienes se sienten afectados; no es "mala", da información. Causas frecuentes: miedo a lo desconocido, temor a perder empleo/poder/estatus, hábitos, falta de información o de confianza, no ver la necesidad, sobrecarga por demasiados cambios.'],
+      ['key', 'Errores comunes al gestionar el cambio (casi todos son saltarse pasos de Kotter): no generar urgencia, comunicar poco o una sola vez, subestimar la resistencia, no capacitar, no mostrar resultados tempranos y <b>declarar la victoria demasiado pronto</b>.'],
+      ['tip', 'Herramientas: plan de comunicación, mapa de interesados (quién gana/pierde/influye), agentes o "campeones" del cambio en cada área, pruebas piloto y victorias tempranas, incentivos alineados con el nuevo comportamiento.']
+    ],
+    tasks: [
+      { t: 'mcq', q: '"El director presenta datos de pérdida de clientes para explicar por qué hay que cambiar." ¿Qué etapa de Lewin es?', opts: ['Descongelar', 'Cambiar', 'Recongelar', 'Ninguna'], a: 0, why: 'Generar conciencia de la necesidad y mostrar el problema actual es descongelar.' },
+      { t: 'order', q: 'Ordená los primeros cuatro pasos de Kotter.', items: ['Crear sentido de urgencia', 'Formar una coalición guía', 'Desarrollar la visión y estrategia', 'Comunicar la visión'], why: 'Primero urgencia, después un equipo con poder (coalición), luego la visión y finalmente comunicarla.' },
+      { t: 'mcq', q: 'Los empleados saben usar el nuevo sistema y pueden hacerlo, pero siguen con las planillas viejas porque "no ven para qué". Según ADKAR, ¿qué falta?', opts: ['Knowledge (conocimiento)', 'Ability (capacidad)', 'Awareness/Desire (conciencia y deseo)', 'Reinforcement'], a: 2, hint: 'Tienen conocimiento y capacidad, pero no entienden el porqué ni quieren.', why: 'Saben y pueden (K y A cumplidas), pero falla antes: no ven el motivo (Awareness) ni quieren (Desire). Hay que trabajar esas etapas.' },
+      { t: 'mcq', q: 'Una empresa comunicó un cambio una sola vez por mail y a los 3 meses declaró "cambio terminado", aunque muchos siguen como antes. ¿Qué error cometió?', opts: ['Comunicación escasa y declarar la victoria demasiado pronto', 'Capacitó de más', 'Generó demasiada urgencia', 'Involucró a todos'], a: 0, why: 'Dos errores clásicos de Kotter: comunicación insuficiente (una sola vez) y declarar la victoria antes de anclar el cambio en la cultura.' }
+    ],
+    recap: { remember: ['Lewin: descongelar → cambiar → recongelar.', 'Kotter: 8 pasos (1-4 clima, 5-7 habilitar, 8 anclar).', 'ADKAR diagnostica a la persona; la resistencia es natural e informativa.'], pitfalls: ['Declarar la victoria antes de consolidar.', 'Capacitar cuando lo que falta es deseo (motivación).'] }
+  },
+  /* ---- org6 ---- */
+  {
+    id: 'org6', title: 'Sistemas, empresa y patrimonio', level: 'Avanzado', mins: 22,
+    goal: 'Vas a retomar teoría de sistemas, la diferencia entre organización y empresa, y la contabilidad básica del patrimonio con sus variaciones. Incluye cálculo numérico.',
+    body: [
+      ['h', 'Teoría general de sistemas (TGS)'],
+      ['p', 'Un <b>sistema</b> es un conjunto de elementos interrelacionados que funcionan como un todo para un objetivo. Modelo básico: <b>entradas → proceso → salidas</b>, con <b>retroalimentación</b> (información de las salidas que vuelve para corregir) y un <b>entorno</b> del que se separa por un <b>límite</b>.'],
+      ['ul', [
+        '<b>Sistema abierto:</b> intercambia materia, energía e información con el entorno (las organizaciones). <b>Cerrado:</b> no intercambia (una abstracción).',
+        '<b>Sinergia:</b> el todo es más que la suma de las partes. <b>Entropía:</b> tendencia al desorden; la <b>neguentropía</b> la combate con información.',
+        '<b>Homeostasis:</b> tendencia a mantener el equilibrio. <b>Equifinalidad:</b> se puede llegar al mismo fin por caminos distintos.'
+      ]],
+      ['h', 'Organización y empresa'],
+      ['p', 'Una <b>organización</b> es un conjunto de personas que, con recursos y una estructura, trabajan coordinadamente por objetivos comunes. Una <b>empresa</b> es una organización con <b>fines económicos</b> que combina factores de producción para ofrecer bienes o servicios en el mercado, asumiendo riesgo y buscando beneficio.'],
+      ['key', 'Toda empresa es una organización, pero <b>no toda organización es una empresa</b>: una ONG, una escuela pública o un club son organizaciones sin fin de lucro.'],
+      ['h', 'Patrimonio: la ecuación fundamental'],
+      ['ul', [
+        '<b>Activo (A):</b> bienes y derechos que posee (caja, bancos, mercaderías, créditos a cobrar).',
+        '<b>Pasivo (P):</b> obligaciones con terceros (proveedores, préstamos, sueldos a pagar).',
+        '<b>Patrimonio Neto (PN):</b> lo que queda para los dueños: PN = A − P.'
+      ]],
+      ['key', 'A = P + PN (ecuación patrimonial fundamental). Siempre tiene que cumplirse: después de cada operación, controlá que el Activo sea igual al Pasivo más el Patrimonio Neto.'],
+      ['h', 'Variaciones patrimoniales'],
+      ['table', ['Tipo', 'Efecto en el PN', 'Ejemplo'], [
+        ['Permutativa', 'No cambia', 'Comprar mercaderías al contado (Caja ↓, Mercaderías ↑)'],
+        ['Modificativa positiva', 'Aumenta (ganancia)', 'Cobrar intereses; vender por más que el costo'],
+        ['Modificativa negativa', 'Disminuye (pérdida)', 'Pagar sueldos; gastos']
+      ]],
+      ['p', '<b>Regla práctica:</b> si el PN no cambia, es <b>permutativa</b>; si el PN cambia, es <b>modificativa</b> (positiva si gana, negativa si pierde).'],
+      ['tip', 'Ejemplo: vender al contado por $90.000 mercadería que costó $60.000 → Caja +90.000, Mercaderías −60.000: el PN sube $30.000 (modificativa positiva). Comprar mercadería a crédito por $40.000 → Mercaderías +40.000 y Deudas +40.000: el PN no cambia (permutativa).']
+    ],
+    tasks: [
+      { t: 'text', q: 'Si el Activo es $480.000 y el Pasivo es $190.000, ¿cuál es el Patrimonio Neto? (solo el número)', a: ['290000','290.000'], hint: 'PN = A − P.', why: 'PN = 480.000 − 190.000 = 290.000.' },
+      { t: 'text', q: 'Si PN = 180.000 y P = 90.000, ¿cuánto vale el Activo? (solo el número)', a: ['270000','270.000'], hint: 'A = P + PN.', why: 'A = 90.000 + 180.000 = 270.000.' },
+      { t: 'mcq', q: 'Se compra una computadora al contado por $120.000. ¿Qué tipo de variación es?', opts: ['Modificativa positiva', 'Modificativa negativa', 'Permutativa', 'No es una operación patrimonial'], a: 2, hint: '¿Cambia el Patrimonio Neto? Caja baja, pero Equipos sube.', why: 'Caja ↓ 120.000 y Equipos ↑ 120.000: cambia la composición pero el PN queda igual → permutativa.' },
+      { t: 'mcq', q: 'Se pagan sueldos por $25.000 en efectivo. ¿Qué variación es?', opts: ['Permutativa', 'Modificativa positiva', 'Modificativa negativa', 'No afecta el patrimonio'], a: 2, why: 'Es un gasto: la Caja baja y no hay contrapartida que lo compense, el PN disminuye → modificativa negativa.' },
+      { t: 'mcq', q: '¿Cuál de estas NO es una empresa?', opts: ['Una fábrica de muebles SRL', 'Un kiosco unipersonal', 'Una escuela pública', 'Una cadena de cafeterías SA'], a: 2, why: 'La escuela pública es una organización sin fin de lucro: es organización pero no empresa (no busca beneficio económico).' }
+    ],
+    recap: { remember: ['Sistema: entrada → proceso → salida + retroalimentación y entorno.', 'Toda empresa es organización, no al revés (fin económico).', 'A = P + PN; permutativa (PN igual) vs. modificativa (PN cambia).'], pitfalls: ['Olvidar controlar que A = P + PN tras cada operación.', 'Clasificar como modificativa algo que no cambia el PN.'] }
   }
   ]
 });
@@ -3582,6 +4010,19 @@ window.C8.DIAGRAMS = {
     <rect x="325" y="50" width="40" height="34" rx="6" fill="var(--surface2)" stroke="var(--border2)"/><text x="345" y="71" fill="var(--fg)" font-size="8">leído</text>
     <line x1="65" y1="67" x2="163" y2="67" stroke="var(--border2)" marker-end="url(#a3)"/><line x1="219" y1="67" x2="323" y2="67" stroke="var(--border2)" marker-end="url(#a3)"/>
     <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="var(--border2)"/></marker></defs></svg>`,
+  piramide: `<svg viewBox="0 0 360 200" font-family="var(--f-body)" font-size="10" text-anchor="middle">
+    <polygon points="180,16 240,74 120,74" fill="color-mix(in srgb,var(--c) 32%,var(--surface2))" stroke="var(--c)"/>
+    <polygon points="118,78 242,78 282,140 78,140" fill="color-mix(in srgb,var(--c) 20%,var(--surface2))" stroke="var(--border2)"/>
+    <polygon points="76,144 284,144 320,196 40,196" fill="color-mix(in srgb,var(--c) 10%,var(--surface2))" stroke="var(--border2)"/>
+    <text x="180" y="52" fill="var(--fg)" font-weight="700" font-size="9">ESTRATÉGICO</text><text x="180" y="66" fill="var(--muted)" font-size="7">largo plazo</text>
+    <text x="180" y="108" fill="var(--fg)" font-weight="700">TÁCTICO</text><text x="180" y="122" fill="var(--muted)" font-size="7">gerentes · mediano plazo</text>
+    <text x="180" y="168" fill="var(--fg)" font-weight="700">OPERATIVO</text><text x="180" y="182" fill="var(--muted)" font-size="7">supervisores · corto plazo</text>
+    <text x="330" y="50" fill="var(--c)" font-size="7" text-anchor="end">conceptual</text><text x="350" y="120" fill="var(--c)" font-size="7" text-anchor="end">humana</text><text x="356" y="178" fill="var(--c)" font-size="7" text-anchor="end">técnica</text></svg>`,
+  proceso: `<svg viewBox="0 0 400 110" font-family="var(--f-body)" font-size="9" text-anchor="middle">
+    ${[['Entradas','insumos',10],['Actividades','transformación',150],['Salidas','producto/servicio',290]].map(([t,s,x],i)=>`<g transform="translate(${x},30)"><rect width="100" height="44" rx="10" fill="color-mix(in srgb,var(--c) ${12+i*8}%,var(--surface2))" stroke="var(--border2)"/><text x="50" y="22" fill="var(--fg)" font-weight="700">${t}</text><text x="50" y="37" fill="var(--muted)" font-size="7">${s}</text>${i<2?'<text x="118" y="28" fill="var(--c)" font-size="16">→</text>':''}</g>`).join('')}
+    <g transform="translate(290,30)"><text x="118" y="28" fill="var(--c)" font-size="16">→</text></g>
+    <text x="378" y="56" fill="var(--fg)" font-weight="700" font-size="9">Cliente</text>
+    <text x="200" y="100" fill="var(--muted)" font-size="7">con retroalimentación e indicadores que miden el proceso</text></svg>`,
   procesos: `<svg viewBox="0 0 400 190" font-family="var(--f-body)" font-size="9" text-anchor="middle">
     <defs><marker id="pa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="var(--muted)"/></marker></defs>
     <g><rect x="20" y="80" width="64" height="30" rx="8" fill="color-mix(in srgb,var(--c) 14%,var(--surface2))" stroke="var(--border2)"/><text x="52" y="99" fill="var(--fg)" font-weight="600">Nuevo</text></g>
@@ -3790,7 +4231,7 @@ function renderHome(main){
   main.appendChild(topbar('Academia Byte','brand'));
   const v=el('section','view'); const w=el('div','wrap');
   const li=levelInfo(S.prog.xp);
-  w.appendChild(el('div','hero', `<h1>Aprendé a programar jugando.</h1>
+  w.appendChild(el('div','hero', `<h1>Aprendé a programar <span class="accent">de verdad</span>, jugando.</h1>
     <p class="lead">Redes, ciberseguridad, bases de datos, Python y C++ desde cero hasta nivel avanzado. Con teoría clara, ejercicios que se corrigen solos, código que corre en el navegador y juegos para practicar. Ganás XP, subís de nivel y competís en el ranking.</p>
     <div class="stats">
       <div class="stat"><b>${MODS.length+1}</b><span>Áreas</span></div>
@@ -4323,10 +4764,10 @@ function renderContact(main){
   fc.appendChild(form); fc.appendChild(note); grid.appendChild(fc);
   // info card
   const ic=el('div','contact-card'); ic.innerHTML='<h3 style="margin-bottom:6px">Otros canales</h3><p style="color:var(--muted);font-size:.86rem;margin-bottom:12px">Podés copiar cualquiera de estos datos.</p>';
-  [['mail','Email','matiasborinelli@gmail.com'],['spark','Comunidad','discord.gg/academia-byte'],['book','Repositorio','github.com/academia-byte'],['home','Institución','Tecnicatura Universitaria en Programación']].forEach(([icn,lbl,val])=>{
+  [['mail','Email','academia.byte@ejemplo.edu'],['spark','Comunidad','discord.gg/academia-byte'],['book','Repositorio','github.com/academia-byte'],['home','Institución','Tecnicatura Universitaria en Programación']].forEach(([icn,lbl,val])=>{
     const it=el('div','contact-item'); it.innerHTML=`<span class="ci-ic">${ICON(icn,18)}</span><div style="min-width:0"><div class="lbl">${lbl}</div><div class="val">${esc(val)}</div></div>`;
     const cp=el('button','copybtn','Copiar'); cp.onclick=()=>doCopy(val,cp); it.appendChild(cp); ic.appendChild(it); });
-  ic.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>Si tiene dudas o consultas se le responderá a la brevedad.</span>'));
+  ic.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>Los datos de contacto son de ejemplo para esta demo. Reemplazalos por los tuyos cuando publiques tu versión.</span>'));
   grid.appendChild(ic);
   w.appendChild(grid); v.appendChild(w); main.appendChild(v);
 }
@@ -4388,7 +4829,8 @@ function ICON(n,s){ s=s||18; const p={
   send:'M4 12l16-8-6 16-3-6z',
   sigma:'M6 4h12l-2 3M6 4l7 8-7 8M6 20h12l-2-3',
   cpu:'M8 8h8v8H8z M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3 M5 5h14v14H5z',
-  layers:'M12 3l9 5-9 5-9-5z M3 13l9 5 9-5 M3 17l9 5 9-5'
+  layers:'M12 3l9 5-9 5-9-5z M3 13l9 5 9-5 M3 17l9 5 9-5',
+  briefcase:'M4 8h16v11H4z M9 8V6a1 1 0 011-1h4a1 1 0 011 1v2 M4 13h16'
 }[n]||'M12 12m-9 0a9 9 0 1018 0 9 9 0 10-18 0';
   const multi=/M.*M/.test(p);
   return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p.split(/(?=M)/).map(d=>'<path d="'+d.trim()+'"/>').join('')}</svg>`;
