@@ -4063,8 +4063,8 @@ const LS = {
    CONFIG SUPABASE — ranking compartido para la versión en GitHub/Render.
    Pegá acá las dos claves de tu proyecto Supabase (Settings → API):
    ======================================================================= */
-const SUPABASE_URL = "";   // ej: https://abcd1234.supabase.co
-const SUPABASE_KEY = "";   // la clave "anon public"
+const SUPABASE_URL = "https://etpairsbmdhzzucvhpsv.supabase.co";   // ej: https://etpairsbmdhzzucvhpsv.supabase.co
+const SUPABASE_KEY = "sb_publishable_29Z3WLqq4N2cZ-oV96lRBQ_WZ0XNoi4";   // la clave "anon public"
 /* ======================================================================= */
 const SUPA = (SUPABASE_URL && SUPABASE_KEY) ? { url: SUPABASE_URL.replace(/\/+$/,''), key: SUPABASE_KEY } : null;
 async function supaUpsert(row){
@@ -4258,7 +4258,7 @@ function renderHome(main){
   main.appendChild(topbar('Academia Byte','brand'));
   const v=el('section','view'); const w=el('div','wrap');
   const li=levelInfo(S.prog.xp);
-  w.appendChild(el('div','hero', `<h1>Aprendé a programar <span class="accent">de verdad</span>, jugando.</h1>
+  w.appendChild(el('div','hero', `<h1>Aprendé a programar jugando.</h1>
     <p class="lead">Redes, ciberseguridad, bases de datos, Python y C++ desde cero hasta nivel avanzado. Con teoría clara, ejercicios que se corrigen solos, código que corre en el navegador y juegos para practicar. Ganás XP, subís de nivel y competís en el ranking.</p>
     <div class="stats">
       <div class="stat"><b>${MODS.length+1}</b><span>Áreas</span></div>
@@ -4792,10 +4792,10 @@ function renderContact(main){
   fc.appendChild(form); fc.appendChild(note); grid.appendChild(fc);
   // info card
   const ic=el('div','contact-card'); ic.innerHTML='<h3 style="margin-bottom:6px">Otros canales</h3><p style="color:var(--muted);font-size:.86rem;margin-bottom:12px">Podés copiar cualquiera de estos datos.</p>';
-  [['mail','Email','academia.byte@ejemplo.edu'],['spark','Comunidad','discord.gg/academia-byte'],['book','Repositorio','github.com/academia-byte'],['home','Institución','Tecnicatura Universitaria en Programación']].forEach(([icn,lbl,val])=>{
+  [['mail','Email','matiasborinelli@gmail.com'],['spark','Comunidad','discord.gg/academia-byte'],['book','Repositorio','github.com/academia-byte'],['home','Institución','Tecnicatura Universitaria en Programación']].forEach(([icn,lbl,val])=>{
     const it=el('div','contact-item'); it.innerHTML=`<span class="ci-ic">${ICON(icn,18)}</span><div style="min-width:0"><div class="lbl">${lbl}</div><div class="val">${esc(val)}</div></div>`;
     const cp=el('button','copybtn','Copiar'); cp.onclick=()=>doCopy(val,cp); it.appendChild(cp); ic.appendChild(it); });
-  ic.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>Los datos de contacto son de ejemplo para esta demo. Reemplazalos por los tuyos cuando publiques tu versión.</span>'));
+  ic.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>Cualquier duda o consulta le responderemos a la brevedad.</span>'));
   grid.appendChild(ic);
   w.appendChild(grid); v.appendChild(w); main.appendChild(v);
 }
