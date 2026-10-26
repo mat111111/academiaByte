@@ -1,0 +1,13 @@
+Subir a GitHub Pages (o cualquier hosting estático):
+
+1) academia-byte/  -> carpeta con index.html: es Academia Byte completa.
+2) arena-juego/    -> carpeta con index.html y assets/: es Academia Byte Arena.
+
+Cómo publicar:
+- Creá un repositorio en GitHub (por ejemplo academia-byte).
+- Subí las dos carpetas. Para que cada una tenga su URL, usá dos repos o dejalas en subcarpetas.
+- En Settings > Pages elegí la rama main y la carpeta raíz.
+- La URL queda como https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/
+
+Nota: los enlaces "Abrir el juego" y "Ver cómo está hecho" dentro de Academia Byte apuntan a claude.ai.
+Si querés que apunten a la versión alojada, cambiá esas URLs en academia-byte/index.html.
