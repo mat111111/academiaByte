@@ -451,6 +451,7 @@ pre.src .fn{color:#7fd6ff}
 
 /* ===== AVATAR ANIMATION ===== */
 .av{display:inline-block}
+.av-img img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated;display:block}
 .av svg{width:100%;height:100%;display:block;overflow:visible}
 .av .bob{transform-box:fill-box;transform-origin:center;animation:bob 2.6s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6%)}}
@@ -2712,7 +2713,7 @@ window.C8.modules.push({
   lessons: [
   /* ---- m1 ---- */
   {
-    id: 'm1', title: 'Conjuntos y subconjuntos', level: 'Básico', mins: 16,
+    id: 'm1', title: 'Conjuntos y subconjuntos', level: 'Básico', mins: 16, par:1,
     goal: 'Vas a manejar la notación de conjuntos, decidir cuándo uno está incluido en otro y contar todos los subconjuntos posibles. Es la base de todo el resto de la materia.',
     body: [
       ['p', 'Un <b>conjunto</b> es una colección bien definida de elementos <b>distintos</b> y <b>sin orden</b>. Se nombra con mayúscula y sus elementos van entre llaves. Dos formas de describirlo:'],
@@ -2750,7 +2751,7 @@ window.C8.modules.push({
   },
   /* ---- m2 ---- */
   {
-    id: 'm2', title: 'Operaciones entre conjuntos', level: 'Básico', mins: 18,
+    id: 'm2', title: 'Operaciones entre conjuntos', level: 'Básico', mins: 18, par:1,
     goal: 'Vas a combinar conjuntos con unión, intersección, diferencia y complemento, y a usar las leyes de De Morgan. Es lo que más aparece en los ejercicios de Venn.',
     body: [
       ['table', ['Operación', 'Símbolo', 'Definición', 'Idea'], [
@@ -2792,7 +2793,7 @@ window.C8.modules.push({
   },
   /* ---- m3 ---- */
   {
-    id: 'm3', title: 'Técnicas de conteo', level: 'Intermedio', mins: 20,
+    id: 'm3', title: 'Técnicas de conteo', level: 'Intermedio', mins: 20, par:1,
     goal: 'Vas a contar sin enumerar: cuántas combinaciones, cuántos ordenamientos, cuántos casos. Es lo que más se toma y lo que sostiene la probabilidad.',
     body: [
       ['h', 'Los dos principios base'],
@@ -2834,7 +2835,7 @@ window.C8.modules.push({
   },
   /* ---- m4 ---- */
   {
-    id: 'm4', title: 'Lógica proposicional y tablas de verdad', level: 'Intermedio', mins: 20,
+    id: 'm4', title: 'Lógica proposicional y tablas de verdad', level: 'Intermedio', mins: 20, par:1,
     goal: 'Vas a formalizar razonamientos con conectivos y decidir con tablas de verdad si algo es siempre verdadero. Es la lógica que está detrás de cada condición de un programa.',
     body: [
       ['p', 'Una <b>proposición</b> es un enunciado que es verdadero (V) o falso (F), nunca ambos. "Hoy llueve" es proposición; "¿qué hora es?" no.'],
@@ -2878,7 +2879,7 @@ window.C8.modules.push({
   },
   /* ---- m5 ---- */
   {
-    id: 'm5', title: 'Relaciones binarias, equivalencia y orden', level: 'Avanzado', mins: 22,
+    id: 'm5', title: 'Relaciones binarias, equivalencia y orden', level: 'Avanzado', mins: 22, par:1,
     goal: 'Vas a analizar cómo se vinculan los elementos de un conjunto y clasificar relaciones. Aparece en bases de datos, grafos y en el diagrama de Hasse del parcial.',
     body: [
       ['p', 'El <b>producto cartesiano</b> {{A × B}} es el conjunto de todos los pares ordenados {{(a, b)}} con a ∈ A y b ∈ B. Si {{|A| = m}} y {{|B| = n}}, entonces {{|A × B| = m · n}}.'],
@@ -2917,7 +2918,7 @@ window.C8.modules.push({
   },
   /* ---- m6 ---- */
   {
-    id: 'm6', title: 'Álgebra de Boole y funciones booleanas', level: 'Avanzado', mins: 20,
+    id: 'm6', title: 'Álgebra de Boole y funciones booleanas', level: 'Avanzado', mins: 20, par:1,
     goal: 'Vas a trabajar con la matemática del 0 y el 1: la de los circuitos digitales y las condiciones lógicas. Conecta la lógica con el hardware.',
     body: [
       ['p', 'Un <b>álgebra de Boole</b> trabaja con dos valores, {{0}} y {{1}}, y tres operaciones: suma {{+}} (OR), producto {{·}} (AND) y complemento {{ ̄}} (NOT). Es la lógica proposicional vestida de números: V = 1, F = 0.'],
@@ -2959,7 +2960,7 @@ window.C8.modules.push({
   },
   /* ---- m7 ---- */
   {
-    id: 'm7', title: 'Matrices (Unidad 5)', level: 'Avanzado', mins: 24,
+    id: 'm7', title: 'Matrices (Unidad 5)', level: 'Avanzado', mins: 24, par:2,
     goal: 'Vas a operar con matrices, calcular determinantes y entender para qué sirve la inversa. Es el tema del segundo parcial y aparece en gráficos, datos e IA.',
     body: [
       ['p', 'Una <b>matriz</b> es un arreglo rectangular de números ordenados en filas y columnas. Una matriz de {{m × n}} tiene m filas y n columnas. El elemento {{aᵢⱼ}} está en la fila i, columna j.'],
@@ -2999,7 +3000,7 @@ window.C8.modules.push({
   },
   /* ---- m8 ---- */
   {
-    id: 'm8', title: 'Determinantes e inversa', level: 'Avanzado', mins: 24,
+    id: 'm8', title: 'Determinantes e inversa', level: 'Avanzado', mins: 24, par:2,
     goal: 'Vas a calcular determinantes de 2×2 y 3×3, y entender para qué sirve la matriz inversa. El determinante es la llave que decide si una matriz tiene inversa y si un sistema tiene solución única.',
     body: [
       ['h', 'Determinante 2×2'],
@@ -3051,7 +3052,7 @@ det = (a·e·i + b·f·g + c·d·h)   ← diagonales que bajan
   },
   /* ---- m9 ---- */
   {
-    id: 'm9', title: 'Sistemas de ecuaciones lineales', level: 'Avanzado', mins: 24,
+    id: 'm9', title: 'Sistemas de ecuaciones lineales', level: 'Avanzado', mins: 24, par:2,
     goal: 'Vas a resolver sistemas con matrices y clasificarlos según su cantidad de soluciones. Es la aplicación directa de determinantes y el cierre del 2° parcial.',
     body: [
       ['p', 'Un <b>sistema de ecuaciones lineales</b> se puede escribir en forma matricial {{A·x = b}}, donde A es la matriz de coeficientes, x el vector de incógnitas y b el de términos independientes.'],
@@ -3120,7 +3121,7 @@ window.C8.modules.push({
   lessons: [
   /* ---- pr1 ---- */
   {
-    id: 'pr1', title: 'Vectores: recorrido y acumuladores', level: 'Básico', mins: 18,
+    id: 'pr1', title: 'Vectores: recorrido y acumuladores', level: 'Básico', mins: 18, par:2,
     goal: 'Vas a manejar el patrón que resuelve el 80% de los ejercicios de la Unidad 7: recorrer un vector acumulando (sumar, contar, buscar el mayor). Si dominás esto, dominás los arreglos.',
     body: [
       ['p', 'Un <b>vector</b> (arreglo) guarda muchos valores del mismo tipo bajo un nombre, con un <b>índice</b> que va de {{0}} a {{tamaño−1}}.'],
@@ -3169,7 +3170,7 @@ cout << "Pares=" << pares << " SumaImpares=" << sumaImp << endl;`, { out: 'Pares
   },
   /* ---- pr2 ---- */
   {
-    id: 'pr2', title: 'Matrices: arreglos de dos dimensiones', level: 'Intermedio', mins: 20,
+    id: 'pr2', title: 'Matrices: arreglos de dos dimensiones', level: 'Intermedio', mins: 20, par:2,
     goal: 'Vas a recorrer tablas de filas y columnas con bucles anidados. Es la Unidad 7 en su parte más temida, pero es el mismo patrón de vectores, duplicado.',
     body: [
       ['p', 'Una <b>matriz</b> es un arreglo de dos dimensiones: se accede con <b>dos índices</b>, {{m[fila][columna]}}. Se recorre con <b>dos for anidados</b>: el de afuera para las filas, el de adentro para las columnas.'],
@@ -3220,7 +3221,7 @@ for (int i = 0; i < 2; i++) {
   },
   /* ---- pr3 ---- */
   {
-    id: 'pr3', title: 'Estructuras (struct)', level: 'Intermedio', mins: 18,
+    id: 'pr3', title: 'Estructuras (struct)', level: 'Intermedio', mins: 18, par:2,
     goal: 'Vas a agrupar datos relacionados en un solo tipo. El parcial toma estructuras explícitamente, así que esto cae seguro.',
     body: [
       ['p', 'Una <b>estructura (struct)</b> agrupa varios datos de <b>distinto tipo</b> que describen a una misma cosa. En vez de llevar tres variables sueltas (nombre, edad, nota), las juntás en un tipo {{Alumno}}.'],
@@ -3265,7 +3266,7 @@ int main() {
   },
   /* ---- pr4 ---- */
   {
-    id: 'pr4', title: 'Vectores de estructuras', level: 'Intermedio', mins: 18,
+    id: 'pr4', title: 'Vectores de estructuras', level: 'Intermedio', mins: 18, par:2,
     goal: 'Vas a combinar las dos herramientas más potentes de la Unidad 7: un arreglo donde cada elemento es un registro. Es el modelo de casi cualquier sistema (alumnos, productos, ventas).',
     body: [
       ['p', 'Un <b>vector de estructuras</b> es un arreglo donde cada posición es un struct completo. Es la forma natural de guardar una lista de registros: alumnos de un curso, productos de un stock, ventas del día.'],
@@ -3309,7 +3310,7 @@ cout << "Menor stock: " << p[min].nombre
   },
   /* ---- pr5 ---- */
   {
-    id: 'pr5', title: 'Búsqueda secuencial y binaria', level: 'Avanzado', mins: 20,
+    id: 'pr5', title: 'Búsqueda secuencial y binaria', level: 'Avanzado', mins: 20, par:2,
     goal: 'Vas a implementar las dos búsquedas fundamentales y entender cuándo usar cada una. Es la Unidad 8 y una pregunta de múltiple choice casi garantizada.',
     body: [
       ['h', 'Búsqueda secuencial (lineal)'],
@@ -3356,7 +3357,7 @@ cout << "Pos=" << pos << " en " << pasos << " pasos" << endl;`, { out: 'Pos=5 en
   },
   /* ---- pr6 ---- */
   {
-    id: 'pr6', title: 'Ordenamiento por burbujeo', level: 'Avanzado', mins: 20,
+    id: 'pr6', title: 'Ordenamiento por burbujeo', level: 'Avanzado', mins: 20, par:2,
     goal: 'Vas a implementar el método de ordenamiento que se enseña primero y que cae en el parcial. Entender cómo "burbujea" el mayor te deja listo para trazarlo.',
     body: [
       ['p', 'El <b>ordenamiento por burbujeo (bubble sort)</b> compara elementos <b>vecinos</b> y los intercambia si están en el orden equivocado. En cada pasada completa, el elemento más grande "burbujea" hasta el final. Repitiendo las pasadas, el vector queda ordenado.'],
@@ -3404,7 +3405,7 @@ for (int j = 0; j < 4; j++)
   },
   /* ---- pr7 ---- */
   {
-    id: 'pr7', title: 'Apareo de vectores ordenados', level: 'Avanzado', mins: 20,
+    id: 'pr7', title: 'Apareo de vectores ordenados', level: 'Avanzado', mins: 20, par:2,
     goal: 'Vas a combinar dos vectores ya ordenados en uno solo ordenado, sin volver a ordenar. Es la base del corte de control y del procesamiento de archivos (Unidad 9).',
     body: [
       ['p', 'El <b>apareo (merge)</b> toma dos vectores <b>ya ordenados</b> A (n elementos) y B (m elementos) y genera un tercer vector C, también ordenado, con todos los elementos. Se usan <b>tres índices</b>: {{i}} para A, {{j}} para B y {{k}} para C.'],
@@ -3448,7 +3449,7 @@ for (int j = 0; j < 4; j++)
   },
   /* ---- pr8 ---- */
   {
-    id: 'pr8', title: 'Corte de control', level: 'Avanzado', mins: 20,
+    id: 'pr8', title: 'Corte de control', level: 'Avanzado', mins: 20, par:2,
     goal: 'Vas a procesar datos agrupados por una clave (por sucursal, por curso, por cliente) y sacar subtotales y total general. Se repite en casi todos los exámenes de la Unidad 9.',
     body: [
       ['p', 'En un <b>corte de control</b> los datos están <b>ordenados por una clave</b> (campo de control) y se procesan por <b>grupos</b> de igual clave. Cuando la clave cambia, se produce el "corte": se muestra el <b>subtotal</b> del grupo, se acumula al <b>total general</b> y se reinicia para el grupo siguiente.'],
@@ -3527,7 +3528,7 @@ window.C8.modules.push({
   lessons: [
   /* ---- a1 ---- */
   {
-    id: 'a1', title: '¿Qué es un sistema operativo?', level: 'Básico', mins: 15,
+    id: 'a1', title: '¿Qué es un sistema operativo?', level: 'Básico', mins: 15, par:1,
     goal: 'Vas a entender qué hace el SO, por qué existe el modo núcleo y cómo un programa le pide servicios. Es el marco para todo lo demás de la materia.',
     body: [
       ['p', 'Un <b>sistema operativo</b> es el software que se interpone entre el hardware y los programas. Cumple dos roles: es una <b>máquina extendida</b> (le oculta al programador la complejidad del hardware, ofreciendo abstracciones como archivos y procesos) y es un <b>administrador de recursos</b> (reparte CPU, memoria, disco y dispositivos entre los programas de forma ordenada).'],
@@ -3562,7 +3563,7 @@ window.C8.modules.push({
   },
   /* ---- a2 ---- */
   {
-    id: 'a2', title: 'Procesos y estados', level: 'Básico', mins: 18,
+    id: 'a2', title: 'Procesos y estados', level: 'Básico', mins: 18, par:1,
     goal: 'Vas a entender qué es un proceso, qué información guarda el SO de él y por qué pasa de un estado a otro. Es el concepto central de la primera parte de la materia.',
     body: [
       ['p', 'Un <b>proceso</b> es un <b>programa en ejecución</b>. No es lo mismo que el programa: el programa es el código guardado (pasivo); el proceso es ese código corriendo, con su propia memoria, sus datos y su punto de ejecución actual. Un mismo programa abierto dos veces son dos procesos distintos.'],
@@ -3601,7 +3602,7 @@ window.C8.modules.push({
   },
   /* ---- a3 ---- */
   {
-    id: 'a3', title: 'Hilos (threads)', level: 'Intermedio', mins: 16,
+    id: 'a3', title: 'Hilos (threads)', level: 'Intermedio', mins: 16, par:1,
     goal: 'Vas a distinguir hilos de procesos y entender por qué un programa moderno usa varios hilos. Es la base de la concurrencia que viene después.',
     body: [
       ['p', 'Un <b>hilo (thread)</b> es una unidad de ejecución <b>dentro</b> de un proceso. Un proceso puede tener uno (monohilo) o muchos hilos (multihilo). Todos los hilos de un proceso <b>comparten</b> el mismo espacio de memoria, código y archivos abiertos, pero cada uno tiene su propio <b>contador de programa, registros y pila</b>.'],
@@ -3637,7 +3638,7 @@ window.C8.modules.push({
   },
   /* ---- a4 ---- */
   {
-    id: 'a4', title: 'Concurrencia, exclusión mutua y deadlock', level: 'Intermedio', mins: 22,
+    id: 'a4', title: 'Concurrencia, exclusión mutua y deadlock', level: 'Intermedio', mins: 22, par:1,
     goal: 'Vas a entender el problema de que varios procesos usen un recurso compartido y las herramientas para coordinarlos. Es el corazón de la materia y lo más preguntado.',
     body: [
       ['p', 'Cuando varios procesos o hilos acceden a un <b>recurso compartido</b> (una variable, un archivo, una impresora), hay que coordinarlos. El fragmento de código que accede a ese recurso se llama <b>sección crítica</b>.'],
@@ -3673,7 +3674,7 @@ signal(mutex)      // devolver el candado`, { title: 'Exclusión mutua con un se
   },
   /* ---- a5 ---- */
   {
-    id: 'a5', title: 'Planificación de la CPU', level: 'Avanzado', mins: 22,
+    id: 'a5', title: 'Planificación de la CPU', level: 'Avanzado', mins: 22, par:2,
     goal: 'Vas a comparar los algoritmos que deciden qué proceso usa la CPU y calcular sus métricas. Es un tema con cuentas que cae seguro en el parcial.',
     body: [
       ['p', 'El <b>planificador (scheduler)</b> decide, de todos los procesos Listos, cuál usa la CPU. Busca objetivos a veces en tensión: maximizar el <b>uso de CPU</b> y el <b>rendimiento</b> (procesos por unidad de tiempo), y minimizar el <b>tiempo de espera</b> y el <b>tiempo de respuesta</b>.'],
@@ -3725,7 +3726,7 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
   },
   /* ---- a6 ---- */
   {
-    id: 'a6', title: 'Gestión de memoria y memoria virtual', level: 'Avanzado', mins: 22,
+    id: 'a6', title: 'Gestión de memoria y memoria virtual', level: 'Avanzado', mins: 22, par:2,
     goal: 'Vas a entender cómo el SO reparte la RAM entre procesos y cómo logra que parezca haber más memoria de la que hay. Es el tema del segundo parcial.',
     body: [
       ['p', 'La memoria principal (RAM) es limitada y la comparten muchos procesos. El SO debe <b>asignarla, protegerla</b> (que un proceso no lea la de otro) y aprovecharla al máximo.'],
@@ -3770,7 +3771,7 @@ Espera promedio = (0 + 4 + 6) / 3 = 3.33`, { title: 'FCFS paso a paso' }],
   },
   /* ---- a7 ---- */
   {
-    id: 'a7', title: 'Gestión de entrada/salida', level: 'Avanzado', mins: 18,
+    id: 'a7', title: 'Gestión de entrada/salida', level: 'Avanzado', mins: 18, par:2,
     goal: 'Vas a ver cómo el SO maneja dispositivos muy lentos sin frenar todo, y cómo ordena los pedidos al disco. Cierra el recorrido del segundo parcial.',
     body: [
       ['p', 'Los dispositivos de E/S (disco, teclado, impresora, red) son mucho más lentos que la CPU y muy variados. El SO los uniformiza mediante <b>drivers</b> y aplica técnicas para que su lentitud no frene al resto del sistema.'],
@@ -3834,7 +3835,7 @@ window.C8.modules.push({
   lessons: [
   /* ---- org1 ---- */
   {
-    id: 'org1', title: 'Eficiencia, eficacia y objetivos SMART', level: 'Básico', mins: 18,
+    id: 'org1', title: 'Eficiencia, eficacia y objetivos SMART', level: 'Básico', mins: 18, par:2,
     goal: 'Vas a distinguir tres palabras que se confunden siempre (eficiencia, eficacia, efectividad) y a escribir objetivos que se puedan medir. Aparecen en casi todos los parciales.',
     body: [
       ['h', 'Sistemas administrativos y contables'],
@@ -3880,7 +3881,7 @@ window.C8.modules.push({
   },
   /* ---- org2 ---- */
   {
-    id: 'org2', title: 'Administración: funciones, niveles y decisiones', level: 'Básico', mins: 20,
+    id: 'org2', title: 'Administración: funciones, niveles y decisiones', level: 'Básico', mins: 20, par:2,
     goal: 'Vas a tener claras las cuatro funciones de la administración, los niveles de una organización y cómo se toman las decisiones. Es la base del resto de la materia.',
     body: [
       ['p', '<b>Administrar</b> es el proceso de <b>planificar, organizar, dirigir y controlar</b> los recursos de una organización (humanos, materiales, financieros, tecnológicos, información) para alcanzar sus objetivos con eficiencia y eficacia. Se aplica a toda organización: empresas, escuelas, hospitales, ONG.'],
@@ -3925,7 +3926,7 @@ window.C8.modules.push({
   },
   /* ---- org3 ---- */
   {
-    id: 'org3', title: 'Liderazgo', level: 'Intermedio', mins: 20,
+    id: 'org3', title: 'Liderazgo', level: 'Intermedio', mins: 20, par:2,
     goal: 'Vas a identificar el estilo de liderazgo de una situación y distinguir liderar de gestionar. Son preguntas de caso muy frecuentes.',
     body: [
       ['p', '<b>Liderazgo</b> es la capacidad de <b>influir</b> en otras personas para que trabajen con entusiasmo en objetivos comunes. A diferencia de la autoridad formal (un cargo), se basa en la influencia: <b>un jefe puede no ser líder, y un líder puede no tener cargo</b>.'],
@@ -3969,7 +3970,7 @@ window.C8.modules.push({
   },
   /* ---- org4 ---- */
   {
-    id: 'org4', title: 'Gestión por procesos', level: 'Intermedio', mins: 20,
+    id: 'org4', title: 'Gestión por procesos', level: 'Intermedio', mins: 20, par:2,
     goal: 'Vas a entender cómo trabaja una organización "de punta a punta" y cómo se coordinan las áreas. Suelen dar un caso y pedir que lo analices.',
     body: [
       ['p', 'Un <b>proceso</b> es un conjunto de actividades relacionadas y secuenciales que transforman <b>entradas</b> (insumos) en <b>salidas</b> (productos o servicios) con valor para un <b>cliente</b> (interno o externo).'],
@@ -4014,7 +4015,7 @@ window.C8.modules.push({
   },
   /* ---- org5 ---- */
   {
-    id: 'org5', title: 'Gestión del cambio', level: 'Avanzado', mins: 22,
+    id: 'org5', title: 'Gestión del cambio', level: 'Avanzado', mins: 22, par:2,
     goal: 'Vas a entender por qué muchos cambios fracasan y cómo conducirlos. Los modelos de Lewin y Kotter y las causas de la resistencia se preguntan seguido.',
     body: [
       ['p', 'El <b>cambio organizacional</b> es la modificación de aspectos de la organización (estrategia, estructura, procesos, tecnología, personas o cultura) para adaptarse al entorno o mejorar. La <b>gestión del cambio</b> es el enfoque estructurado para llevar a las personas desde la situación actual a la deseada, minimizando la resistencia.'],
@@ -4050,7 +4051,7 @@ window.C8.modules.push({
   },
   /* ---- org6 ---- */
   {
-    id: 'org6', title: 'Sistemas, empresa y patrimonio', level: 'Avanzado', mins: 22,
+    id: 'org6', title: 'Sistemas, empresa y patrimonio', level: 'Avanzado', mins: 22, par:1,
     goal: 'Vas a retomar teoría de sistemas, la diferencia entre organización y empresa, y la contabilidad básica del patrimonio con sus variaciones. Incluye cálculo numérico.',
     body: [
       ['h', 'Teoría general de sistemas (TGS)'],
@@ -7032,7 +7033,7 @@ M.lessons.push(
 (function(){
 const M=window.C8.modules.find(m=>m.id==='ayso'); if(!M) return;
 M.lessons.push({
- id:'a8', title:'Unidad 6 a fondo: tipos de planificación y algoritmos', level:'Avanzado', mins:30,
+ id:'a8', title:'Unidad 6 a fondo: tipos de planificación y algoritmos', level:'Avanzado', mins:30, par:2,
  goal:'Vas a dominar la Unidad 6 completa: los tres planificadores (largo, medio y corto plazo) sobre el modelo de 7 estados, los criterios para comparar algoritmos y el funcionamiento de FCFS, Round Robin, SPN, SRT y Feedback, resolviendo el ejemplo de las diapositivas.',
  body:[
   ['p','Planificar es decidir <b>qué proceso usa el procesador y cuáles esperan</b>. Como esa decisión se toma miles de veces por segundo, afecta directamente el rendimiento de todo el sistema.'],
@@ -7099,7 +7100,7 @@ M.lessons.push({
 (function(){
 const M=window.C8.modules.find(m=>m.id==='ayso'); if(!M) return;
 M.lessons.push({
- id:'a9', title:'Unidad 7 a fondo: requisitos, particiones, paginación y segmentación', level:'Avanzado', mins:30,
+ id:'a9', title:'Unidad 7 a fondo: requisitos, particiones, paginación y segmentación', level:'Avanzado', mins:30, par:2,
  goal:'Vas a dominar la Unidad 7: los cinco requisitos de la gestión de memoria, los esquemas de particionamiento (fijo, dinámico, buddy) con sus fragmentaciones, los algoritmos de ubicación y la traducción de direcciones en paginación y segmentación, con cuentas.',
  body:[
   ['p','La gestión de memoria reparte la RAM entre los procesos y controla el intercambio con el disco. En un sistema <b>multiprogramado</b> es vital: si hay pocos procesos en memoria, es muy probable que todos estén esperando E/S al mismo tiempo y el procesador quede ocioso. En uno monoprogramado, solo se divide entre el SO y un programa.'],
@@ -7167,7 +7168,7 @@ M.lessons.push({
 (function(){
 const M=window.C8.modules.find(m=>m.id==='ayso'); if(!M) return;
 M.lessons.push({
- id:'a10', title:'Unidad 8 a fondo: memoria virtual, tablas, TLB y políticas', level:'Avanzado', mins:34,
+ id:'a10', title:'Unidad 8 a fondo: memoria virtual, tablas, TLB y políticas', level:'Avanzado', mins:34, par:2,
  goal:'Vas a dominar la Unidad 8: por qué existe la memoria virtual, el manejo de un fallo de página, las tablas multinivel e invertida, la TLB, el tamaño de página y las seis políticas del SO (recuperación, ubicación, reemplazo, conjunto residente, limpieza y control de carga), con trazas de reemplazo resueltas.',
  body:[
   ['p','Con paginación o segmentación "pura", el proceso tiene que estar ENTERO en RAM, aunque sus páginas estén desparramadas. La <b>memoria virtual</b> elimina esa exigencia: para empezar a ejecutar alcanza con cargar unas pocas páginas o segmentos; el resto queda en disco y se trae cuando hace falta.'],
@@ -7247,7 +7248,7 @@ M.lessons.push({
 (function(){
 const M=window.C8.modules.find(m=>m.id==='ayso'); if(!M) return;
 M.lessons.push({
- id:'a11', title:'Unidad 9 a fondo: técnicas de E/S, buffers, disco, caché y RAID', level:'Avanzado', mins:32,
+ id:'a11', title:'Unidad 9 a fondo: técnicas de E/S, buffers, disco, caché y RAID', level:'Avanzado', mins:32, par:2,
  goal:'Vas a dominar la Unidad 9: las técnicas de E/S y su evolución en 6 etapas, el DMA paso a paso, por qué hacen falta los buffers, los tiempos del disco, todas las políticas de planificación de disco con cuentas, la caché de disco y los niveles de RAID.',
  body:[
   ['p','La E/S es probablemente la parte más complicada del diseño de un SO: hay muchísimos dispositivos distintos (discos, teclados, mouse, pantallas, red) con velocidades y formas de trabajar que no tienen nada que ver entre sí, y eso impide una solución única y uniforme.'],
@@ -13523,6 +13524,12 @@ window.C8.AVATARS.builder = { name:'Mi personaje', c:'#f6c445', build:true,
   .tl-mbar .btn{flex:1;justify-content:center}
 }
 
+.tl-tracks{display:flex;gap:6px;margin:2px 0 10px;flex-wrap:wrap}
+.tl-tracks button{padding:7px 14px;border-radius:10px;border:1px solid var(--border2);background:var(--surface);color:var(--fg-soft);font-weight:600;font-size:.82rem;cursor:pointer}
+.tl-tracks button.on{border-color:var(--programacion);color:var(--fg);background:color-mix(in srgb,var(--programacion) 16%,var(--surface))}
+.tl-steps.wrap{flex-wrap:wrap;overflow:visible}
+.tl-unit{flex:0 0 100%;font-size:.7rem;font-family:var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:6px 0 0}
+
 </style>
 <script>
 /* ===== CppLab: mini-intérprete de C++ (subconjunto de la materia Programación) ===== */
@@ -13997,11 +14004,12 @@ class StrRef{ constructor(b,i){ this.b=b; this.i=i; } get v(){ return this.b.v.c
 class ExitSignal{ constructor(c){ this.code=c; } }
 const rtErr=(line,msg)=>new CppError('ejecución',line,msg);
 
+function fx(v,p){ let s=v.toFixed(p); if(p<=70&&Math.abs(v)<1e21&&isFinite(v)){ const l=v.toFixed(p+30), tail=l.slice(l.length-30); if(/^50*$/.test(tail)){ let t=l.slice(0,l.length-30); if(t.endsWith('.')) t=t.slice(0,-1); const d=+t[t.length-1]; if(d%2===0) s=t; } } return s; }
 function fmtG(x,p){
   if(x===0) return (1/x<0)?'-0':'0'; if(p<1) p=1;
   const ex=x.toExponential(p-1).split('e'); const e=parseInt(ex[1],10);
   if(e<-4||e>=p){ let m=ex[0]; if(m.includes('.')) m=m.replace(/0+$/,'').replace(/\.$/,''); const ae=Math.abs(e); return m+'e'+(e<0?'-':'+')+(ae<10?'0':'')+ae; }
-  let r=x.toFixed(Math.max(0,p-1-e)); if(r.includes('.')) r=r.replace(/0+$/,'').replace(/\.$/,''); return r;
+  let r=fx(x,Math.max(0,p-1-e)); if(r.includes('.')) r=r.replace(/0+$/,'').replace(/\.$/,''); return r;
 }
 class Out{
   constructor(limit,mute){ this.parts=[]; this.len=0; this.limit=limit||200000; this.mute=!!mute; this.fixed=false; this.sci=false; this.prec=6; this.w=0; this.fill=' '; this.left=false; this.balpha=false; this.segs=[]; this.line=0; }
@@ -14011,7 +14019,7 @@ class Out{
     let s;
     if(v&&typeof v==='object'&&v.m!==undefined){ this.manip(v); return; }
     if(ty==='char') s=String.fromCharCode(v); else if(ty==='bool') s=this.balpha?(v?'true':'false'):String(v?1:0);
-    else if(ty==='double'){ s=Number.isNaN(v)?'nan':v===Infinity?'inf':v===-Infinity?'-inf':this.fixed?v.toFixed(this.prec):this.sci?v.toExponential(this.prec).replace(/e([+-])(\d)$/,'e$10$2'):fmtG(v,this.prec); }
+    else if(ty==='double'){ s=Number.isNaN(v)?'nan':v===Infinity?'inf':v===-Infinity?'-inf':this.fixed?fx(v,this.prec):this.sci?v.toExponential(this.prec).replace(/e([+-])(\d)$/,'e$10$2'):fmtG(v,this.prec); }
     else s=String(v);
     this.raw(this.pad(s));
   }
@@ -15801,6 +15809,1442 @@ trace:{q:'Si `cargar` se declarara como `void cargar(Alumno v[], int n)` (sin `&
 
 </script>
 <script>
+/* ===== Taller: 27 programas sueltos (track 'lib') — generado con g++ ===== */
+(function(root){
+const STEPS=root.TALLER_STEPS=root.TALLER_STEPS||[];
+[
+
+ {
+  "id": "p01",
+  "n": 1,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Suma y promedio de un vector",
+  "xp": 30,
+  "goal": "Cargar un vector con `n` números y mostrar su suma y su promedio con 2 decimales.",
+  "theory": [
+   "Un **vector** (arreglo) guarda varios valores del mismo tipo con un solo nombre. Se accede por **posición**, que empieza en 0: `v[0]` es el primero y `v[n-1]` el último.",
+   {
+    "code": "const int MAX = 100;   // tamaño máximo (constante)\nint v[MAX];             // vector de hasta 100 enteros\nfor (int i = 0; i < n; i++) {   // recorre las n posiciones usadas\n    cin >> v[i];\n}"
+   },
+   "Para **acumular** se usa una variable que arranca en 0 (`suma = 0`) y se le va sumando cada elemento. Para el promedio hay que dividir **como decimal**: `suma * 1.0 / n` (si no, `7 / 2` da 3 y se pierden los decimales)."
+  ],
+  "task": "Leé `n` y después `n` enteros. Mostrá:\n`Suma: <suma>`\n`Promedio: <promedio con 2 decimales>`\nUsá un vector, una constante `const int MAX` para su tamaño y comentá el programa (cabecera, `main` y cada `for`). Para fijar 2 decimales: `cout << fixed << setprecision(2);` con `#include <iomanip>`.",
+  "starter": "// TODO: cabecera -> qué hace el programa\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n, suma = 0;\n    cin >> n;\n    // TODO: cargá el vector con un for\n\n    // TODO: sumá los elementos con otro for\n\n    cout << \"Suma: \" << suma << endl;\n    // TODO: mostrá el promedio con 2 decimales\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:5,need:['array','const','for']},
+  "tests": [
+   {
+    "name": "4 números",
+    "stdin": "4\n10 20 30 40",
+    "out": "Suma: 100\nPromedio: 25.00\n"
+   },
+   {
+    "name": "Promedio con decimales (1.67)",
+    "stdin": "3\n1 2 2",
+    "out": "Suma: 5\nPromedio: 1.67\n"
+   },
+   {
+    "name": "Un solo elemento",
+    "stdin": "1\n7",
+    "out": "Suma: 7\nPromedio: 7.00\n"
+   },
+   {
+    "name": "Con negativos",
+    "stdin": "5\n-4 10 -6 3 7",
+    "out": "Suma: 10\nPromedio: 2.00\n"
+   }
+  ],
+  "hints": [
+   "Necesitás **dos recorridos**: uno para leer (`cin >> v[i]`) y otro para sumar (`suma += v[i]`). También podés sumar mientras leés, pero cargar el vector primero es lo que se pide.",
+   "El promedio es `suma * 1.0 / n`. Multiplicar por `1.0` convierte la cuenta a decimal antes de dividir.",
+   "Para mostrar 2 decimales: `cout << fixed << setprecision(2) << \"Promedio: \" << promedio << endl;`"
+  ],
+  "sampleIn": "4\n10 20 30 40",
+  "solution": "// Programa 1: suma y promedio de un vector\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\n// Lee n numeros y muestra su suma y su promedio\nint main() {\n    int v[MAX];\n    int n, suma = 0;\n    cin >> n;\n    // carga el vector posicion por posicion\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // acumula todos los elementos en suma\n    for (int i = 0; i < n; i++) {\n        suma += v[i];\n    }\n    cout << \"Suma: \" << suma << endl;\n    // multiplicar por 1.0 evita la division entera\n    cout << fixed << setprecision(2) << \"Promedio: \" << suma * 1.0 / n << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si `v = {3, 4}` y `n = 2`, ¿qué muestra `cout << suma / n;` con `suma = 7` (int)? ¿Y con `suma * 1.0 / n`?",
+   "a": "Con enteros `7 / 2` da **3** (se descarta el .5). Con `7 * 1.0 / 2` da **3.5**: un solo operando decimal alcanza para que la división sea decimal."
+  }
+ },
+ {
+  "id": "p02",
+  "n": 2,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Máximo, mínimo y sus posiciones",
+  "xp": 35,
+  "goal": "Encontrar el mayor y el menor de un vector y la posición donde aparece cada uno.",
+  "theory": [
+   "Para buscar el **máximo** se parte del primer elemento (`mayor = v[0]`, `posMayor = 0`) y se recorre el resto: si `v[i] > mayor`, se actualizan **valor y posición**. Con el mínimo es igual cambiando el signo.",
+   {
+    "code": "int mayor = v[0], posMayor = 0;\nfor (int i = 1; i < n; i++) {\n    if (v[i] > mayor) {      // \">\" estricto: se queda con la PRIMERA aparición\n        mayor = v[i];\n        posMayor = i;\n    }\n}"
+   },
+   "Inicializar con `v[0]` (y no con 0) es importante: si todos los números son negativos, un máximo inicial de 0 sería incorrecto."
+  ],
+  "task": "Leé `n` y `n` enteros. Mostrá:\n`Maximo: <valor> (posicion <p>)`\n`Minimo: <valor> (posicion <p>)`\nLa posición cuenta desde 0. Si el valor se repite, mostrá la **primera** aparición.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    int mayor = v[0], posMayor = 0;\n    int menor = v[0], posMenor = 0;\n    // TODO: recorré desde la posición 1 actualizando mayor/menor y sus posiciones\n\n    cout << \"Maximo: \" << mayor << \" (posicion \" << posMayor << \")\" << endl;\n    cout << \"Minimo: \" << menor << \" (posicion \" << posMenor << \")\" << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:5,need:['array','for']},
+  "tests": [
+   {
+    "name": "Caso normal",
+    "stdin": "5\n3 9 2 9 1",
+    "out": "Maximo: 9 (posicion 1)\nMinimo: 1 (posicion 4)\n"
+   },
+   {
+    "name": "Un solo elemento",
+    "stdin": "1\n5",
+    "out": "Maximo: 5 (posicion 0)\nMinimo: 5 (posicion 0)\n"
+   },
+   {
+    "name": "Todos negativos y repetidos",
+    "stdin": "4\n-3 -7 -3 -7",
+    "out": "Maximo: -3 (posicion 0)\nMinimo: -7 (posicion 1)\n"
+   },
+   {
+    "name": "Máximo al final",
+    "stdin": "4\n1 2 3 4",
+    "out": "Maximo: 4 (posicion 3)\nMinimo: 1 (posicion 0)\n"
+   }
+  ],
+  "hints": [
+   "Dentro del `for` van **dos `if` separados**: uno para el mayor (`v[i] > mayor`) y otro para el menor (`v[i] < menor`).",
+   "Cada vez que cambia el valor, guardá también `i` en la posición correspondiente. Si usás `>=` en vez de `>`, te quedás con la última aparición y no con la primera.",
+   "El bucle puede arrancar en `i = 1` porque `v[0]` ya está cargado como mayor y menor iniciales."
+  ],
+  "sampleIn": "5\n3 9 2 9 1",
+  "solution": "// Programa 2: maximo, minimo y sus posiciones\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\n// Lee un vector y busca el mayor y el menor con su posicion\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    int mayor = v[0], posMayor = 0;   // se parte del primer elemento\n    int menor = v[0], posMenor = 0;\n    // compara cada elemento con el mayor y el menor actuales\n    for (int i = 1; i < n; i++) {\n        if (v[i] > mayor) {\n            mayor = v[i];\n            posMayor = i;\n        }\n        if (v[i] < menor) {\n            menor = v[i];\n            posMenor = i;\n        }\n    }\n    cout << \"Maximo: \" << mayor << \" (posicion \" << posMayor << \")\" << endl;\n    cout << \"Minimo: \" << menor << \" (posicion \" << posMenor << \")\" << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "Con `v = {4, 9, 9, 2}`, ¿qué posición guarda `posMayor` si el `if` usa `v[i] >= mayor`? ¿Y con `>`?",
+   "a": "Con `>=` queda `posMayor = 2` (la última aparición del 9); con `>` queda `1` (la primera). El `=` extra hace que un empate también \"gane\"."
+  }
+ },
+ {
+  "id": "p03",
+  "n": 3,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Contadores: positivos, negativos, ceros y pares",
+  "xp": 35,
+  "goal": "Clasificar los elementos de un vector usando varios contadores en un solo recorrido.",
+  "theory": [
+   "Un **contador** es una variable que arranca en 0 y suma 1 cada vez que se cumple una condición. Con un solo `for` se pueden llevar varios contadores a la vez.",
+   {
+    "code": "if (v[i] > 0) {\n    positivos++;\n} else if (v[i] < 0) {\n    negativos++;\n} else {\n    ceros++;\n}\nif (v[i] % 2 == 0) {   // el resto de dividir por 2 es 0 -> par\n    pares++;\n}"
+   },
+   "Ojo: son **dos clasificaciones distintas** (signo y paridad). Por eso la de pares va en un `if` aparte, no en el `else if` del signo. El 0 es par."
+  ],
+  "task": "Leé `n` y `n` enteros. Mostrá cuatro líneas:\n`Positivos: <a>`\n`Negativos: <b>`\n`Ceros: <c>`\n`Pares: <d>`\n(el 0 cuenta como par).",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    int positivos = 0, negativos = 0, ceros = 0, pares = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // TODO: recorré el vector y actualizá los cuatro contadores\n\n    cout << \"Positivos: \" << positivos << endl;\n    cout << \"Negativos: \" << negativos << endl;\n    cout << \"Ceros: \" << ceros << endl;\n    cout << \"Pares: \" << pares << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:5,need:['array','for','if']},
+  "tests": [
+   {
+    "name": "Mezcla de todo",
+    "stdin": "6\n4 -3 0 7 -8 10",
+    "out": "Positivos: 3\nNegativos: 2\nCeros: 1\nPares: 4\n"
+   },
+   {
+    "name": "Solo positivos impares",
+    "stdin": "3\n1 3 5",
+    "out": "Positivos: 3\nNegativos: 0\nCeros: 0\nPares: 0\n"
+   },
+   {
+    "name": "Solo ceros",
+    "stdin": "3\n0 0 0",
+    "out": "Positivos: 0\nNegativos: 0\nCeros: 3\nPares: 3\n"
+   },
+   {
+    "name": "Negativos pares",
+    "stdin": "4\n-2 -4 -6 -7",
+    "out": "Positivos: 0\nNegativos: 4\nCeros: 0\nPares: 3\n"
+   }
+  ],
+  "hints": [
+   "Usá `if / else if / else` para el signo (excluyentes) y un `if` **separado** para `v[i] % 2 == 0`.",
+   "`-8 % 2` da `0` y `-3 % 2` da `-1` en C++: por eso conviene comparar con `== 0` y no con `== 1`.",
+   "Los cuatro contadores ya están en 0: solo falta incrementarlos dentro del bucle."
+  ],
+  "sampleIn": "6\n4 -3 0 7 -8 10",
+  "solution": "// Programa 3: contadores de signo y paridad\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\n// Cuenta positivos, negativos, ceros y pares de un vector\nint main() {\n    int v[MAX];\n    int n;\n    int positivos = 0, negativos = 0, ceros = 0, pares = 0;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // un solo recorrido actualiza todos los contadores\n    for (int i = 0; i < n; i++) {\n        if (v[i] > 0) {\n            positivos++;\n        } else if (v[i] < 0) {\n            negativos++;\n        } else {\n            ceros++;\n        }\n        if (v[i] % 2 == 0) {   // el 0 tambien es par\n            pares++;\n        }\n    }\n    cout << \"Positivos: \" << positivos << endl;\n    cout << \"Negativos: \" << negativos << endl;\n    cout << \"Ceros: \" << ceros << endl;\n    cout << \"Pares: \" << pares << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Qué valor tiene `pares` al terminar con `v = {0, -2, 3}`? ¿Y qué pasaría si el `if` de pares estuviera dentro del `else` final del signo?",
+   "a": "`pares = 2` (el 0 y el -2). Si estuviera dentro del `else` del signo, solo se evaluaría para los ceros y daría `pares = 1`: los otros dos casos nunca llegarían ahí."
+  }
+ },
+ {
+  "id": "p04",
+  "n": 4,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Invertir un vector (en el mismo vector)",
+  "xp": 45,
+  "goal": "Escribir una función que da vuelta un vector intercambiando extremos, sin usar un segundo vector.",
+  "theory": [
+   "Los vectores se pasan a las funciones **por referencia**: si la función cambia `v[i]`, cambia el vector original. Por eso `void invertir(int v[], int n)` no necesita devolver nada.",
+   {
+    "code": "// intercambiar dos posiciones usa una variable auxiliar\nint aux = v[i];\nv[i] = v[j];\nv[j] = aux;"
+   },
+   "Para invertir: se intercambia la posición `i` con su espejo `n - 1 - i`, y solo hasta **la mitad** (`i < n / 2`). Si recorrieras todo, intercambiarías cada par dos veces y el vector quedaría igual."
+  ],
+  "task": "Escribí `void invertir(int v[], int n)` que dé vuelta el vector **en el lugar**. En `main`, leé `n` y los números, mostrá `Original: ...`, llamá a la función y mostrá `Invertido: ...` (números separados por un espacio).",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nvoid invertir(int v[], int n);\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cout << \"Original:\";\n    for (int i = 0; i < n; i++) {\n        cout << \" \" << v[i];\n    }\n    cout << endl;\n    // TODO: llamá a invertir y mostrá \"Invertido:\" con el vector\n\n    return 0;\n}\n\n// TODO: comentá y escribí invertir\nvoid invertir(int v[], int n) {\n\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['func:invertir','for']},
+  "tests": [
+   {
+    "name": "Cantidad impar",
+    "stdin": "5\n1 2 3 4 5",
+    "out": "Original: 1 2 3 4 5\nInvertido: 5 4 3 2 1\n"
+   },
+   {
+    "name": "Cantidad par",
+    "stdin": "4\n10 20 30 40",
+    "out": "Original: 10 20 30 40\nInvertido: 40 30 20 10\n"
+   },
+   {
+    "name": "Un solo elemento",
+    "stdin": "1\n9",
+    "out": "Original: 9\nInvertido: 9\n"
+   },
+   {
+    "name": "invertir cambia el vector original",
+    "fn": "invertir",
+    "driver": "int __drv(){ int a[6]={1,2,3,4,5,6}; invertir(a,6); for(int i=0;i<6;i++) cout<<a[i]<<\" \"; cout<<endl; int b[3]={7,8,9}; invertir(b,3); for(int i=0;i<3;i++) cout<<b[i]<<\" \"; cout<<endl; return 0; }",
+    "out": "6 5 4 3 2 1 \n9 8 7 \n"
+   }
+  ],
+  "hints": [
+   "El bucle es `for (int i = 0; i < n / 2; i++)` y en cada vuelta intercambia `v[i]` con `v[n - 1 - i]`.",
+   "El intercambio necesita una variable auxiliar: `int aux = v[i]; v[i] = v[n-1-i]; v[n-1-i] = aux;`.",
+   "En `main` mostrás el vector otra vez con el mismo `for` que ya usaste para \"Original\"."
+  ],
+  "sampleIn": "5\n1 2 3 4 5",
+  "solution": "// Programa 4: invertir un vector en el lugar\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\nvoid invertir(int v[], int n);\n\n// Lee un vector, lo muestra, lo invierte y lo vuelve a mostrar\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cout << \"Original:\";\n    // muestra el vector original\n    for (int i = 0; i < n; i++) {\n        cout << \" \" << v[i];\n    }\n    cout << endl;\n    invertir(v, n);\n    cout << \"Invertido:\";\n    // muestra el vector ya invertido\n    for (int i = 0; i < n; i++) {\n        cout << \" \" << v[i];\n    }\n    cout << endl;\n    return 0;\n}\n\n// Intercambia cada posicion con su espejo, solo hasta la mitad\nvoid invertir(int v[], int n) {\n    // si llegara hasta n el vector volveria a quedar igual\n    for (int i = 0; i < n / 2; i++) {\n        int aux = v[i];\n        v[i] = v[n - 1 - i];\n        v[n - 1 - i] = aux;\n    }\n}\n",
+  "trace": {
+   "q": "Si el `for` de `invertir` fuera `i < n` en lugar de `i < n / 2`, ¿cómo queda `{1, 2, 3, 4}`? Seguilo paso a paso.",
+   "a": "Queda `{1, 2, 3, 4}` igual que al principio: en las vueltas 0 y 1 se intercambian (1↔4) y (2↔3) → `{4,3,2,1}`; en las vueltas 2 y 3 se intercambian los **mismos pares** otra vez y se deshace todo."
+  }
+ },
+ {
+  "id": "p05",
+  "n": 5,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Rotar un vector a la derecha",
+  "xp": 45,
+  "goal": "Desplazar todos los elementos una posición a la derecha, pasando el último al principio.",
+  "theory": [
+   "Rotar es **mover** elementos: cada `v[i]` pasa a `v[i+1]` y el último vuelve al inicio. Si copiás en el orden equivocado, pisás datos.",
+   {
+    "code": "int ultimo = v[n - 1];            // 1) guardo el que se \"cae\" del final\nfor (int i = n - 1; i > 0; i--) {  // 2) corro de ATRÁS hacia ADELANTE\n    v[i] = v[i - 1];\n}\nv[0] = ultimo;                     // 3) lo pongo al principio"
+   },
+   "Por qué de atrás hacia adelante: si copiaras `v[1] = v[0]` primero, perderías el valor original de `v[1]` antes de moverlo. Recorriendo al revés, cada posición se copia **después** de haber sido usada."
+  ],
+  "task": "Escribí `void rotarDerecha(int v[], int n)` que rote el vector una posición a la derecha. `main` lee `n` y los números, llama a la función y muestra `Rotado: ...` (separados por espacio). Con `1 2 3 4 5` queda `5 1 2 3 4`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nvoid rotarDerecha(int v[], int n);\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // TODO: rotá y mostrá \"Rotado:\" con los elementos\n\n    return 0;\n}\n\n// TODO: comentá y escribí rotarDerecha\nvoid rotarDerecha(int v[], int n) {\n\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['func:rotarDerecha','for']},
+  "tests": [
+   {
+    "name": "1 2 3 4 5",
+    "stdin": "5\n1 2 3 4 5",
+    "out": "Rotado: 5 1 2 3 4\n"
+   },
+   {
+    "name": "Dos elementos",
+    "stdin": "2\n7 8",
+    "out": "Rotado: 8 7\n"
+   },
+   {
+    "name": "Un elemento",
+    "stdin": "1\n4",
+    "out": "Rotado: 4\n"
+   },
+   {
+    "name": "rotarDerecha dos veces seguidas",
+    "fn": "rotarDerecha",
+    "driver": "int __drv(){ int a[4]={1,2,3,4}; rotarDerecha(a,4); rotarDerecha(a,4); for(int i=0;i<4;i++) cout<<a[i]<<\" \"; cout<<endl; return 0; }",
+    "out": "3 4 1 2 \n"
+   }
+  ],
+  "hints": [
+   "Antes de mover nada, guardá `v[n-1]` en una variable: es el único valor que se \"cae\" del vector.",
+   "El `for` va de `i = n - 1` hacia abajo (`i--`) mientras `i > 0`, y copia `v[i] = v[i - 1]`.",
+   "Al final, `v[0] = ultimo;`. Con `n = 1` el bucle no corre y el vector queda igual, que es lo correcto."
+  ],
+  "sampleIn": "5\n1 2 3 4 5",
+  "solution": "// Programa 5: rotar un vector una posicion a la derecha\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\nvoid rotarDerecha(int v[], int n);\n\n// Lee un vector, lo rota a la derecha y lo muestra\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    rotarDerecha(v, n);\n    cout << \"Rotado:\";\n    // muestra el vector rotado\n    for (int i = 0; i < n; i++) {\n        cout << \" \" << v[i];\n    }\n    cout << endl;\n    return 0;\n}\n\n// Corre todos los elementos un lugar a la derecha; el ultimo pasa al inicio\nvoid rotarDerecha(int v[], int n) {\n    int ultimo = v[n - 1];   // guarda el que se cae por el final\n    // se copia de atras hacia adelante para no pisar datos\n    for (int i = n - 1; i > 0; i--) {\n        v[i] = v[i - 1];\n    }\n    v[0] = ultimo;\n}\n",
+  "trace": {
+   "q": "Si el `for` fuera `for (int i = 1; i < n; i++) v[i] = v[i - 1];` con `v = {1, 2, 3}`, ¿cómo queda el vector? ¿Por qué?",
+   "a": "Queda `{1, 1, 1}`. En `i=1` se copia `v[0]` (1) sobre `v[1]` y se pierde el 2; en `i=2` se copia el nuevo `v[1]` (1) sobre `v[2]`. Copiar hacia adelante propaga un solo valor."
+  }
+ },
+ {
+  "id": "p06",
+  "n": 6,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Vector de contadores: frecuencia de notas",
+  "xp": 50,
+  "goal": "Usar el valor leído como **índice** de un vector de contadores para contar repeticiones.",
+  "theory": [
+   "Cuando los datos son enteros en un rango chico (por ejemplo notas de 0 a 10), conviene un **vector de contadores**: `cant[7]` guarda cuántas veces apareció el 7.",
+   {
+    "code": "int cant[11] = {0};      // posiciones 0 a 10, todas en 0\nint nota;\ncin >> nota;\ncant[nota]++;           // el dato mismo es el índice"
+   },
+   "Para mostrar los resultados se recorre el vector de contadores (no el de datos) y se muestran solo las posiciones con `cant[i] > 0`."
+  ],
+  "task": "Leé `n` y después `n` notas enteras entre 0 y 10. Mostrá una línea `nota: cantidad` por cada nota que apareció, de menor a mayor. Ejemplo: con `7 8 7 10 4 7` sale `4: 1`, `7: 3`, `8: 1`, `10: 1`. No hace falta guardar las notas: alcanza con el vector de contadores.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int NOTAS = 11;   // notas posibles: 0 a 10\n\n// TODO: explicá qué hace main\nint main() {\n    int cant[NOTAS] = {0};\n    int n, nota;\n    cin >> n;\n    // TODO: leé cada nota y sumá 1 en cant[nota]\n\n    // TODO: mostrá \"nota: cantidad\" solo para las notas que aparecieron\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:5,need:['array','const','for']},
+  "tests": [
+   {
+    "name": "Ejemplo del enunciado",
+    "stdin": "6\n7 8 7 10 4 7",
+    "out": "4: 1\n7: 3\n8: 1\n10: 1\n"
+   },
+   {
+    "name": "Todas iguales",
+    "stdin": "4\n5 5 5 5",
+    "out": "5: 4\n"
+   },
+   {
+    "name": "Extremos 0 y 10",
+    "stdin": "5\n0 10 0 10 10",
+    "out": "0: 2\n10: 3\n"
+   },
+   {
+    "name": "Una sola nota",
+    "stdin": "1\n9",
+    "out": "9: 1\n"
+   }
+  ],
+  "hints": [
+   "Un solo `for` para leer: `cin >> nota; cant[nota]++;`. No necesitás guardar las `n` notas en otro vector.",
+   "Para mostrar, recorré `i` de 0 a `NOTAS - 1` y hacé `if (cant[i] > 0)` antes del `cout`.",
+   "El formato es `cout << i << \": \" << cant[i] << endl;`."
+  ],
+  "sampleIn": "6\n7 8 7 10 4 7",
+  "solution": "// Programa 6: frecuencia de notas con un vector de contadores\n#include <iostream>\nusing namespace std;\n\nconst int NOTAS = 11;   // notas posibles: 0 a 10\n\n// Cuenta cuantas veces aparece cada nota y la muestra\nint main() {\n    int cant[NOTAS] = {0};   // cant[i] = veces que aparecio la nota i\n    int n, nota;\n    cin >> n;\n    // la nota leida se usa directamente como indice\n    for (int i = 0; i < n; i++) {\n        cin >> nota;\n        cant[nota]++;\n    }\n    // recorre los contadores y muestra los que no son cero\n    for (int i = 0; i < NOTAS; i++) {\n        if (cant[i] > 0) {\n            cout << i << \": \" << cant[i] << endl;\n        }\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Qué pasa si se lee la nota `11` con `int cant[11]`? ¿Qué debería hacer el programa antes de `cant[nota]++`?",
+   "a": "`cant[11]` está **fuera del vector** (las posiciones válidas son 0 a 10): comportamiento indefinido o error. Antes hay que validar `if (nota >= 0 && nota <= 10)`."
+  }
+ },
+ {
+  "id": "p07",
+  "n": 7,
+  "track": "lib",
+  "unit": "Unidad 7 · Matrices",
+  "title": "Matriz: suma de cada fila y cada columna",
+  "xp": 55,
+  "goal": "Recorrer una matriz por filas y por columnas con bucles anidados.",
+  "theory": [
+   "Una **matriz** es un vector de vectores: `int m[10][10]` se accede con `m[fila][columna]`. Para recorrerla se usan **dos `for` anidados**: el de afuera elige la fila y el de adentro recorre sus columnas.",
+   {
+    "code": "for (int f = 0; f < filas; f++) {        // fila fija...\n    for (int c = 0; c < cols; c++) {     // ...y se recorren sus columnas\n        suma += m[f][c];\n    }\n}"
+   },
+   "Para sumar **columnas** se invierte el orden: el `for` de afuera es el de columnas y el de adentro el de filas. En cada caso la variable acumuladora se pone en 0 **antes** del bucle interno."
+  ],
+  "task": "Leé `f` y `c` (filas y columnas) y luego los `f*c` números de la matriz, fila por fila. Mostrá `Fila 1: <suma>` ... `Fila f: <suma>` y después `Columna 1: <suma>` ... `Columna c: <suma>`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;\n\n// TODO: explicá qué hace main\nint main() {\n    int m[MAX][MAX];\n    int f, c;\n    cin >> f >> c;\n    // TODO: cargá la matriz con dos for anidados\n\n    // TODO: mostrá la suma de cada fila\n\n    // TODO: mostrá la suma de cada columna\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['array2d','nested']},
+  "tests": [
+   {
+    "name": "Matriz 2x3",
+    "stdin": "2 3\n1 2 3\n4 5 6",
+    "out": "Fila 1: 6\nFila 2: 15\nColumna 1: 5\nColumna 2: 7\nColumna 3: 9\n"
+   },
+   {
+    "name": "Matriz cuadrada 3x3",
+    "stdin": "3 3\n1 1 1\n2 2 2\n3 3 3",
+    "out": "Fila 1: 3\nFila 2: 6\nFila 3: 9\nColumna 1: 6\nColumna 2: 6\nColumna 3: 6\n"
+   },
+   {
+    "name": "Una sola fila",
+    "stdin": "1 4\n5 6 7 8",
+    "out": "Fila 1: 26\nColumna 1: 5\nColumna 2: 6\nColumna 3: 7\nColumna 4: 8\n"
+   },
+   {
+    "name": "Una sola columna",
+    "stdin": "3 1\n4\n5\n6",
+    "out": "Fila 1: 4\nFila 2: 5\nFila 3: 6\nColumna 1: 15\n"
+   }
+  ],
+  "hints": [
+   "Cargar: `for f` por fuera y `for c` por dentro con `cin >> m[i][j];`.",
+   "Suma de filas: `int s = 0;` **dentro** del `for` de filas (para que se reinicie), sumá `m[i][j]` en el interno y mostrá `Fila i+1` al cerrar el interno.",
+   "Suma de columnas: el `for` de afuera recorre `j` (columnas) y el de adentro `i` (filas), sumando `m[i][j]`."
+  ],
+  "sampleIn": "2 3\n1 2 3\n4 5 6",
+  "solution": "// Programa 7: suma de filas y columnas de una matriz\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;   // tamaño maximo de filas y columnas\n\n// Lee una matriz y muestra la suma de cada fila y de cada columna\nint main() {\n    int m[MAX][MAX];\n    int f, c;\n    cin >> f >> c;\n    // carga la matriz fila por fila\n    for (int i = 0; i < f; i++) {\n        for (int j = 0; j < c; j++) {\n            cin >> m[i][j];\n        }\n    }\n    // para cada fila, suma sus columnas\n    for (int i = 0; i < f; i++) {\n        int suma = 0;   // se reinicia en cada fila\n        // recorre las columnas de la fila i\n        for (int j = 0; j < c; j++) {\n            suma += m[i][j];\n        }\n        cout << \"Fila \" << i + 1 << \": \" << suma << endl;\n    }\n    // para cada columna, suma sus filas\n    for (int j = 0; j < c; j++) {\n        int suma = 0;   // se reinicia en cada columna\n        // recorre las filas de la columna j\n        for (int i = 0; i < f; i++) {\n            suma += m[i][j];\n        }\n        cout << \"Columna \" << j + 1 << \": \" << suma << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si `int suma = 0;` se declarara **antes** del `for` de filas y no dentro, ¿qué mostraría `Fila 2:` para la matriz `{{1,2,3},{4,5,6}}`?",
+   "a": "Mostraría `Fila 2: 21` (6 de la fila 1 + 15 de la fila 2): el acumulador no se reinicia y arrastra la suma anterior."
+  }
+ },
+ {
+  "id": "p08",
+  "n": 8,
+  "track": "lib",
+  "unit": "Unidad 7 · Matrices",
+  "title": "Matriz cuadrada: diagonales",
+  "xp": 55,
+  "goal": "Sumar la diagonal principal y la secundaria de una matriz cuadrada con un solo bucle.",
+  "theory": [
+   "En una matriz cuadrada `n × n`, la **diagonal principal** son las posiciones donde fila = columna: `m[i][i]`. La **secundaria** (de arriba a la derecha hacia abajo a la izquierda) son las que cumplen fila + columna = n - 1: `m[i][n-1-i]`.",
+   {
+    "code": "for (int i = 0; i < n; i++) {     // UN solo for alcanza\n    principal  += m[i][i];\n    secundaria += m[i][n - 1 - i];\n}"
+   },
+   "No hace falta recorrer toda la matriz: las diagonales tienen exactamente `n` elementos y cada uno se calcula con la fórmula de su índice."
+  ],
+  "task": "Leé `n` y una matriz de `n × n`. Mostrá:\n`Principal: <suma>`\n`Secundaria: <suma>`\nSi `n` es impar, el elemento central pertenece a las dos diagonales y se suma en ambas.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;\n\n// TODO: explicá qué hace main\nint main() {\n    int m[MAX][MAX];\n    int n;\n    int principal = 0, secundaria = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            cin >> m[i][j];\n        }\n    }\n    // TODO: con un solo for sumá las dos diagonales\n\n    cout << \"Principal: \" << principal << endl;\n    cout << \"Secundaria: \" << secundaria << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:5,need:['array2d','nested']},
+  "tests": [
+   {
+    "name": "3x3 consecutiva",
+    "stdin": "3\n1 2 3\n4 5 6\n7 8 9",
+    "out": "Principal: 15\nSecundaria: 15\n"
+   },
+   {
+    "name": "2x2 distinta",
+    "stdin": "2\n2 0\n9 1",
+    "out": "Principal: 3\nSecundaria: 9\n"
+   },
+   {
+    "name": "1x1",
+    "stdin": "1\n7",
+    "out": "Principal: 7\nSecundaria: 7\n"
+   },
+   {
+    "name": "4x4",
+    "stdin": "4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16",
+    "out": "Principal: 34\nSecundaria: 34\n"
+   }
+  ],
+  "hints": [
+   "Después de cargar la matriz, un solo `for (int i = 0; i < n; i++)` alcanza.",
+   "La principal es `m[i][i]`. Para la secundaria el índice de columna es `n - 1 - i`.",
+   "Con `n = 3` y `i = 0`, la secundaria toma `m[0][2]`; con `i = 2`, toma `m[2][0]`."
+  ],
+  "sampleIn": "3\n1 2 3\n4 5 6\n7 8 9",
+  "solution": "// Programa 8: suma de las diagonales de una matriz cuadrada\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;   // tamaño maximo de la matriz\n\n// Lee una matriz n x n y suma su diagonal principal y su diagonal secundaria\nint main() {\n    int m[MAX][MAX];\n    int n;\n    int principal = 0, secundaria = 0;\n    cin >> n;\n    // carga la matriz\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            cin >> m[i][j];\n        }\n    }\n    // cada diagonal tiene n elementos: un solo bucle alcanza\n    for (int i = 0; i < n; i++) {\n        principal += m[i][i];\n        secundaria += m[i][n - 1 - i];\n    }\n    cout << \"Principal: \" << principal << endl;\n    cout << \"Secundaria: \" << secundaria << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "En una matriz 4×4, ¿qué posiciones suma `m[i][n - 1 - i]` para `i = 0, 1, 2, 3`? ¿Se cruzan con la principal?",
+   "a": "Suma `[0][3]`, `[1][2]`, `[2][1]`, `[3][0]`. En 4×4 **no se cruzan** (n par); en 3×3 se cruzan en `[1][1]`, el centro."
+  }
+ },
+ {
+  "id": "p09",
+  "n": 9,
+  "track": "lib",
+  "unit": "Unidad 7 · Matrices",
+  "title": "Matriz transpuesta",
+  "xp": 55,
+  "goal": "Construir y mostrar la transpuesta de una matriz (filas ↔ columnas).",
+  "theory": [
+   "La **transpuesta** de una matriz `f × c` es una matriz `c × f` donde `t[j][i] = m[i][j]`: lo que era la fila `i` pasa a ser la columna `i`.",
+   {
+    "code": "for (int i = 0; i < f; i++) {\n    for (int j = 0; j < c; j++) {\n        t[j][i] = m[i][j];   // se intercambian los índices\n    }\n}"
+   },
+   "La matriz resultado tiene **las dimensiones dadas vuelta**: si la original es 2×3, la transpuesta es 3×2. Al mostrarla se recorre con `c` filas y `f` columnas."
+  ],
+  "task": "Leé `f`, `c` y la matriz. Mostrá la transpuesta, una fila por línea con los números separados por un espacio. Para `2 3 / 1 2 3 / 4 5 6` sale:\n`1 4`\n`2 5`\n`3 6`",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;\n\n// TODO: explicá qué hace main\nint main() {\n    int m[MAX][MAX], t[MAX][MAX];\n    int f, c;\n    cin >> f >> c;\n    for (int i = 0; i < f; i++) {\n        for (int j = 0; j < c; j++) {\n            cin >> m[i][j];\n        }\n    }\n    // TODO: llená t con la transpuesta\n\n    // TODO: mostrá t (c filas y f columnas)\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['array2d','nested']},
+  "tests": [
+   {
+    "name": "2x3",
+    "stdin": "2 3\n1 2 3\n4 5 6",
+    "out": "1 4\n2 5\n3 6\n"
+   },
+   {
+    "name": "3x2",
+    "stdin": "3 2\n1 2\n3 4\n5 6",
+    "out": "1 3 5\n2 4 6\n"
+   },
+   {
+    "name": "Cuadrada 2x2",
+    "stdin": "2 2\n1 2\n3 4",
+    "out": "1 3\n2 4\n"
+   },
+   {
+    "name": "Una fila",
+    "stdin": "1 3\n7 8 9",
+    "out": "7\n8\n9\n"
+   }
+  ],
+  "hints": [
+   "Necesitás **dos matrices**: la original `m` y la nueva `t`.",
+   "En el bucle de copia: `t[j][i] = m[i][j];` (con `i` recorriendo filas de `m` y `j` sus columnas).",
+   "Para mostrar `t`, el `for` externo va hasta `c` (cantidad de filas de la transpuesta) y el interno hasta `f`. Poné un espacio entre números pero no al final de la línea."
+  ],
+  "sampleIn": "2 3\n1 2 3\n4 5 6",
+  "solution": "// Programa 9: transpuesta de una matriz\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;   // tamaño maximo de filas y columnas\n\n// Lee una matriz f x c y muestra su transpuesta c x f\nint main() {\n    int m[MAX][MAX], t[MAX][MAX];\n    int f, c;\n    cin >> f >> c;\n    // carga la matriz original\n    for (int i = 0; i < f; i++) {\n        for (int j = 0; j < c; j++) {\n            cin >> m[i][j];\n        }\n    }\n    // la fila i de m pasa a ser la columna i de t\n    for (int i = 0; i < f; i++) {\n        for (int j = 0; j < c; j++) {\n            t[j][i] = m[i][j];\n        }\n    }\n    // t tiene c filas y f columnas\n    for (int i = 0; i < c; i++) {\n        for (int j = 0; j < f; j++) {\n            if (j > 0) {\n                cout << \" \";\n            }\n            cout << t[i][j];\n        }\n        cout << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Se puede transponer **en el lugar** (sin segunda matriz) cuando la matriz es 2×3? ¿Y si es 3×3? Justificá.",
+   "a": "En 2×3 no: la transpuesta es 3×2, otra forma, y no entra en el mismo arreglo de dimensiones fijas. En 3×3 sí, intercambiando `m[i][j]` con `m[j][i]` solo para `j > i`."
+  }
+ },
+ {
+  "id": "p10",
+  "n": 10,
+  "track": "lib",
+  "unit": "Unidad 7 · Matrices",
+  "title": "¿Es un cuadrado mágico?",
+  "xp": 70,
+  "goal": "Verificar que todas las filas, columnas y las dos diagonales de una matriz suman lo mismo.",
+  "theory": [
+   "Un **cuadrado mágico** es una matriz cuadrada donde todas las filas, todas las columnas y las dos diagonales dan **la misma suma**. Para verificarlo: se calcula la suma de la primera fila como **referencia** y se compara todo lo demás con ella.",
+   {
+    "code": "int ref = 0;\nfor (int j = 0; j < n; j++) ref += m[0][j];   // suma de referencia\nbool magico = true;                             // \"bandera\": arranca en verdadero\nif (sumaFila != ref) magico = false;            // una sola diferencia lo arruina"
+   },
+   "La técnica de la **bandera** (`bool`) sirve para \"todos cumplen\": se supone que sí y se pone en `false` en cuanto aparece un caso que no cumple. Nunca se vuelve a poner en `true`."
+  ],
+  "task": "Leé `n` y una matriz `n × n`. Mostrá `Es magico` si todas las filas, columnas y las dos diagonales suman igual, o `No es magico` en caso contrario.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;\n\n// TODO: explicá qué hace main\nint main() {\n    int m[MAX][MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            cin >> m[i][j];\n        }\n    }\n    bool magico = true;\n    // TODO: calculá la suma de la primera fila como referencia\n    // TODO: comparala con cada fila, cada columna y las dos diagonales\n\n    if (magico) {\n        cout << \"Es magico\" << endl;\n    } else {\n        cout << \"No es magico\" << endl;\n    }\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:8,need:['array2d','nested','if']},
+  "tests": [
+   {
+    "name": "Cuadrado mágico clásico 3x3",
+    "stdin": "3\n2 7 6\n9 5 1\n4 3 8",
+    "out": "Es magico\n"
+   },
+   {
+    "name": "Filas bien pero columnas mal",
+    "stdin": "3\n1 2 3\n3 2 1\n2 2 2",
+    "out": "No es magico\n"
+   },
+   {
+    "name": "Filas y columnas bien, diagonal mal",
+    "stdin": "3\n1 2 3\n2 3 1\n3 1 2",
+    "out": "No es magico\n"
+   },
+   {
+    "name": "1x1 es mágico",
+    "stdin": "1\n5",
+    "out": "Es magico\n"
+   },
+   {
+    "name": "Mágico 4x4",
+    "stdin": "4\n16 3 2 13\n5 10 11 8\n9 6 7 12\n4 15 14 1",
+    "out": "Es magico\n"
+   }
+  ],
+  "hints": [
+   "Primero `ref` = suma de la fila 0. Después, para cada fila `i`, sumá sus columnas y comparala con `ref`.",
+   "Hacé lo mismo con las columnas (intercambiando los índices) y con las dos diagonales `m[i][i]` y `m[i][n-1-i]`.",
+   "Si cualquier suma es distinta de `ref`, `magico = false;`. Mostrá el resultado recién al final."
+  ],
+  "sampleIn": "3\n2 7 6\n9 5 1\n4 3 8",
+  "solution": "// Programa 10: verificar si una matriz es un cuadrado magico\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 10;   // tamaño maximo de la matriz\n\n// Lee una matriz n x n y comprueba que filas, columnas y diagonales sumen igual\nint main() {\n    int m[MAX][MAX];\n    int n;\n    cin >> n;\n    // carga la matriz\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            cin >> m[i][j];\n        }\n    }\n    int ref = 0;   // suma de la primera fila: sirve de referencia\n    // calcula la suma de referencia\n    for (int j = 0; j < n; j++) {\n        ref += m[0][j];\n    }\n    bool magico = true;   // se supone que si, hasta que algo falle\n    // compara cada fila y cada columna con la referencia\n    for (int i = 0; i < n; i++) {\n        int sf = 0, sc = 0;\n        // suma la fila i y la columna i a la vez\n        for (int j = 0; j < n; j++) {\n            sf += m[i][j];\n            sc += m[j][i];\n        }\n        if (sf != ref || sc != ref) {\n            magico = false;\n        }\n    }\n    int d1 = 0, d2 = 0;\n    // suma las dos diagonales\n    for (int i = 0; i < n; i++) {\n        d1 += m[i][i];\n        d2 += m[i][n - 1 - i];\n    }\n    if (d1 != ref || d2 != ref) {\n        magico = false;\n    }\n    if (magico) {\n        cout << \"Es magico\" << endl;\n    } else {\n        cout << \"No es magico\" << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "En el `for` que compara filas y columnas, ¿qué pasaría si dentro del `if` pusieras `magico = true;` en un `else`? Probalo con una matriz donde solo la fila 0 falla.",
+   "a": "El `else` volvería a poner `true` en las filas siguientes que sí cumplen y **taparía el error**: la matriz mala se mostraría como mágica. La bandera solo debe cambiar en un sentido (a `false`)."
+  }
+ },
+ {
+  "id": "p11",
+  "n": 11,
+  "track": "lib",
+  "unit": "Unidad 7 · Estructuras",
+  "title": "Struct Alumno: el mejor promedio",
+  "xp": 60,
+  "goal": "Definir un `struct` con varios campos, cargar un vector de structs y buscar el de mayor nota.",
+  "theory": [
+   "Un **struct** agrupa datos de distinto tipo en un solo \"registro\". Se define una vez y después se usa como un tipo más; los campos se acceden con un punto.",
+   {
+    "code": "struct Alumno {          // un registro con 3 campos\n    int legajo;\n    string nombre;\n    double nota;\n};\nAlumno v[50];               // vector de structs\ncin >> v[0].legajo >> v[0].nombre >> v[0].nota;"
+   },
+   "Buscar el mejor es igual que buscar el máximo de un vector común, pero se compara **un campo** (`v[i].nota`) y se guarda la **posición** del mejor para después mostrar todo su registro."
+  ],
+  "task": "Leé `n` y luego `n` alumnos: `legajo nombre nota` (nombre sin espacios, nota decimal). Mostrá:\n`Mejor alumno: <nombre> (<nota con 2 decimales>)`\n`Promedio del curso: <promedio con 2 decimales>`\nSi hay empate en la mejor nota, quedate con el primero cargado. Usá un `struct Alumno` comentado y un vector de structs.",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// TODO: comentá el struct\nstruct Alumno {\n    int legajo;\n    string nombre;\n    double nota;\n};\n\n// TODO: explicá qué hace main\nint main() {\n    Alumno v[50];\n    int n;\n    cin >> n;\n    // TODO: cargá los n alumnos (legajo, nombre, nota)\n\n    // TODO: buscá la posición del alumno con la mejor nota y calculá el promedio\n    cout << fixed << setprecision(2);\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,commentStructs:true,minComments:6,need:['struct','structarray','for']},
+  "tests": [
+   {
+    "name": "Tres alumnos",
+    "stdin": "3\n101 Ana 9.5\n102 Luis 6\n103 Eva 7.5",
+    "out": "Mejor alumno: Ana (9.50)\nPromedio del curso: 7.67\n"
+   },
+   {
+    "name": "Empate: gana el primero",
+    "stdin": "2\n1 Sol 8\n2 Rio 8",
+    "out": "Mejor alumno: Sol (8.00)\nPromedio del curso: 8.00\n"
+   },
+   {
+    "name": "Un solo alumno",
+    "stdin": "1\n77 Teo 4.25",
+    "out": "Mejor alumno: Teo (4.25)\nPromedio del curso: 4.25\n"
+   },
+   {
+    "name": "Mejor al final",
+    "stdin": "4\n1 A 5\n2 B 6\n3 C 7\n4 D 10",
+    "out": "Mejor alumno: D (10.00)\nPromedio del curso: 7.00\n"
+   }
+  ],
+  "hints": [
+   "Cargá con `cin >> v[i].legajo >> v[i].nombre >> v[i].nota;` dentro de un `for`.",
+   "Guardá la **posición** del mejor: `int pm = 0;` y en el recorrido `if (v[i].nota > v[pm].nota) pm = i;` (con `>` estricto el primero gana los empates).",
+   "Acumulá `suma += v[i].nota` (tipo `double`) y dividí por `n` al final. Mostrá `v[pm].nombre` y `v[pm].nota`."
+  ],
+  "sampleIn": "3\n101 Ana 9.5\n102 Luis 6\n103 Eva 7.5",
+  "solution": "// Programa 11: mejor alumno y promedio con un vector de structs\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// Registro de un alumno: legajo, nombre y nota final\nstruct Alumno {\n    int legajo;\n    string nombre;\n    double nota;\n};\n\n// Carga n alumnos, busca el de mejor nota y calcula el promedio del curso\nint main() {\n    Alumno v[50];\n    int n;\n    double suma = 0;\n    cin >> n;\n    // carga cada registro campo por campo\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].legajo >> v[i].nombre >> v[i].nota;\n        suma += v[i].nota;\n    }\n    int pm = 0;   // posicion del mejor alumno\n    // compara la nota de cada alumno con la del mejor actual\n    for (int i = 1; i < n; i++) {\n        if (v[i].nota > v[pm].nota) {\n            pm = i;\n        }\n    }\n    cout << fixed << setprecision(2);\n    cout << \"Mejor alumno: \" << v[pm].nombre << \" (\" << v[pm].nota << \")\" << endl;\n    cout << \"Promedio del curso: \" << suma / n << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Por qué conviene guardar la **posición** `pm` del mejor y no solo su nota `mejorNota`?",
+   "a": "Porque con la posición accedés a **todo el registro** (nombre, legajo, etc.): `v[pm].nombre`. Guardando solo la nota, habría que volver a buscar quién la tuvo."
+  }
+ },
+ {
+  "id": "p12",
+  "n": 12,
+  "track": "lib",
+  "unit": "Unidad 7 · Estructuras",
+  "title": "Struct Producto: valor del inventario y faltantes",
+  "xp": 65,
+  "goal": "Recorrer un vector de structs para acumular un total y listar los registros que cumplen una condición.",
+  "theory": [
+   "Con un vector de structs se hacen dos tareas típicas en **un mismo recorrido**: acumular (valor total del inventario) y filtrar (mostrar solo los de stock bajo).",
+   {
+    "code": "struct Producto { string nombre; double precio; int stock; };\ntotal += v[i].precio * v[i].stock;   // valor de este producto\nif (v[i].stock < 5) {                // condición de filtro\n    cout << v[i].nombre << endl;\n}"
+   },
+   "Cuando se informa \"no hay ninguno\", hace falta una **bandera o un contador** que recuerde si algún registro cumplió: no se puede saber antes de terminar el recorrido."
+  ],
+  "task": "Leé `n` y `n` productos: `nombre precio stock`. Mostrá primero `Valor total: <suma de precio*stock con 2 decimales>`. Después, una línea `Stock bajo: <nombre> (<stock>)` por cada producto con **stock menor a 5**, en el orden de carga. Si no hay ninguno, mostrá `Sin faltantes`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// TODO: comentá el struct\nstruct Producto {\n    string nombre;\n    double precio;\n    int stock;\n};\n\n// TODO: explicá qué hace main\nint main() {\n    Producto v[50];\n    int n;\n    double total = 0;\n    int bajos = 0;\n    cin >> n;\n    // TODO: cargá los productos y acumulá el valor total\n\n    cout << fixed << setprecision(2);\n    cout << \"Valor total: \" << total << endl;\n    // TODO: mostrá los de stock bajo (o \"Sin faltantes\")\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,commentStructs:true,minComments:6,need:['struct','structarray','for']},
+  "tests": [
+   {
+    "name": "Hay dos con stock bajo",
+    "stdin": "4\nLapiz 50 100\nCuaderno 450.5 3\nGoma 30 4\nRegla 120 20",
+    "out": "Valor total: 8871.50\nStock bajo: Cuaderno (3)\nStock bajo: Goma (4)\n"
+   },
+   {
+    "name": "Sin faltantes",
+    "stdin": "2\nA 10 5\nB 20 6",
+    "out": "Valor total: 170.00\nSin faltantes\n"
+   },
+   {
+    "name": "Stock 0 cuenta como bajo",
+    "stdin": "1\nPendrive 1500 0",
+    "out": "Valor total: 0.00\nStock bajo: Pendrive (0)\n"
+   },
+   {
+    "name": "Todos bajos",
+    "stdin": "3\nX 1 1\nY 2 2\nZ 3 3",
+    "out": "Valor total: 14.00\nStock bajo: X (1)\nStock bajo: Y (2)\nStock bajo: Z (3)\n"
+   }
+  ],
+  "hints": [
+   "Un solo `for` carga cada producto y suma `precio * stock` en `total` (tipo `double`).",
+   "Otro `for` recorre de nuevo: `if (v[i].stock < 5)` → mostrar la línea y hacer `bajos++`.",
+   "Al terminar ese recorrido, `if (bajos == 0) cout << \"Sin faltantes\" << endl;`."
+  ],
+  "sampleIn": "4\nLapiz 50 100\nCuaderno 450.5 3\nGoma 30 4\nRegla 120 20",
+  "solution": "// Programa 12: valor del inventario y productos con stock bajo\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// Registro de un producto del inventario\nstruct Producto {\n    string nombre;\n    double precio;\n    int stock;\n};\n\n// Carga productos, calcula el valor total y lista los faltantes\nint main() {\n    Producto v[50];\n    int n;\n    double total = 0;\n    int bajos = 0;   // cuantos productos tienen stock bajo\n    cin >> n;\n    // carga y acumula el valor de cada producto\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].nombre >> v[i].precio >> v[i].stock;\n        total += v[i].precio * v[i].stock;\n    }\n    cout << fixed << setprecision(2);\n    cout << \"Valor total: \" << total << endl;\n    // muestra los de stock menor a 5\n    for (int i = 0; i < n; i++) {\n        if (v[i].stock < 5) {\n            cout << \"Stock bajo: \" << v[i].nombre << \" (\" << v[i].stock << \")\" << endl;\n            bajos++;\n        }\n    }\n    if (bajos == 0) {\n        cout << \"Sin faltantes\" << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Por qué `\"Sin faltantes\"` no se puede mostrar **dentro** del `for` con un `else`?",
+   "a": "Porque el `else` se ejecutaría para **cada** producto con stock suficiente (aunque otros sí fueran faltantes). La conclusión \"no hay ninguno\" recién se conoce cuando termina todo el recorrido."
+  }
+ },
+ {
+  "id": "p13",
+  "n": 13,
+  "track": "lib",
+  "unit": "Unidad 7 · Estructuras",
+  "title": "Struct Registro: mayor amplitud térmica",
+  "xp": 60,
+  "goal": "Calcular un valor derivado de dos campos del struct y buscar el máximo.",
+  "theory": [
+   "A veces el dato que se busca no es un campo, sino algo **calculado** con varios campos. Se calcula dentro del recorrido y se compara como cualquier valor.",
+   {
+    "code": "struct Registro { int dia; double tmax, tmin; };\ndouble amp = v[i].tmax - v[i].tmin;   // dato derivado\nif (amp > mejorAmp) {\n    mejorAmp = amp;\n    mejorDia = v[i].dia;\n}"
+   },
+   "Cuando varios campos tienen el mismo tipo se pueden declarar juntos: `double tmax, tmin;`."
+  ],
+  "task": "Leé `n` y `n` registros de temperatura: `dia tmax tmin`. Mostrá `Mayor amplitud: dia <d> (<amplitud con 1 decimal>)`, donde la amplitud es `tmax - tmin`. Si hay empate, el primer día cargado.",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\n// TODO: comentá el struct\nstruct Registro {\n    int dia;\n    double tmax, tmin;\n};\n\n// TODO: explicá qué hace main\nint main() {\n    Registro v[31];\n    int n;\n    cin >> n;\n    // TODO: cargá los registros\n\n    // TODO: buscá el día de mayor amplitud (tmax - tmin)\n    cout << fixed << setprecision(1);\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,commentStructs:true,minComments:6,need:['struct','structarray','for']},
+  "tests": [
+   {
+    "name": "Tres días",
+    "stdin": "3\n1 25.5 15.0\n2 30.0 18.5\n3 22.0 19.0",
+    "out": "Mayor amplitud: dia 2 (11.5)\n"
+   },
+   {
+    "name": "Empate: el primero",
+    "stdin": "2\n5 20 10\n6 25 15",
+    "out": "Mayor amplitud: dia 5 (10.0)\n"
+   },
+   {
+    "name": "Un solo día",
+    "stdin": "1\n12 18.5 7.25",
+    "out": "Mayor amplitud: dia 12 (11.2)\n"
+   },
+   {
+    "name": "Mayor al final",
+    "stdin": "3\n1 20 19\n2 21 18\n3 30 10",
+    "out": "Mayor amplitud: dia 3 (20.0)\n"
+   }
+  ],
+  "hints": [
+   "Después de cargar, inicializá `mejorAmp = v[0].tmax - v[0].tmin` y `pos = 0`.",
+   "En el recorrido calculá `double amp = v[i].tmax - v[i].tmin;` y comparala con `>` (estricto, para el empate).",
+   "Mostrá `v[pos].dia` y `mejorAmp` con `fixed << setprecision(1)`."
+  ],
+  "sampleIn": "3\n1 25.5 15.0\n2 30.0 18.5\n3 22.0 19.0",
+  "solution": "// Programa 13: dia con mayor amplitud termica\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\n// Registro de la temperatura de un dia\nstruct Registro {\n    int dia;\n    double tmax, tmin;\n};\n\n// Carga los registros y busca el dia de mayor diferencia entre maxima y minima\nint main() {\n    Registro v[31];\n    int n;\n    cin >> n;\n    // carga cada registro\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].dia >> v[i].tmax >> v[i].tmin;\n    }\n    double mejorAmp = v[0].tmax - v[0].tmin;   // amplitud del primer dia\n    int pos = 0;\n    // busca la mayor amplitud, calculandola en cada vuelta\n    for (int i = 1; i < n; i++) {\n        double amp = v[i].tmax - v[i].tmin;\n        if (amp > mejorAmp) {\n            mejorAmp = amp;\n            pos = i;\n        }\n    }\n    cout << fixed << setprecision(1);\n    cout << \"Mayor amplitud: dia \" << v[pos].dia << \" (\" << mejorAmp << \")\" << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si `mejorAmp` se inicializara en `0` en vez de con el primer registro, ¿qué entrada rompería el programa?",
+   "a": "Una donde **todas** las amplitudes sean negativas (por datos mal cargados, `tmax < tmin`): ninguna superaría el 0, `pos` quedaría en 0 y se mostraría una amplitud de 0 inexistente. Inicializar con el primer dato evita ese problema."
+  }
+ },
+ {
+  "id": "p14",
+  "n": 14,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Búsqueda secuencial: primera posición y apariciones",
+  "xp": 50,
+  "goal": "Escribir una función de búsqueda secuencial que devuelve la posición o -1, y contar las apariciones.",
+  "theory": [
+   "La **búsqueda secuencial** recorre el vector de izquierda a derecha comparando cada elemento con el buscado. La función **devuelve la posición** y corta apenas lo encuentra, o devuelve `-1` si llega al final sin éxito.",
+   {
+    "code": "int buscar(int v[], int n, int x) {\n    for (int i = 0; i < n; i++) {\n        if (v[i] == x) {\n            return i;     // corta: devuelve la primera aparición\n        }\n    }\n    return -1;            // FUERA del for: recién acá sabemos que no está\n}"
+   },
+   "Error clásico: poner `return -1;` **dentro** del `for` (con un `else`): la función se rendiría en la primera comparación fallida y nunca miraría el resto."
+  ],
+  "task": "Escribí `int buscar(int v[], int n, int x)` (primera posición o `-1`). En `main` leé `n`, el vector y el valor `x`; mostrá `Primera posicion: <p>` (o `No esta`) y en otra línea `Apariciones: <cantidad>` (contalas con un `for` en `main`).",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nint buscar(int v[], int n, int x);\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n, x, apar = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cin >> x;\n    // TODO: llamá a buscar y mostrá la primera posición (o \"No esta\")\n\n    // TODO: contá cuántas veces aparece x\n    cout << \"Apariciones: \" << apar << endl;\n    return 0;\n}\n\n// TODO: comentá y escribí buscar\nint buscar(int v[], int n, int x) {\n    return -1;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['func:buscar','for|while']},
+  "tests": [
+   {
+    "name": "Aparece dos veces",
+    "stdin": "6\n4 7 2 7 9 1\n7",
+    "out": "Primera posicion: 1\nApariciones: 2\n"
+   },
+   {
+    "name": "No está",
+    "stdin": "3\n1 2 3\n8",
+    "out": "No esta\nApariciones: 0\n"
+   },
+   {
+    "name": "Primer y último elemento",
+    "stdin": "4\n5 1 1 5\n5",
+    "out": "Primera posicion: 0\nApariciones: 2\n"
+   },
+   {
+    "name": "buscar: casos límite",
+    "fn": "buscar",
+    "driver": "int __drv(){ int a[5]={3,8,3,1,8}; cout<<buscar(a,5,3)<<\" \"<<buscar(a,5,8)<<\" \"<<buscar(a,5,1)<<\" \"<<buscar(a,5,9)<<\" \"<<buscar(a,0,3)<<endl; return 0; }",
+    "out": "0 1 3 -1 -1\n"
+   }
+  ],
+  "hints": [
+   "Dentro de `buscar`: `for` con `if (v[i] == x) return i;`. El `return -1;` va **después** del `for`.",
+   "En `main`: `int p = buscar(v, n, x);` y `if (p == -1) cout << \"No esta\"; else cout << \"Primera posicion: \" << p;`.",
+   "Las apariciones se cuentan con otro `for` en `main`: `if (v[i] == x) apar++;`."
+  ],
+  "sampleIn": "6\n4 7 2 7 9 1\n7",
+  "solution": "// Programa 14: busqueda secuencial con funcion\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\nint buscar(int v[], int n, int x);\n\n// Busca un valor en un vector y cuenta cuantas veces aparece\nint main() {\n    int v[MAX];\n    int n, x, apar = 0;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cin >> x;\n    int p = buscar(v, n, x);\n    if (p == -1) {\n        cout << \"No esta\" << endl;\n    } else {\n        cout << \"Primera posicion: \" << p << endl;\n    }\n    // cuenta todas las apariciones\n    for (int i = 0; i < n; i++) {\n        if (v[i] == x) {\n            apar++;\n        }\n    }\n    cout << \"Apariciones: \" << apar << endl;\n    return 0;\n}\n\n// Devuelve la primera posicion de x en v, o -1 si no esta\nint buscar(int v[], int n, int x) {\n    // recorre de izquierda a derecha y corta al encontrarlo\n    for (int i = 0; i < n; i++) {\n        if (v[i] == x) {\n            return i;\n        }\n    }\n    return -1;   // si salio del for, no estaba\n}\n",
+  "trace": {
+   "q": "¿Cuántas comparaciones hace `buscar` en el **peor caso** para un vector de 1000 elementos? ¿Y en el mejor?",
+   "a": "Peor caso: **1000** (el elemento está al final o no está). Mejor caso: **1** (está en la primera posición). En promedio, si está, ronda las n/2."
+  }
+ },
+ {
+  "id": "p15",
+  "n": 15,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Búsqueda en vector de structs por código",
+  "xp": 65,
+  "goal": "Buscar un registro por su campo clave y responder varias consultas.",
+  "theory": [
+   "Cuando los datos son registros, se busca por un **campo clave** (código, legajo, DNI). La función recibe el vector de structs y devuelve la **posición**; con ella se accede al resto de los campos.",
+   {
+    "code": "int buscarCodigo(Producto v[], int n, int cod) {\n    for (int i = 0; i < n; i++) {\n        if (v[i].codigo == cod) {\n            return i;\n        }\n    }\n    return -1;\n}\nint p = buscarCodigo(v, n, c);\nif (p != -1) cout << v[p].precio;"
+   },
+   "Devolver la **posición** (y no el precio) es más flexible: quien llama decide qué campo usar, y `-1` distingue \"no existe\" de cualquier valor válido."
+  ],
+  "task": "Leé `n` productos (`codigo precio`) y después `q` consultas (cada una un código). Para cada consulta mostrá `<codigo>: <precio con 2 decimales>` o `<codigo>: no existe`. Escribí `int buscarCodigo(Producto v[], int n, int cod)`. Entrada: `n`, los `n` productos, `q` y los `q` códigos.",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\n// TODO: comentá el struct\nstruct Producto {\n    int codigo;\n    double precio;\n};\n\nint buscarCodigo(Producto v[], int n, int cod);\n\n// TODO: explicá qué hace main\nint main() {\n    Producto v[50];\n    int n, q, cod;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].codigo >> v[i].precio;\n    }\n    cin >> q;\n    cout << fixed << setprecision(2);\n    // TODO: por cada consulta leé el código, buscalo y mostrá el resultado\n\n    return 0;\n}\n\n// TODO: comentá y escribí buscarCodigo\nint buscarCodigo(Producto v[], int n, int cod) {\n    return -1;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,commentStructs:true,minComments:7,need:['func:buscarCodigo','struct','structarray','paramtype:Producto']},
+  "tests": [
+   {
+    "name": "Dos consultas, una no existe",
+    "stdin": "3\n101 25.5\n205 100\n350 7.75\n2\n205\n999",
+    "out": "205: 100.00\n999: no existe\n"
+   },
+   {
+    "name": "Consulta repetida",
+    "stdin": "2\n1 10\n2 20\n3\n1\n1\n2",
+    "out": "1: 10.00\n1: 10.00\n2: 20.00\n"
+   },
+   {
+    "name": "Sin consultas",
+    "stdin": "1\n5 5\n0",
+    "out": ""
+   },
+   {
+    "name": "buscarCodigo directo",
+    "fn": "buscarCodigo",
+    "driver": "int __drv(){ Producto v[3]; v[0].codigo=10; v[0].precio=1; v[1].codigo=20; v[1].precio=2; v[2].codigo=30; v[2].precio=3; cout<<buscarCodigo(v,3,10)<<\" \"<<buscarCodigo(v,3,30)<<\" \"<<buscarCodigo(v,3,25)<<\" \"<<buscarCodigo(v,0,10)<<endl; return 0; }",
+    "out": "0 2 -1 -1\n"
+   }
+  ],
+  "hints": [
+   "`buscarCodigo` es igual a la búsqueda secuencial de enteros, pero compara `v[i].codigo == cod`.",
+   "En `main`, un `for` de `q` vueltas: `cin >> cod; int p = buscarCodigo(v, n, cod);`.",
+   "Si `p == -1` mostrá `cod << \": no existe\"`; si no, `cod << \": \" << v[p].precio`."
+  ],
+  "sampleIn": "3\n101 25.5\n205 100\n350 7.75\n2\n205\n999",
+  "solution": "// Programa 15: busqueda de productos por codigo\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\n// Producto con su codigo (clave de busqueda) y su precio\nstruct Producto {\n    int codigo;\n    double precio;\n};\n\nint buscarCodigo(Producto v[], int n, int cod);\n\n// Carga productos y responde consultas por codigo\nint main() {\n    Producto v[50];\n    int n, q, cod;\n    cin >> n;\n    // carga el catalogo\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].codigo >> v[i].precio;\n    }\n    cin >> q;\n    cout << fixed << setprecision(2);\n    // atiende cada consulta\n    for (int k = 0; k < q; k++) {\n        cin >> cod;\n        int p = buscarCodigo(v, n, cod);\n        if (p == -1) {\n            cout << cod << \": no existe\" << endl;\n        } else {\n            cout << cod << \": \" << v[p].precio << endl;\n        }\n    }\n    return 0;\n}\n\n// Devuelve la posicion del producto con ese codigo, o -1 si no esta\nint buscarCodigo(Producto v[], int n, int cod) {\n    // busqueda secuencial sobre el campo codigo\n    for (int i = 0; i < n; i++) {\n        if (v[i].codigo == cod) {\n            return i;\n        }\n    }\n    return -1;\n}\n",
+  "trace": {
+   "q": "Si hay dos productos con el mismo código, ¿cuál devuelve `buscarCodigo`? ¿Cómo lo cambiarías para devolver el **último**?",
+   "a": "Devuelve el **primero** (corta al encontrarlo). Para el último: recorrer de atrás hacia adelante (`for (int i = n - 1; i >= 0; i--)`) o guardar `pos = i` sin cortar y devolver `pos` al final."
+  }
+ },
+ {
+  "id": "p16",
+  "n": 16,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Búsqueda binaria contando los pasos",
+  "xp": 70,
+  "goal": "Implementar búsqueda binaria sobre un vector ordenado y medir cuántas iteraciones necesita.",
+  "theory": [
+   "La **búsqueda binaria** solo funciona con el vector **ordenado**. Compara con el elemento del medio y descarta la mitad que no puede contener al buscado.",
+   {
+    "code": "int ini = 0, fin = n - 1;\nwhile (ini <= fin) {\n    int medio = (ini + fin) / 2;\n    if (v[medio] == x) return medio;\n    if (v[medio] < x) ini = medio + 1;   // descarto la mitad izquierda\n    else fin = medio - 1;                // descarto la mitad derecha\n}\nreturn -1;"
+   },
+   "Cada vuelta **divide por 2** el espacio de búsqueda: para 1000 elementos alcanzan unas 10 vueltas, contra hasta 1000 de la secuencial. Un parámetro por referencia (`int &pasos`) permite que la función **devuelva dos cosas**: la posición (con `return`) y los pasos (por referencia)."
+  ],
+  "task": "Escribí `int buscarBin(int v[], int n, int x, int &pasos)` que devuelva la posición (o `-1`) y deje en `pasos` la cantidad de vueltas del `while` (cada vuelta cuenta 1, incluso la que lo encuentra). En `main` leé `n`, el vector ordenado y `x`; mostrá `Encontrado en posicion <p> en <k> pasos` o `No encontrado tras <k> pasos`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nint buscarBin(int v[], int n, int x, int &pasos);\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n, x, pasos = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cin >> x;\n    // TODO: llamá a buscarBin y mostrá el resultado con los pasos\n\n    return 0;\n}\n\n// TODO: comentá y escribí buscarBin (ini, fin, medio, pasos)\nint buscarBin(int v[], int n, int x, int &pasos) {\n    return -1;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['func:buscarBin','while','refparam']},
+  "tests": [
+   {
+    "name": "Está (40)",
+    "stdin": "5\n10 20 30 40 50\n40",
+    "out": "Encontrado en posicion 3 en 2 pasos\n"
+   },
+   {
+    "name": "No está (35)",
+    "stdin": "5\n10 20 30 40 50\n35",
+    "out": "No encontrado tras 2 pasos\n"
+   },
+   {
+    "name": "Está en el primero",
+    "stdin": "5\n10 20 30 40 50\n10",
+    "out": "Encontrado en posicion 0 en 2 pasos\n"
+   },
+   {
+    "name": "Un solo elemento",
+    "stdin": "1\n7\n7",
+    "out": "Encontrado en posicion 0 en 1 pasos\n"
+   },
+   {
+    "name": "Vector vacío",
+    "stdin": "0\n3",
+    "out": "No encontrado tras 0 pasos\n"
+   },
+   {
+    "name": "buscarBin: pasos en 1000 elementos",
+    "fn": "buscarBin",
+    "driver": "int __drv(){ int v[1000]; for(int i=0;i<1000;i++) v[i]=i*2; int p=0; int r=buscarBin(v,1000,998,p); cout<<r<<\" \"<<p<<endl; int q=0; r=buscarBin(v,1000,501,q); cout<<r<<\" \"<<q<<endl; return 0; }",
+    "out": "499 1\n-1 10\n",
+    "stepsMax": 60000
+   }
+  ],
+  "hints": [
+   "Variables: `ini = 0`, `fin = n - 1`, `medio = (ini + fin) / 2`. El bucle es `while (ini <= fin)`.",
+   "Al **entrar** a cada vuelta hacé `pasos++;` (y poné `pasos = 0;` antes del `while`, porque el valor de afuera puede traer basura).",
+   "Si `v[medio] < x` → `ini = medio + 1`; si es mayor → `fin = medio - 1`. Siempre saltá el medio (±1) o el bucle puede no terminar."
+  ],
+  "sampleIn": "5\n10 20 30 40 50\n40",
+  "solution": "// Programa 16: busqueda binaria que cuenta sus pasos\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\nint buscarBin(int v[], int n, int x, int &pasos);\n\n// Busca x en un vector ordenado y muestra en cuantos pasos lo logro\nint main() {\n    int v[MAX];\n    int n, x, pasos = 0;\n    cin >> n;\n    // carga el vector (ya viene ordenado)\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    cin >> x;\n    int p = buscarBin(v, n, x, pasos);\n    if (p == -1) {\n        cout << \"No encontrado tras \" << pasos << \" pasos\" << endl;\n    } else {\n        cout << \"Encontrado en posicion \" << p << \" en \" << pasos << \" pasos\" << endl;\n    }\n    return 0;\n}\n\n// Busqueda binaria: devuelve la posicion (o -1) y los pasos por referencia\nint buscarBin(int v[], int n, int x, int &pasos) {\n    int ini = 0, fin = n - 1;\n    pasos = 0;\n    // en cada vuelta se descarta la mitad del espacio de busqueda\n    while (ini <= fin) {\n        pasos++;\n        int medio = (ini + fin) / 2;\n        if (v[medio] == x) {\n            return medio;\n        } else if (v[medio] < x) {\n            ini = medio + 1;   // seguimos en la mitad derecha\n        } else {\n            fin = medio - 1;   // seguimos en la mitad izquierda\n        }\n    }\n    return -1;\n}\n",
+  "trace": {
+   "q": "Un vector ordenado de 16 elementos y un valor que **no está**: ¿cuántos pasos hace `buscarBin` como máximo? Pensá cuántas veces se puede dividir 16 por 2 hasta llegar a 1.",
+   "a": "**5** pasos (16 → 8 → 4 → 2 → 1 → 0 elementos). En general `⌊log₂ n⌋ + 1`. Por eso con un millón de elementos alcanzan unos 20 pasos."
+  }
+ },
+ {
+  "id": "p17",
+  "n": 17,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Burbujeo paso a paso",
+  "xp": 70,
+  "goal": "Ordenar un vector con el método de burbujeo y mostrar el estado después de cada pasada.",
+  "theory": [
+   "El **burbujeo** compara pares de elementos vecinos y los intercambia si están en el orden equivocado. Después de cada **pasada**, el mayor de los que quedaban \"sube\" hasta su lugar definitivo al final.",
+   {
+    "code": "for (int i = 0; i < n - 1; i++) {          // pasadas\n    for (int j = 0; j < n - 1 - i; j++) {    // pares de la parte no ordenada\n        if (v[j] > v[j + 1]) {\n            int aux = v[j];\n            v[j] = v[j + 1];\n            v[j + 1] = aux;\n        }\n    }\n}"
+   },
+   "El `- i` del bucle interno se debe a que, tras `i` pasadas, los últimos `i` elementos ya están en su lugar y no hace falta volver a compararlos."
+  ],
+  "task": "Leé `n` y `n` enteros. Ordenalos de menor a mayor con burbujeo y, **al terminar cada pasada** (es decir, `n - 1` veces), mostrá `Pasada <k>:` seguido del vector completo (cada número precedido de un espacio). Ejemplo: `Pasada 1: 1 4 2 5 8`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // TODO: ordená con burbujeo (dos for anidados) y mostrá el vector al final de cada pasada\n\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['array','nested']},
+  "tests": [
+   {
+    "name": "Ejemplo clásico",
+    "stdin": "5\n5 1 4 2 8",
+    "out": "Pasada 1: 1 4 2 5 8\nPasada 2: 1 2 4 5 8\nPasada 3: 1 2 4 5 8\nPasada 4: 1 2 4 5 8\n"
+   },
+   {
+    "name": "Ya ordenado",
+    "stdin": "4\n1 2 3 4",
+    "out": "Pasada 1: 1 2 3 4\nPasada 2: 1 2 3 4\nPasada 3: 1 2 3 4\n"
+   },
+   {
+    "name": "Orden inverso",
+    "stdin": "4\n4 3 2 1",
+    "out": "Pasada 1: 3 2 1 4\nPasada 2: 2 1 3 4\nPasada 3: 1 2 3 4\n"
+   },
+   {
+    "name": "Dos elementos",
+    "stdin": "2\n9 3",
+    "out": "Pasada 1: 3 9\n"
+   },
+   {
+    "name": "Con repetidos",
+    "stdin": "5\n3 1 3 1 2",
+    "out": "Pasada 1: 1 3 1 2 3\nPasada 2: 1 1 2 3 3\nPasada 3: 1 1 2 3 3\nPasada 4: 1 1 2 3 3\n"
+   }
+  ],
+  "hints": [
+   "Dos `for`: el externo cuenta las pasadas (`i` de 0 a `n - 2`) y el interno compara `v[j]` con `v[j + 1]`.",
+   "El intercambio necesita una variable auxiliar. El interno llega hasta `j < n - 1 - i`.",
+   "Después de cerrar el `for` interno (y **antes** de cerrar el externo), mostrá `\"Pasada \" << i + 1 << \":\"` y un `for` que imprima ` v[k]` para cada elemento."
+  ],
+  "sampleIn": "5\n5 1 4 2 8",
+  "solution": "// Programa 17: ordenamiento por burbujeo mostrando cada pasada\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\n// Ordena un vector con burbujeo y muestra el estado tras cada pasada\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // cada pasada deja el mayor restante en su lugar final\n    for (int i = 0; i < n - 1; i++) {\n        // compara pares vecinos de la parte aun no ordenada\n        for (int j = 0; j < n - 1 - i; j++) {\n            if (v[j] > v[j + 1]) {\n                int aux = v[j];\n                v[j] = v[j + 1];\n                v[j + 1] = aux;\n            }\n        }\n        cout << \"Pasada \" << i + 1 << \":\";\n        // muestra el vector al final de la pasada\n        for (int k = 0; k < n; k++) {\n            cout << \" \" << v[k];\n        }\n        cout << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "Con `{3, 2, 1}`, escribí cómo queda el vector después de la pasada 1 y de la pasada 2. ¿Cuántas comparaciones hizo cada pasada?",
+   "a": "Pasada 1 (2 comparaciones): `{2, 1, 3}`. Pasada 2 (1 comparación): `{1, 2, 3}`. En total `(n-1) + (n-2) + ... + 1 = n(n-1)/2` comparaciones."
+  }
+ },
+ {
+  "id": "p18",
+  "n": 18,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Burbujeo con bandera (corte temprano)",
+  "xp": 75,
+  "goal": "Mejorar el burbujeo para que se detenga apenas una pasada no hace ningún intercambio.",
+  "theory": [
+   "Si en una pasada **no hubo ningún intercambio**, el vector ya está ordenado y seguir comparando es trabajo perdido. Se detecta con una **bandera**:",
+   {
+    "code": "bool huboCambio;\ndo {\n    huboCambio = false;              // al empezar la pasada: nada cambió\n    for (int j = 0; j < n - 1; j++) {\n        if (v[j] > v[j + 1]) {\n            /* intercambio */\n            huboCambio = true;       // algo se movió\n        }\n    }\n    pasadas++;\n} while (huboCambio);"
+   },
+   "Mejor caso: un vector **ya ordenado** termina en **1** pasada (la que no encuentra nada que cambiar). Peor caso: sigue haciendo `n` pasadas, igual que el burbujeo común."
+  ],
+  "task": "Escribí `int ordenar(int v[], int n)` que ordene de menor a mayor con burbujeo y bandera, y **devuelva la cantidad de pasadas** realizadas (incluida la última, la que no intercambia). `main` lee `n` y el vector, y muestra `Ordenado:` con los números (cada uno precedido de un espacio) y en otra línea `Pasadas: <k>`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nint ordenar(int v[], int n);\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    // TODO: llamá a ordenar y mostrá \"Ordenado:\" y \"Pasadas:\"\n\n    return 0;\n}\n\n// TODO: comentá y escribí ordenar (burbujeo con bandera)\nint ordenar(int v[], int n) {\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['func:ordenar','nested']},
+  "tests": [
+   {
+    "name": "Ejemplo (3 pasadas)",
+    "stdin": "5\n5 1 4 2 8",
+    "out": "Ordenado: 1 2 4 5 8\nPasadas: 3\n"
+   },
+   {
+    "name": "Ya ordenado: 1 pasada",
+    "stdin": "4\n1 2 3 4",
+    "out": "Ordenado: 1 2 3 4\nPasadas: 1\n"
+   },
+   {
+    "name": "Orden inverso",
+    "stdin": "4\n4 3 2 1",
+    "out": "Ordenado: 1 2 3 4\nPasadas: 4\n"
+   },
+   {
+    "name": "Un elemento",
+    "stdin": "1\n6",
+    "out": "Ordenado: 6\nPasadas: 1\n"
+   },
+   {
+    "name": "ordenar: contador de pasadas",
+    "fn": "ordenar",
+    "driver": "int __drv(){ int a[4]={2,1,3,4}; int p=ordenar(a,4); cout<<p<<\" \"; for(int i=0;i<4;i++) cout<<a[i]; cout<<endl; int b[3]={1,2,3}; cout<<ordenar(b,3)<<endl; return 0; }",
+    "out": "2 1234\n1\n"
+   }
+  ],
+  "hints": [
+   "Una forma simple: `do { huboCambio = false; for (...) {...} pasadas++; } while (huboCambio);`.",
+   "La bandera se reinicia en `false` **al empezar cada pasada**, y pasa a `true` solo dentro del `if` del intercambio.",
+   "Devolvé `pasadas`. Con un vector ordenado la primera pasada no cambia nada y ya cuenta 1."
+  ],
+  "sampleIn": "5\n5 1 4 2 8",
+  "solution": "// Programa 18: burbujeo con bandera y conteo de pasadas\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\nint ordenar(int v[], int n);\n\n// Ordena un vector y muestra cuantas pasadas necesito\nint main() {\n    int v[MAX];\n    int n;\n    cin >> n;\n    // carga el vector\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n    }\n    int pasadas = ordenar(v, n);\n    cout << \"Ordenado:\";\n    // muestra el vector ordenado\n    for (int i = 0; i < n; i++) {\n        cout << \" \" << v[i];\n    }\n    cout << endl;\n    cout << \"Pasadas: \" << pasadas << endl;\n    return 0;\n}\n\n// Burbujeo que corta cuando una pasada no intercambia nada; devuelve las pasadas\nint ordenar(int v[], int n) {\n    int pasadas = 0;\n    bool huboCambio;\n    // repite pasadas hasta que una no intercambie nada\n    do {\n        huboCambio = false;   // al empezar la pasada, nada cambio\n        // compara pares vecinos\n        for (int j = 0; j < n - 1; j++) {\n            if (v[j] > v[j + 1]) {\n                int aux = v[j];\n                v[j] = v[j + 1];\n                v[j + 1] = aux;\n                huboCambio = true;\n            }\n        }\n        pasadas++;\n    } while (huboCambio);\n    return pasadas;\n}\n",
+  "trace": {
+   "q": "¿Cuántas pasadas devuelve `ordenar` para `{1, 3, 2}`? ¿Y por qué la última pasada **siempre** es una que no intercambia nada?",
+   "a": "Devuelve **2**: la pasada 1 intercambia el 3 y el 2 (`huboCambio = true`); la pasada 2 no cambia nada y recién ahí el `do-while` termina. Para saber que está ordenado hay que hacer una pasada completa sin cambios."
+  }
+ },
+ {
+  "id": "p19",
+  "n": 19,
+  "track": "lib",
+  "unit": "Unidad 8 · Búsqueda y orden",
+  "title": "Ordenar structs por precio (de mayor a menor)",
+  "xp": 80,
+  "goal": "Aplicar burbujeo a un vector de structs comparando un campo e intercambiando registros completos.",
+  "theory": [
+   "Para ordenar structs se compara **un campo** pero se intercambia **el registro entero**: el struct se copia con una sola asignación.",
+   {
+    "code": "if (v[j].precio < v[j + 1].precio) {   // orden DESCENDENTE: el menor baja\n    Producto aux = v[j];\n    v[j] = v[j + 1];                      // se copian todos los campos\n    v[j + 1] = aux;\n}"
+   },
+   "Con comparación **estricta** (`<`, no `<=`), dos productos de igual precio **no se intercambian**: el orden de carga se mantiene. Un ordenamiento con esa propiedad se llama **estable**."
+  ],
+  "task": "Leé `n` productos `nombre precio` y escribí `void ordenarPorPrecio(Producto v[], int n)` que los ordene de **mayor a menor precio** con burbujeo. Si dos tienen el mismo precio, deben quedar en el orden en que se cargaron. Mostrá `<nombre> <precio con 2 decimales>` por línea.",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// TODO: comentá el struct\nstruct Producto {\n    string nombre;\n    double precio;\n};\n\nvoid ordenarPorPrecio(Producto v[], int n);\n\n// TODO: explicá qué hace main\nint main() {\n    Producto v[50];\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].nombre >> v[i].precio;\n    }\n    // TODO: ordená y mostrá cada producto\n    cout << fixed << setprecision(2);\n\n    return 0;\n}\n\n// TODO: comentá y escribí ordenarPorPrecio\nvoid ordenarPorPrecio(Producto v[], int n) {\n\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,commentStructs:true,minComments:8,need:['func:ordenarPorPrecio','struct','nested','paramtype:Producto']},
+  "tests": [
+   {
+    "name": "Cuatro productos",
+    "stdin": "4\nLapiz 50\nMochila 8500\nGoma 30\nRegla 120",
+    "out": "Mochila 8500.00\nRegla 120.00\nLapiz 50.00\nGoma 30.00\n"
+   },
+   {
+    "name": "Empate: se mantiene el orden de carga",
+    "stdin": "4\nA 10\nB 20\nC 10\nD 20",
+    "out": "B 20.00\nD 20.00\nA 10.00\nC 10.00\n"
+   },
+   {
+    "name": "Un producto",
+    "stdin": "1\nUnico 99.5",
+    "out": "Unico 99.50\n"
+   },
+   {
+    "name": "Ya ordenado",
+    "stdin": "3\nX 30\nY 20\nZ 10",
+    "out": "X 30.00\nY 20.00\nZ 10.00\n"
+   },
+   {
+    "name": "Orden inverso",
+    "stdin": "3\nX 10\nY 20\nZ 30",
+    "out": "Z 30.00\nY 20.00\nX 10.00\n"
+   }
+  ],
+  "hints": [
+   "Es el mismo burbujeo de siempre, pero compara `v[j].precio` con `v[j + 1].precio` y usa `<` para ordenar de mayor a menor.",
+   "Intercambiá los **registros completos**: `Producto aux = v[j]; v[j] = v[j + 1]; v[j + 1] = aux;`. No intercambies solo el precio o los nombres quedarían desparejados.",
+   "Con `<` (y no `<=`) los empates no se mueven, así que se conserva el orden de carga."
+  ],
+  "sampleIn": "4\nLapiz 50\nMochila 8500\nGoma 30\nRegla 120",
+  "solution": "// Programa 19: ordenar productos por precio descendente\n#include <iostream>\n#include <iomanip>\n#include <string>\nusing namespace std;\n\n// Producto con su nombre y su precio\nstruct Producto {\n    string nombre;\n    double precio;\n};\n\nvoid ordenarPorPrecio(Producto v[], int n);\n\n// Carga productos, los ordena por precio y los muestra\nint main() {\n    Producto v[50];\n    int n;\n    cin >> n;\n    // carga cada producto\n    for (int i = 0; i < n; i++) {\n        cin >> v[i].nombre >> v[i].precio;\n    }\n    ordenarPorPrecio(v, n);\n    cout << fixed << setprecision(2);\n    // muestra la lista ya ordenada\n    for (int i = 0; i < n; i++) {\n        cout << v[i].nombre << \" \" << v[i].precio << endl;\n    }\n    return 0;\n}\n\n// Burbujeo descendente por precio; intercambia registros completos\nvoid ordenarPorPrecio(Producto v[], int n) {\n    // cada pasada baja el menor restante hasta el final\n    for (int i = 0; i < n - 1; i++) {\n        // compara pares vecinos de la parte no ordenada\n        for (int j = 0; j < n - 1 - i; j++) {\n            if (v[j].precio < v[j + 1].precio) {\n                Producto aux = v[j];\n                v[j] = v[j + 1];\n                v[j + 1] = aux;\n            }\n        }\n    }\n}\n",
+  "trace": {
+   "q": "Con `{(\"A\",10), (\"B\",10)}` y la comparación `v[j].precio <= v[j+1].precio`, ¿qué pasa con A y B? ¿Qué propiedad se pierde?",
+   "a": "Se **intercambian** aunque tengan igual precio y quedan `B, A`: se pierde la **estabilidad**. Con `<` estricto quedan `A, B` (orden de carga)."
+  }
+ },
+ {
+  "id": "p20",
+  "n": 20,
+  "track": "lib",
+  "unit": "Unidad 9 · Apareo",
+  "title": "Apareo de dos vectores ordenados",
+  "xp": 75,
+  "goal": "Intercalar dos vectores ordenados en un tercero que también quede ordenado.",
+  "theory": [
+   "El **apareo** recorre dos vectores ordenados con **dos índices** (`i` para `a`, `j` para `b`) y en cada paso copia el menor de los dos elementos actuales al resultado.",
+   {
+    "code": "while (i < na && j < nb) {          // mientras queden en AMBOS\n    if (a[i] <= b[j]) { c[k] = a[i]; i++; }\n    else              { c[k] = b[j]; j++; }\n    k++;\n}\nwhile (i < na) { c[k] = a[i]; i++; k++; }   // sobrantes de a\nwhile (j < nb) { c[k] = b[j]; j++; k++; }   // sobrantes de b"
+   },
+   "Los dos `while` finales copian lo que **sobró** del vector que no se agotó (como mucho uno de los dos hace algo). El orden del resultado es automático porque ambas entradas ya estaban ordenadas."
+  ],
+  "task": "Escribí `int aparear(int a[], int na, int b[], int nb, int c[])` que deje en `c` los elementos de ambos vectores en orden ascendente (los repetidos se conservan) y devuelva la cantidad total. `main` lee `na` y `a`, luego `nb` y `b`, y muestra `Resultado:` con los números (cada uno precedido de un espacio).",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\nint aparear(int a[], int na, int b[], int nb, int c[]);\n\n// TODO: explicá qué hace main\nint main() {\n    int a[MAX], b[MAX], c[2 * MAX];\n    int na, nb;\n    cin >> na;\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    // TODO: llamá a aparear y mostrá \"Resultado:\" con los elementos\n\n    return 0;\n}\n\n// TODO: comentá y escribí aparear (índices i, j, k)\nint aparear(int a[], int na, int b[], int nb, int c[]) {\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['func:aparear','while']},
+  "tests": [
+   {
+    "name": "Intercalados",
+    "stdin": "3\n1 4 9\n4\n2 3 10 11",
+    "out": "Resultado: 1 2 3 4 9 10 11\n"
+   },
+   {
+    "name": "Con repetidos",
+    "stdin": "3\n1 2 2\n3\n2 2 5",
+    "out": "Resultado: 1 2 2 2 2 5\n"
+   },
+   {
+    "name": "Un vector vacío",
+    "stdin": "0\n3\n4 5 6",
+    "out": "Resultado: 4 5 6\n"
+   },
+   {
+    "name": "Todos los de a son menores",
+    "stdin": "2\n1 2\n2\n8 9",
+    "out": "Resultado: 1 2 8 9\n"
+   },
+   {
+    "name": "aparear: cantidad devuelta",
+    "fn": "aparear",
+    "driver": "int __drv(){ int a[3]={1,5,9}, b[2]={2,6}, c[10]; int k=aparear(a,3,b,2,c); cout<<k<<\":\"; for(int i=0;i<k;i++) cout<<\" \"<<c[i]; cout<<endl; return 0; }",
+    "out": "5: 1 2 5 6 9\n"
+   }
+  ],
+  "hints": [
+   "Tres índices: `i = 0`, `j = 0` y `k = 0` (este último es el del resultado).",
+   "`while (i < na && j < nb)`: copiá el menor y avanzá **solo** el índice del vector de donde copiaste, más `k`.",
+   "Después, dos `while` separados para los sobrantes: `while (i < na)` y `while (j < nb)`. Devolvé `k`."
+  ],
+  "sampleIn": "3\n1 4 9\n4\n2 3 10 11",
+  "solution": "// Programa 20: apareo de dos vectores ordenados\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo de cada vector\n\nint aparear(int a[], int na, int b[], int nb, int c[]);\n\n// Lee dos vectores ordenados y muestra el resultado de intercalarlos\nint main() {\n    int a[MAX], b[MAX], c[2 * MAX];\n    int na, nb;\n    cin >> na;\n    // carga el primer vector\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    // carga el segundo vector\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    int nc = aparear(a, na, b, nb, c);\n    cout << \"Resultado:\";\n    // muestra el vector intercalado\n    for (int i = 0; i < nc; i++) {\n        cout << \" \" << c[i];\n    }\n    cout << endl;\n    return 0;\n}\n\n// Intercala a y b en c, manteniendo el orden; devuelve la cantidad total\nint aparear(int a[], int na, int b[], int nb, int c[]) {\n    int i = 0, j = 0, k = 0;\n    // mientras queden elementos en los dos vectores, copia el menor\n    while (i < na && j < nb) {\n        if (a[i] <= b[j]) {\n            c[k] = a[i];\n            i++;\n        } else {\n            c[k] = b[j];\n            j++;\n        }\n        k++;\n    }\n    // sobrantes de a (si b se agoto primero)\n    while (i < na) {\n        c[k] = a[i];\n        i++;\n        k++;\n    }\n    // sobrantes de b (si a se agoto primero)\n    while (j < nb) {\n        c[k] = b[j];\n        j++;\n        k++;\n    }\n    return k;\n}\n",
+  "trace": {
+   "q": "Con `a = {1, 3}` y `b = {2, 4, 6}`, anotá el valor de `i`, `j` y `k` al salir del primer `while`. ¿Qué hacen los dos `while` finales?",
+   "a": "Al salir: `i=2`, `j=1`, `k=3` (resultado `1 2 3`; `a` se agotó). El `while (i<na)` no hace nada y el `while (j<nb)` copia `4` y `6`: queda `1 2 3 4 6`."
+  }
+ },
+ {
+  "id": "p21",
+  "n": 21,
+  "track": "lib",
+  "unit": "Unidad 9 · Apareo",
+  "title": "Unión sin repetidos",
+  "xp": 80,
+  "goal": "Apareo de dos listas ordenadas donde los elementos que están en las dos aparecen una sola vez.",
+  "theory": [
+   "Es el mismo apareo, con un tercer caso: **si los dos elementos actuales son iguales**, se copia uno solo y se avanzan **los dos** índices.",
+   {
+    "code": "if (a[i] < b[j]) {            c[k++] = a[i++]; }\nelse if (a[i] > b[j]) {       c[k++] = b[j++]; }\nelse {                        c[k++] = a[i]; i++; j++; }   // iguales: uno solo"
+   },
+   "Se asume que cada lista, por separado, **no tiene repetidos** (como una lista de legajos). Así, el único repetido posible es el que está en las dos."
+  ],
+  "task": "Leé `na` y el vector `a`, `nb` y el vector `b` (ambos ascendentes y sin repetidos). Mostrá `Union:` seguido de la unión ordenada, con cada valor una sola vez (cada número precedido de un espacio). Si ambas listas están vacías, mostrá solo `Union:`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int a[MAX], b[MAX], c[2 * MAX];\n    int na, nb;\n    cin >> na;\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    int i = 0, j = 0, k = 0;\n    // TODO: apareo de tres casos (menor, mayor, igual) y sobrantes\n\n    cout << \"Union:\";\n    for (int x = 0; x < k; x++) {\n        cout << \" \" << c[x];\n    }\n    cout << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['while','if']},
+  "tests": [
+   {
+    "name": "Con elementos en común",
+    "stdin": "4\n1 3 5 7\n4\n3 4 5 8",
+    "out": "Union: 1 3 4 5 7 8\n"
+   },
+   {
+    "name": "Listas disjuntas",
+    "stdin": "2\n1 2\n2\n3 4",
+    "out": "Union: 1 2 3 4\n"
+   },
+   {
+    "name": "Iguales",
+    "stdin": "3\n1 2 3\n3\n1 2 3",
+    "out": "Union: 1 2 3\n"
+   },
+   {
+    "name": "Una vacía",
+    "stdin": "0\n2\n5 6",
+    "out": "Union: 5 6\n"
+   },
+   {
+    "name": "Ambas vacías",
+    "stdin": "0\n0",
+    "out": "Union:\n"
+   }
+  ],
+  "hints": [
+   "Mientras `i < na && j < nb`: tres casos con `if / else if / else`: menor, mayor, **igual**.",
+   "En el caso de igualdad copiá uno solo y avanzá `i`, `j` y `k`.",
+   "Al final, dos `while` para los sobrantes (los que quedaron sin comparar), copiándolos tal cual."
+  ],
+  "sampleIn": "4\n1 3 5 7\n4\n3 4 5 8",
+  "solution": "// Programa 21: union sin repetidos de dos listas ordenadas\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo de cada vector\n\n// Lee dos listas ordenadas y arma su union sin repetidos\nint main() {\n    int a[MAX], b[MAX], c[2 * MAX];\n    int na, nb;\n    cin >> na;\n    // carga la primera lista\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    // carga la segunda lista\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    int i = 0, j = 0, k = 0;\n    // compara los elementos actuales de cada lista\n    while (i < na && j < nb) {\n        if (a[i] < b[j]) {\n            c[k] = a[i];\n            i++;\n        } else if (a[i] > b[j]) {\n            c[k] = b[j];\n            j++;\n        } else {\n            c[k] = a[i];   // iguales: se copia uno solo\n            i++;\n            j++;\n        }\n        k++;\n    }\n    // sobrantes de a\n    while (i < na) {\n        c[k] = a[i];\n        i++;\n        k++;\n    }\n    // sobrantes de b\n    while (j < nb) {\n        c[k] = b[j];\n        j++;\n        k++;\n    }\n    cout << \"Union:\";\n    // muestra la union\n    for (int x = 0; x < k; x++) {\n        cout << \" \" << c[x];\n    }\n    cout << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "En el caso `iguales`, ¿qué pasaría si solo avanzaras `i` y no `j`? Probalo con `a = {5}` y `b = {5, 6}`.",
+   "a": "Quedaría `j` apuntando al 5 otra vez: en la vuelta siguiente `i` ya terminó (sale del while) y los sobrantes de `b` copiarían el **5 de nuevo**: la unión mostraría `5 5 6` en vez de `5 6`."
+  }
+ },
+ {
+  "id": "p22",
+  "n": 22,
+  "track": "lib",
+  "unit": "Unidad 9 · Apareo",
+  "title": "Intersección de dos listas ordenadas",
+  "xp": 80,
+  "goal": "Encontrar los elementos que están en las dos listas con un solo recorrido conjunto.",
+  "theory": [
+   "En la **intersección** solo interesa el caso de igualdad. Si `a[i] < b[j]`, ese `a[i]` no puede estar en `b` (todo lo que queda en `b` es mayor o igual) y se **descarta** avanzando `i`; con `>` se descarta avanzando `j`.",
+   {
+    "code": "while (i < na && j < nb) {\n    if (a[i] < b[j]) {\n        i++;                     // a[i] no está en b\n    } else if (a[i] > b[j]) {\n        j++;                     // b[j] no está en a\n    } else {\n        /* común: guardar */  i++; j++;\n    }\n}"
+   },
+   "A diferencia del apareo y la unión, acá **no hay `while` de sobrantes**: lo que queda sin comparar de una lista no puede estar en la otra, porque la otra ya se agotó."
+  ],
+  "task": "Leé `na` y `a`, `nb` y `b` (ascendentes y sin repetidos). Mostrá `Comunes:` seguido de los elementos que están en ambas (cada uno precedido de un espacio) o `Sin elementos en comun` si no hay ninguno.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int a[MAX], b[MAX], c[MAX];\n    int na, nb;\n    cin >> na;\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    int i = 0, j = 0, k = 0;\n    // TODO: recorré las dos listas a la vez guardando los comunes en c\n\n    // TODO: mostrar \"Comunes:\" y c, o \"Sin elementos en comun\"\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['while','if']},
+  "tests": [
+   {
+    "name": "Dos en común",
+    "stdin": "5\n1 3 5 7 9\n4\n3 4 7 10",
+    "out": "Comunes: 3 7\n"
+   },
+   {
+    "name": "Sin comunes",
+    "stdin": "3\n1 2 3\n3\n4 5 6",
+    "out": "Sin elementos en comun\n"
+   },
+   {
+    "name": "Listas iguales",
+    "stdin": "3\n2 4 6\n3\n2 4 6",
+    "out": "Comunes: 2 4 6\n"
+   },
+   {
+    "name": "Una lista vacía",
+    "stdin": "0\n2\n1 2",
+    "out": "Sin elementos en comun\n"
+   },
+   {
+    "name": "Uno incluido en otro",
+    "stdin": "2\n3 8\n5\n1 3 5 8 9",
+    "out": "Comunes: 3 8\n"
+   }
+  ],
+  "hints": [
+   "`while (i < na && j < nb)` con tres casos: `<` avanza `i`, `>` avanza `j`, `==` guarda el valor y avanza los dos.",
+   "No necesitás recorrer sobrantes: cuando una lista se acaba, ya no puede haber más comunes.",
+   "Mostrá al final: si `k == 0` → `Sin elementos en comun`; si no, `Comunes:` y el vector `c`."
+  ],
+  "sampleIn": "5\n1 3 5 7 9\n4\n3 4 7 10",
+  "solution": "// Programa 22: interseccion de dos listas ordenadas\n#include <iostream>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo de cada vector\n\n// Lee dos listas ordenadas y muestra los elementos que tienen en comun\nint main() {\n    int a[MAX], b[MAX], c[MAX];\n    int na, nb;\n    cin >> na;\n    // carga la primera lista\n    for (int i = 0; i < na; i++) {\n        cin >> a[i];\n    }\n    cin >> nb;\n    // carga la segunda lista\n    for (int i = 0; i < nb; i++) {\n        cin >> b[i];\n    }\n    int i = 0, j = 0, k = 0;\n    // avanza el indice del menor; si son iguales, el valor es comun\n    while (i < na && j < nb) {\n        if (a[i] < b[j]) {\n            i++;\n        } else if (a[i] > b[j]) {\n            j++;\n        } else {\n            c[k] = a[i];\n            k++;\n            i++;\n            j++;\n        }\n    }\n    if (k == 0) {\n        cout << \"Sin elementos en comun\" << endl;\n    } else {\n        cout << \"Comunes:\";\n        // muestra los comunes\n        for (int x = 0; x < k; x++) {\n            cout << \" \" << c[x];\n        }\n        cout << endl;\n    }\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Cuántas comparaciones hace la intersección ordenada en el peor caso para listas de tamaño `na` y `nb`? Compará con comparar cada elemento de `a` contra todos los de `b`.",
+   "a": "A lo sumo **`na + nb`** (cada vuelta avanza al menos un índice). El método \"todos contra todos\" hace `na × nb`: con 1000 y 1000 elementos son 2.000 contra 1.000.000."
+  }
+ },
+ {
+  "id": "p23",
+  "n": 23,
+  "track": "lib",
+  "unit": "Unidad 9 · Corte de control",
+  "title": "Corte de control: ventas por sucursal",
+  "xp": 85,
+  "goal": "Procesar datos agrupados por una clave (sucursal) acumulando un subtotal que se cierra cuando la clave cambia.",
+  "theory": [
+   "El **corte de control** procesa datos **ordenados por una clave**. Se acumula mientras la clave no cambia; cuando cambia, se **cierra el grupo** (se muestra su total) y se **abre el siguiente**.",
+   {
+    "code": "cin >> suc >> monto;\nwhile (suc != 0) {              // 0 = fin de datos\n    int actual = suc;            // 1) abrir el grupo\n    int total = 0;\n    while (suc == actual) {      // 2) procesar el grupo\n        total += monto;\n        cin >> suc >> monto;     // lectura DENTRO (lee el siguiente)\n    }\n    cout << \"Sucursal \" << actual << \": \" << total << endl;   // 3) cerrar\n}"
+   },
+   "Detalle clave: la **primera lectura va antes** del `while` (\"lectura anticipada\") y la siguiente **al final de cada vuelta interna**. Así el `while` siempre evalúa un registro ya leído y no se pierde ni se repite ninguno."
+  ],
+  "task": "Los datos llegan como pares `sucursal monto`, **ordenados por sucursal**, y terminan con la sucursal `0` (ese par no se procesa). Mostrá por cada sucursal `Sucursal <s>: <cantidad> ventas, total <suma>` y al final `Total general: <suma de todo>`. Si no hay datos (solo `0 0`), mostrá únicamente `Total general: 0`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\n// TODO: explicá qué hace main\nint main() {\n    int suc, monto;\n    int general = 0;\n    cin >> suc >> monto;   // lectura anticipada\n    // TODO: bucle externo por sucursal, bucle interno mientras la sucursal no cambie\n\n    cout << \"Total general: \" << general << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:7,need:['while','nested']},
+  "tests": [
+   {
+    "name": "Tres sucursales",
+    "stdin": "1 100\n1 50\n2 70\n3 10\n3 20\n3 5\n0 0",
+    "out": "Sucursal 1: 2 ventas, total 150\nSucursal 2: 1 ventas, total 70\nSucursal 3: 3 ventas, total 35\nTotal general: 255\n"
+   },
+   {
+    "name": "Una sola sucursal",
+    "stdin": "5 10\n5 20\n0 0",
+    "out": "Sucursal 5: 2 ventas, total 30\nTotal general: 30\n"
+   },
+   {
+    "name": "Una venta por sucursal",
+    "stdin": "1 5\n2 6\n3 7\n0 0",
+    "out": "Sucursal 1: 1 ventas, total 5\nSucursal 2: 1 ventas, total 6\nSucursal 3: 1 ventas, total 7\nTotal general: 18\n"
+   },
+   {
+    "name": "Sin datos",
+    "stdin": "0 0",
+    "out": "Total general: 0\n"
+   }
+  ],
+  "hints": [
+   "Estructura: `while (suc != 0) { actual = suc; total = 0; cant = 0; while (suc == actual) {...} mostrar }`.",
+   "Dentro del `while` interno: acumulá `total += monto; cant++;` y **leé el siguiente** `cin >> suc >> monto;` al final de la vuelta.",
+   "Después de cerrar cada grupo sumá `total` a `general`. Como el `0` final distinto de `actual` corta el interno y el externo, no necesitás ningún `if` especial."
+  ],
+  "sampleIn": "1 100\n1 50\n2 70\n3 10\n3 20\n3 5\n0 0",
+  "solution": "// Programa 23: corte de control por sucursal\n#include <iostream>\nusing namespace std;\n\n// Procesa ventas ordenadas por sucursal y muestra un subtotal por cada una\nint main() {\n    int suc, monto;\n    int general = 0;\n    cin >> suc >> monto;   // lectura anticipada del primer registro\n    // cada vuelta procesa UNA sucursal completa\n    while (suc != 0) {\n        int actual = suc;   // clave del grupo que se abre\n        int total = 0, cant = 0;\n        // mientras la sucursal no cambie, se acumula\n        while (suc == actual) {\n            total += monto;\n            cant++;\n            cin >> suc >> monto;   // lee el registro siguiente\n        }\n        cout << \"Sucursal \" << actual << \": \" << cant << \" ventas, total \" << total << endl;\n        general += total;\n    }\n    cout << \"Total general: \" << general << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Qué pasa si movés la lectura `cin >> suc >> monto;` al **principio** del `while` interno, antes de `total += monto`? Seguilo con `1 10 / 1 20 / 0 0`.",
+   "a": "Se pierde el primer registro de cada grupo (se pisa `monto` antes de sumarlo) y además se procesa el registro `0 0` como una venta. Con esos datos el total de la sucursal 1 daría 20 en vez de 30."
+  }
+ },
+ {
+  "id": "p24",
+  "n": 24,
+  "track": "lib",
+  "unit": "Unidad 9 · Corte de control",
+  "title": "Corte de control de dos niveles: provincia y ciudad",
+  "xp": 95,
+  "goal": "Anidar dos cortes de control: un subtotal por ciudad dentro de un total por provincia.",
+  "theory": [
+   "Con **dos niveles**, los datos vienen ordenados por provincia y, dentro de cada una, por ciudad. Hay dos grupos anidados: el de **provincia** (externo) y el de **ciudad** (interno).",
+   {
+    "code": "while (prov != 0) {                    // nivel 1: provincia\n    int provActual = prov;\n    while (prov == provActual) {          // sigue la misma provincia\n        int ciuActual = ciu;               // nivel 2: ciudad\n        while (prov == provActual && ciu == ciuActual) {\n            totalCiu += monto;\n            cin >> prov >> ciu >> monto;\n        }\n        /* cierra ciudad */\n    }\n    /* cierra provincia */\n}"
+   },
+   "Regla de oro: el `while` interno debe terminar **también** cuando cambia la clave del nivel superior. Por eso su condición repite la comparación de provincia (`prov == provActual && ciu == ciuActual`)."
+  ],
+  "task": "Cada registro es `provincia ciudad monto`, ordenado por provincia y luego por ciudad; termina con provincia `0`. Mostrá:\n`Provincia <p>`\n`  Ciudad <c>: <total>` (dos espacios al inicio)\n`Total provincia <p>: <total>`\ny al final `Total general: <suma>`.",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\n// TODO: explicá qué hace main\nint main() {\n    int prov, ciu, monto;\n    int general = 0;\n    cin >> prov >> ciu >> monto;   // lectura anticipada\n    // TODO: bucle de provincia, dentro bucle de ciudad, dentro bucle de registros\n\n    cout << \"Total general: \" << general << endl;\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['while','nested']},
+  "tests": [
+   {
+    "name": "Dos provincias",
+    "stdin": "1 10 100\n1 10 50\n1 11 30\n2 20 70\n2 21 5\n2 21 15\n0 0 0",
+    "out": "Provincia 1\n  Ciudad 10: 150\n  Ciudad 11: 30\nTotal provincia 1: 180\nProvincia 2\n  Ciudad 20: 70\n  Ciudad 21: 20\nTotal provincia 2: 90\nTotal general: 270\n"
+   },
+   {
+    "name": "Una provincia, una ciudad",
+    "stdin": "3 5 10\n3 5 20\n0 0 0",
+    "out": "Provincia 3\n  Ciudad 5: 30\nTotal provincia 3: 30\nTotal general: 30\n"
+   },
+   {
+    "name": "Misma ciudad en provincias distintas",
+    "stdin": "1 7 10\n2 7 20\n0 0 0",
+    "out": "Provincia 1\n  Ciudad 7: 10\nTotal provincia 1: 10\nProvincia 2\n  Ciudad 7: 20\nTotal provincia 2: 20\nTotal general: 30\n"
+   },
+   {
+    "name": "Sin datos",
+    "stdin": "0 0 0",
+    "out": "Total general: 0\n"
+   }
+  ],
+  "hints": [
+   "Tres `while` anidados: provincia → ciudad → registro. Cada uno abre y cierra su grupo.",
+   "El `while` de **ciudad** necesita `while (prov == provActual && ciu == ciuActual)`. Sin la parte de provincia, las ciudades con el mismo número en provincias distintas se mezclan.",
+   "Al cerrar cada ciudad mostrá su total (con 2 espacios), y al cerrar la provincia mostrá su total y sumalo al general."
+  ],
+  "sampleIn": "1 10 100\n1 10 50\n1 11 30\n2 20 70\n2 21 5\n2 21 15\n0 0 0",
+  "solution": "// Programa 24: corte de control de dos niveles (provincia y ciudad)\n#include <iostream>\nusing namespace std;\n\n// Procesa ventas ordenadas por provincia y ciudad con subtotales en cada nivel\nint main() {\n    int prov, ciu, monto;\n    int general = 0;\n    cin >> prov >> ciu >> monto;   // lectura anticipada\n    // nivel 1: una vuelta por provincia\n    while (prov != 0) {\n        int provActual = prov;\n        int totalProv = 0;\n        cout << \"Provincia \" << provActual << endl;\n        // nivel 2: una vuelta por ciudad de la provincia actual\n        while (prov == provActual) {\n            int ciuActual = ciu;\n            int totalCiu = 0;\n            // nivel 3: registros de la misma ciudad y la misma provincia\n            while (prov == provActual && ciu == ciuActual) {\n                totalCiu += monto;\n                cin >> prov >> ciu >> monto;\n            }\n            cout << \"  Ciudad \" << ciuActual << \": \" << totalCiu << endl;\n            totalProv += totalCiu;\n        }\n        cout << \"Total provincia \" << provActual << \": \" << totalProv << endl;\n        general += totalProv;\n    }\n    cout << \"Total general: \" << general << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si el `while` de ciudad usara solo `ciu == ciuActual` (sin comparar la provincia), ¿qué pasa con `1 7 10 / 2 7 20 / 0 0 0`?",
+   "a": "El registro `2 7 20` tiene la misma ciudad (7) que el anterior y se **sumaría a la ciudad 7 de la provincia 1** (total 30). La provincia 2 nunca se abriría como grupo propio. La clave de un nivel incluye las claves de los niveles superiores."
+  }
+ },
+ {
+  "id": "p25",
+  "n": 25,
+  "track": "lib",
+  "unit": "Integrador",
+  "title": "Mini cajero: menú con do-while y switch",
+  "xp": 90,
+  "goal": "Armar un menú que se repite hasta que el usuario elige salir, atendiendo cada opción con un `switch`.",
+  "theory": [
+   "Un **menú** necesita mostrarse **al menos una vez**: por eso se usa `do { ... } while (opcion != 4);` (la condición se evalúa al final). Cada opción se atiende con un `switch`.",
+   {
+    "code": "do {\n    cin >> opcion;\n    switch (opcion) {\n        case 1: cout << \"Saldo: \" << saldo << endl; break;\n        case 2: /* depositar */ break;\n        default: cout << \"Opcion invalida\" << endl;\n    }\n} while (opcion != 4);"
+   },
+   "No te olvides del **`break`** al final de cada `case`: sin él, la ejecución \"cae\" al caso siguiente. Y para validar datos (extraer más de lo que hay) se usa un `if` dentro del `case`."
+  ],
+  "task": "El cajero empieza con saldo `1000`. Se leen opciones hasta que llegue la `4`:\n`1` → `Saldo: <saldo>`\n`2 <monto>` → suma y muestra `Deposito realizado`\n`3 <monto>` → si alcanza resta y muestra `Extraccion realizada`, si no `Fondos insuficientes`\n`4` → muestra `Hasta luego` y termina\nOtro número → `Opcion invalida`. Los montos van en la misma línea que la opción (`2 500`).",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\n// TODO: explicá qué hace main\nint main() {\n    int saldo = 1000;\n    int opcion, monto;\n    // TODO: do-while que repita hasta que opcion == 4, con un switch por opción\n\n    return 0;\n}\n",
+  "rules": {header:true,commentFuncs:true,commentLoops:true,minComments:6,need:['do','switch']},
+  "tests": [
+   {
+    "name": "Operaciones mezcladas",
+    "stdin": "1\n2 500\n1\n3 2000\n3 300\n1\n4",
+    "out": "Saldo: 1000\nDeposito realizado\nSaldo: 1500\nFondos insuficientes\nExtraccion realizada\nSaldo: 1200\nHasta luego\n"
+   },
+   {
+    "name": "Salir enseguida",
+    "stdin": "4",
+    "out": "Hasta luego\n"
+   },
+   {
+    "name": "Opción inválida",
+    "stdin": "9\n1\n4",
+    "out": "Opcion invalida\nSaldo: 1000\nHasta luego\n"
+   },
+   {
+    "name": "Extraer todo el saldo",
+    "stdin": "3 1000\n1\n3 1\n4",
+    "out": "Extraccion realizada\nSaldo: 0\nFondos insuficientes\nHasta luego\n"
+   }
+  ],
+  "hints": [
+   "`do { cin >> opcion; switch (opcion) {...} } while (opcion != 4);`. La opción 4 también está en el `switch` para mostrar `Hasta luego`.",
+   "En `case 2` y `case 3` leés el monto adentro: `cin >> monto;`. Para extraer, `if (monto <= saldo) { saldo -= monto; ... } else { ... }`.",
+   "Cada `case` termina con `break;` y el `default` atiende cualquier otro número."
+  ],
+  "sampleIn": "1\n2 500\n1\n3 2000\n3 300\n1\n4",
+  "solution": "// Programa 25: mini cajero con menu\n#include <iostream>\nusing namespace std;\n\n// Atiende opciones de un cajero hasta que se elige salir\nint main() {\n    int saldo = 1000;\n    int opcion, monto;\n    // el menu se atiende al menos una vez y se repite hasta la opcion 4\n    do {\n        cin >> opcion;\n        switch (opcion) {\n            case 1:   // consultar\n                cout << \"Saldo: \" << saldo << endl;\n                break;\n            case 2:   // depositar\n                cin >> monto;\n                saldo += monto;\n                cout << \"Deposito realizado\" << endl;\n                break;\n            case 3:   // extraer, validando el saldo\n                cin >> monto;\n                if (monto <= saldo) {\n                    saldo -= monto;\n                    cout << \"Extraccion realizada\" << endl;\n                } else {\n                    cout << \"Fondos insuficientes\" << endl;\n                }\n                break;\n            case 4:   // salir\n                cout << \"Hasta luego\" << endl;\n                break;\n            default:\n                cout << \"Opcion invalida\" << endl;\n        }\n    } while (opcion != 4);\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si olvidás el `break;` del `case 2`, ¿qué muestra el programa para la entrada `2 100 / 4`? Seguí el flujo.",
+   "a": "Después de depositar y mostrar `Deposito realizado`, la ejecución **cae** al `case 3`: lee otro monto (el `4`, que toma como monto), intenta extraer 4 y muestra `Extraccion realizada`; luego el programa pide otra opción y se queda esperando datos. El `break` evita esa \"cascada\"."
+  }
+ },
+ {
+  "id": "p26",
+  "n": 26,
+  "track": "lib",
+  "unit": "Unidad 7 · Vectores",
+  "title": "Contar elementos mayores al promedio",
+  "xp": 40,
+  "goal": "Calcular el promedio de un vector y contar cuántos elementos lo superan, en dos recorridos.",
+  "theory": [
+   "No se puede saber si un elemento supera el promedio **mientras** se lo calcula: el promedio depende de **todos** los elementos, así que primero hay que terminar de sumarlos y recién ahí comparar. Por eso hacen falta **dos recorridos** separados.",
+   {
+    "code": "int suma = 0;\nfor (int i = 0; i < n; i++) suma += v[i];     // 1er recorrido: sumar\ndouble promedio = suma * 1.0 / n;\nint mayores = 0;\nfor (int i = 0; i < n; i++) {                 // 2do recorrido: comparar\n    if (v[i] > promedio) mayores++;\n}"
+   },
+   "La comparación `v[i] > promedio` mezcla un `int` con un `double`: C++ convierte automáticamente `v[i]` a decimal para comparar, así que no hace falta castear a mano."
+  ],
+  "task": "Leé `n` y `n` enteros. Mostrá:\n`Promedio: <promedio con 2 decimales>`\n`Mayores al promedio: <cantidad>`\nUsá `>` estricto (un elemento igual al promedio no cuenta).",
+  "starter": "// TODO: cabecera\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nconst int MAX = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int v[MAX];\n    int n, suma = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n        suma += v[i];\n    }\n    // TODO: calculá el promedio como decimal\n\n    // TODO: con otro for, contá cuántos v[i] son ESTRICTAMENTE mayores al promedio\n\n    cout << fixed << setprecision(2) << \"Promedio: \" << 0 << endl;\n    cout << \"Mayores al promedio: \" << 0 << endl;\n    return 0;\n}\n",
+  "rules": {"header":true,"commentFuncs":true,"commentLoops":true,"minComments":5,"need":["array","const","for"]},
+  "tests": [
+   {"name":"2 4 6 8", "stdin":"4\n2 4 6 8", "out":"Promedio: 5.00\nMayores al promedio: 2\n"},
+   {"name":"Todos iguales", "stdin":"5\n10 10 10 10 10", "out":"Promedio: 10.00\nMayores al promedio: 0\n"},
+   {"name":"1 2 3", "stdin":"3\n1 2 3", "out":"Promedio: 2.00\nMayores al promedio: 1\n"},
+   {"name":"Un solo elemento", "stdin":"1\n7", "out":"Promedio: 7.00\nMayores al promedio: 0\n"}
+  ],
+  "hints": [
+   "Primero un `for` que sume todo en `suma` (podés hacerlo en el mismo `for` de la carga, como ya está en el starter).",
+   "`double promedio = suma * 1.0 / n;` — el `1.0` evita la división entera.",
+   "Un segundo `for (int i = 0; i < n; i++) if (v[i] > promedio) mayores++;` cuenta los que superan el promedio."
+  ],
+  "sampleIn": "4\n2 4 6 8",
+  "solution": "// Programa 26: cuenta los elementos mayores al promedio del vector\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nconst int MAX = 100;   // tamaño maximo del vector\n\n// Lee n numeros, calcula su promedio y cuenta cuantos lo superan\nint main() {\n    int v[MAX];\n    int n, suma = 0;\n    cin >> n;\n    // carga y suma en el mismo recorrido\n    for (int i = 0; i < n; i++) {\n        cin >> v[i];\n        suma += v[i];\n    }\n    double promedio = suma * 1.0 / n;   // division decimal\n    int mayores = 0;\n    // segundo recorrido: recien aca se puede comparar contra el promedio ya calculado\n    for (int i = 0; i < n; i++) {\n        if (v[i] > promedio) mayores++;\n    }\n    cout << fixed << setprecision(2) << \"Promedio: \" << promedio << endl;\n    cout << \"Mayores al promedio: \" << mayores << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "¿Por qué este programa no puede resolverse con un solo `for`, a diferencia de la suma o el máximo?",
+   "a": "Porque la condición (`> promedio`) depende de un valor — el promedio — que **todavía no existe** hasta haber visto **todos** los elementos. Sumar o buscar el máximo se puede decidir elemento a elemento; contar \"mayores al promedio\" no."
+  }
+ },
+ {
+  "id": "p27",
+  "n": 27,
+  "track": "lib",
+  "unit": "Unidad 7 · Matrices",
+  "title": "Máximo de cada fila de una matriz",
+  "xp": 50,
+  "goal": "Recorrer una matriz fila por fila y guardar el mayor valor de cada una en un vector.",
+  "theory": [
+   "Para \"un resultado por fila\" conviene un **for externo por fila** y, adentro, un **for interno por columna** que busca el máximo de esa fila sola (reiniciando el máximo al entrar a cada fila nueva).",
+   {
+    "code": "for (int i = 0; i < filas; i++) {\n    int max = m[i][0];              // arranca con la 1ra columna de ESTA fila\n    for (int j = 1; j < cols; j++) {\n        if (m[i][j] > max) max = m[i][j];\n    }\n    maximos[i] = max;                // un resultado por fila\n}"
+   },
+   "El error típico es inicializar `max` una sola vez antes del for externo: así el máximo de la fila 0 \"contamina\" a las demás filas."
+  ],
+  "task": "Leé `filas`, `columnas` y la matriz. Mostrá una sola línea:\n`Maximos por fila: <max0> <max1> ... <maxN-1>`",
+  "starter": "// TODO: cabecera\n#include <iostream>\nusing namespace std;\n\nconst int MAX_COLS = 100;\nconst int MAX_FILAS = 100;\n\n// TODO: explicá qué hace main\nint main() {\n    int m[MAX_FILAS][MAX_COLS];\n    int filas, cols;\n    cin >> filas >> cols;\n    for (int i = 0; i < filas; i++) {\n        for (int j = 0; j < cols; j++) {\n            cin >> m[i][j];\n        }\n    }\n    int maximos[MAX_FILAS];\n    // TODO: para cada fila, buscá su maximo (reiniciando al entrar a cada fila) y guardalo en maximos[i]\n\n    cout << \"Maximos por fila:\";\n    for (int i = 0; i < filas; i++) cout << \" \" << maximos[i];\n    cout << endl;\n    return 0;\n}\n",
+  "rules": {"header":true,"commentFuncs":true,"commentLoops":true,"minComments":5,"need":["array2d","nested"]},
+  "tests": [
+   {"name":"3x2", "stdin":"3 2\n3 8\n9 2\n4 4", "out":"Maximos por fila: 8 9 4\n"},
+   {"name":"Con negativos", "stdin":"2 2\n-10 -5\n-1 -20", "out":"Maximos por fila: -5 -1\n"},
+   {"name":"1x1", "stdin":"1 1\n7", "out":"Maximos por fila: 7\n"},
+   {"name":"Cuasi-diagonal 3x3", "stdin":"3 3\n1 0 0\n0 5 0\n0 0 9", "out":"Maximos por fila: 1 5 9\n"}
+  ],
+  "hints": [
+   "El `for` externo recorre las filas (`i`); el interno recorre las columnas de **esa** fila (`j`).",
+   "Reiniciá `int max = m[i][0];` **dentro** del for externo, al empezar cada fila — no antes de todos los fors.",
+   "Guardá el resultado con `maximos[i] = max;` al terminar el for interno de cada fila."
+  ],
+  "sampleIn": "3 2\n3 8\n9 2\n4 4",
+  "solution": "// Programa 27: maximo de cada fila de una matriz\n#include <iostream>\nusing namespace std;\n\nconst int MAX_COLS = 100;\nconst int MAX_FILAS = 100;\n\n// Lee una matriz y guarda en un vector el maximo de cada fila\nint main() {\n    int m[MAX_FILAS][MAX_COLS];\n    int filas, cols;\n    cin >> filas >> cols;\n    // carga la matriz\n    for (int i = 0; i < filas; i++) {\n        for (int j = 0; j < cols; j++) {\n            cin >> m[i][j];\n        }\n    }\n    int maximos[MAX_FILAS];\n    // por cada fila, un maximo propio que arranca de nuevo en cada vuelta\n    for (int i = 0; i < filas; i++) {\n        int max = m[i][0];\n        // recorre el resto de la fila comparando contra el maximo de ESTA fila\n        for (int j = 1; j < cols; j++) {\n            if (m[i][j] > max) max = m[i][j];\n        }\n        maximos[i] = max;\n    }\n    cout << \"Maximos por fila:\";\n    // recorre el vector de resultados y los imprime uno por uno\n    for (int i = 0; i < filas; i++) cout << \" \" << maximos[i];\n    cout << endl;\n    return 0;\n}\n",
+  "trace": {
+   "q": "Si `int max = m[i][0];` se escribe UNA sola vez antes del for externo (en vez de dentro, por cada fila), ¿qué pasa con una matriz donde la fila 0 tiene el valor más alto de toda la matriz?",
+   "a": "Como `max` nunca se reinicia, ese valor altísimo de la fila 0 queda \"compitiendo\" en todas las filas siguientes: si ninguna fila posterior lo supera, todas las filas (menos la 0) muestran por error ese mismo máximo de la fila 0, en vez del máximo real de cada una."
+  }
+ }
+
+].forEach(s=>STEPS.push(s));
+})(typeof globalThis!=='undefined'?globalThis:window);
+
+</script>
+<script>
 /* ===== TallerCore: verificación de un paso (sin DOM) ===== */
 (function(root){
 'use strict';
@@ -16077,7 +17521,14 @@ function levelInfo(xp){
 }
 
 /* ---------- avatar ---------- */
-function avatarEl(id, cls){ const a=AV[id]||AV.robo; const d=el('span','av '+(cls||'')); d.style.setProperty('--ac',a.c); d.innerHTML=a.svg(a.c); return d; }
+/* Personajes de la Arena como avatar: el juego (iframe) manda un retrato PNG por personaje y lo guardamos en S.prog.arenaAv */
+const AR_PNG=/^data:image\/png;base64,[A-Za-z0-9+\/=]{20,20000}$/;
+function arenaAvOf(id){ if(typeof id!=='string'||id.slice(0,6)!=='arena:') return null; return (S.prog.arenaAv||[]).find(x=>'arena:'+x.id===id)||null; }
+function arenaAvImg(){ const a=arenaAvOf(S.prog.avatar); return a?a.png:''; }
+function avatarEl(id, cls, img){
+  if(typeof id==='string'&&id.slice(0,6)==='arena:'){ const ar=arenaAvOf(id), png=ar?ar.png:(img||'');
+    if(png&&AR_PNG.test(png)){ const d=el('span','av av-img '+(cls||'')); d.style.setProperty('--ac','#f6c445'); const im=document.createElement('img'); im.src=png; im.alt=ar?ar.name:'Personaje de la Arena'; im.draggable=false; d.appendChild(im); return d; } }
+  const a=AV[id]||AV.robo; const d=el('span','av '+(cls||'')); d.style.setProperty('--ac',a.c); d.innerHTML=a.svg(a.c); return d; }
 
 /* ---------- toast / levelup ---------- */
 let toastWrap;
@@ -16148,7 +17599,7 @@ function syncRanking(){
   rankTimer=setTimeout(()=>{
     if(S.db && S.uid && S.isWriter!==false){
       const li=levelInfo(S.prog.xp);
-      try{ S.db.doc('ranking/'+S.uid).set({ nick:(S.prog.nick||'Anónimo').slice(0,24), avatar:S.prog.avatar, xp:S.prog.xp, level:li.level, lessons:doneLessonsCount(), study:S.prog.studyMin||0, updated:Date.now() }); }catch(e){}
+      try{ S.db.doc('ranking/'+S.uid).set({ nick:(S.prog.nick||'Anónimo').slice(0,24), avatar:S.prog.avatar, avimg:arenaAvImg(), xp:S.prog.xp, level:li.level, lessons:doneLessonsCount(), study:S.prog.studyMin||0, updated:Date.now() }); }catch(e){}
     }
     else if(S.useSupa && S.uid){
       const li=levelInfo(S.prog.xp);
@@ -16201,7 +17652,7 @@ let arenaRankT;
 function accRank(r){
   if(!S.db||!S.uid||S.isWriter===false||!r) return;
   clearTimeout(arenaRankT);
-  arenaRankT=setTimeout(()=>{ try{ if(r.none){ S.db.doc('arena/'+S.uid).delete(); return; } S.db.doc('arena/'+S.uid).set({ nick:(S.prog.nick||ACC.name||'Anónimo').slice(0,24), avatar:S.prog.avatar, score:Math.max(0,Math.floor(+r.score||0)), lvl:r.lvl|0, name:String(r.name||'').slice(0,16), cls:String(r.cls||'').slice(0,12), maps:r.maps|0, kills:r.kills|0, updated:Date.now() }); }catch(e){} },800);
+  arenaRankT=setTimeout(()=>{ try{ if(r.none){ S.db.doc('arena/'+S.uid).delete(); return; } S.db.doc('arena/'+S.uid).set({ nick:(S.prog.nick||ACC.name||'Anónimo').slice(0,24), avatar:S.prog.avatar, avimg:arenaAvImg(), score:Math.max(0,Math.floor(+r.score||0)), lvl:r.lvl|0, name:String(r.name||'').slice(0,16), cls:String(r.cls||'').slice(0,12), maps:r.maps|0, kills:r.kills|0, updated:Date.now() }); }catch(e){} },800);
 }
 window.addEventListener('message',ev=>{
   const f=arenaFrame(), d=ev.data; if(!f||ev.source!==f.contentWindow||!d||typeof d!=='object'||typeof d.abg!=='string') return;
@@ -16209,7 +17660,15 @@ window.addEventListener('message',ev=>{
   else if(d.abg==='save'&&typeof d.json==='string') accSave(d);
   else if(d.abg==='del') accDel(d.id,d.at);
   else if(d.abg==='rank') accRank(d.rank);
+  else if(d.abg==='avatars') arenaAvatars(d.list);
 });
+function arenaAvatars(list){
+  if(!Array.isArray(list)) return;
+  const clean=list.slice(0,10).filter(x=>x&&typeof x.id==='string'&&/^[\w-]{1,40}$/.test(x.id)&&typeof x.png==='string'&&AR_PNG.test(x.png))
+    .map(x=>({id:x.id,name:String(x.name||'Héroe').slice(0,16),lvl:x.lvl|0,cls:String(x.cls||'').slice(0,12),png:x.png}));
+  if(JSON.stringify(clean)===JSON.stringify(S.prog.arenaAv||[])) return;
+  S.prog.arenaAv=clean; saveProg(); try{ refreshMe(); }catch(e){}
+}
 function accCard(){
   const st=ACC.state, c=el('div','acc-card '+(st==='ok'?'ok':st==='sin-sesion'?'off':'')); const nick=S.prog.nick||ACC.name||'Jugador/a';
   const title = st==='ok' ? 'Sesión iniciada · '+esc(nick) : st==='lectura' ? 'Sesión de solo lectura · '+esc(nick) : st==='sin-sesion' ? 'Sin sesión' : 'Conectando con tu cuenta…';
@@ -16320,6 +17779,7 @@ function refreshMe(){
     me.appendChild(a);
     me.appendChild(el('div','', `<div class="me-name">${esc(S.prog.nick||'Jugador/a')}</div><div class="me-lvl">Nivel ${li.level} · ${esc(curTitle())} · ${S.prog.xp} XP · ${S.prog.coins} 🪙</div><div class="xpbar"><i style="width:${li.pct}%"></i></div>`));
   });
+  $$('#meBtnMini').forEach(m=>{ m.innerHTML=''; const a=avatarEl(S.prog.avatar); a.style.width='26px'; a.style.height='26px'; if(S.prog.effectsOn.includes('fx_aura')) a.classList.add('fx-aura'); m.appendChild(a); });
   applyEffects();
   renderMobileNav();
 }
@@ -16954,6 +18414,17 @@ function renderHome(main){
 }
 
 /* ================= MÓDULO (lista de lecciones) ================= */
+/* ===== Tu tecnicatura (UTN): filtro 1er / 2do parcial =====
+   Cada lección de estas 4 materias trae un campo l.par (1 o 2) que indica
+   a qué parcial corresponde su contenido, según el cronograma 2026 de la
+   tecnicatura. PARVIEW (0=todas,1=1er parcial,2=2do parcial) se guarda en
+   localStorage y es global a las 4 materias: como los parciales de las 4
+   caen en fechas cercanas, el estudiante suele querer "todo lo del 1er
+   parcial" sin tener que tocar el filtro materia por materia. */
+const TECNI_MODS=['matematica','programacion','ayso','organizacion'];
+let PARVIEW=0; try{ PARVIEW=parseInt(localStorage.getItem('ab_parfiltro')||'0')||0; }catch(e){}
+function parLabel(v){ return v===1?'1er parcial':v===2?'2do parcial':'Todas'; }
+function setParView(v){ if(v===PARVIEW) return; PARVIEW=v; try{ localStorage.setItem('ab_parfiltro',String(v)); }catch(e){} go('module',{mod:S.mod}); }
 function renderModule(main){
   const m=MODS.find(x=>x.id===S.mod); if(!m)return go('home');
   main.appendChild(topbar(m.name, m.color, m.short));
@@ -16962,10 +18433,25 @@ function renderModule(main){
   w.appendChild(el('div','why', `<b>¿Por qué aprender esto?</b> ${m.why}`));
   if(m.note) w.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>'+rich(m.note)+'</span>'));
   if(m.ethics) w.appendChild(el('div','callout warn','<span class="ci">'+ICON('shield')+'</span><span><b>Nota ética y legal.</b> '+rich(m.ethics)+'</span>'));
+  const esTecni=TECNI_MODS.includes(m.id);
+  let lessonsToShow=m.lessons;
+  if(esTecni){
+    const tabs=el('div','pomo-mode'); tabs.setAttribute('role','tablist'); tabs.style.marginTop='4px';
+    [0,1,2].forEach(pv=>{ const b=el('button',pv===PARVIEW?'on':'',esc(parLabel(pv))); b.type='button'; b.onclick=()=>setParView(pv); tabs.appendChild(b); });
+    w.appendChild(tabs);
+    if(PARVIEW){
+      lessonsToShow=m.lessons.filter(l=>l.par===PARVIEW);
+      if(!lessonsToShow.length){ const otro=PARVIEW===1?2:1;
+        w.appendChild(el('div','callout info','<span class="ci">'+ICON('info')+'</span><span>'+esc(m.name)+' no tiene lecciones marcadas para el '+parLabel(PARVIEW)+' en esta plataforma: todo el contenido cargado corresponde al '+parLabel(otro)+'.</span>'));
+      } else {
+        w.appendChild(el('p','',`<span style="color:var(--muted);font-size:.86rem">Mostrando ${lessonsToShow.length} de ${m.lessons.length} lecciones · ${parLabel(PARVIEW)}.</span>`));
+      }
+    }
+  }
   const list=el('div','lessons');
-  m.lessons.forEach((l,i)=>{ const done=S.prog.lessons[m.id+':'+l.id]; const c=el('button','lesson-card'+(done?' done':''));
+  lessonsToShow.forEach((l,i)=>{ const done=S.prog.lessons[m.id+':'+l.id]; const c=el('button','lesson-card'+(done?' done':''));
     c.innerHTML=`<div class="lesson-n">${done?ICON('check',18):(i+1)}</div>
-      <div class="lesson-info"><h4>${esc(l.title)}</h4><div class="meta"><span class="lvl-badge lvl-${l.level}">${l.level}</span><span>⏱ ${l.mins} min</span><span>${l.tasks.length} ejercicios</span></div></div>
+      <div class="lesson-info"><h4>${esc(l.title)}</h4><div class="meta"><span class="lvl-badge lvl-${l.level}">${l.level}</span><span>⏱ ${l.mins} min</span><span>${l.tasks.length} ejercicios</span>${esTecni&&l.par?`<span class="lvl-badge" style="background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c)">${parLabel(l.par)}</span>`:''}</div></div>
       <span style="color:var(--muted)">${ICON('chevron')}</span>`;
     c.onclick=()=>go('lesson',{mod:m.id,lesson:l.id}); list.appendChild(c); });
   w.appendChild(list);
@@ -17697,7 +19183,7 @@ async function renderRanking(main){
     list.appendChild(el('div','callout info',`<span class="ci">${ICON('info')}</span><span>${msg}</span>`)); }
   rows.forEach((r,idx)=>{ const mine=(r.id===S.uid)||r.me; const row=el('div','rank-row'+(mine?' me-row':'')+(idx<3?' top'+(idx+1):''));
     const pos=el('div','rank-pos', idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':(idx+1));
-    const av=avatarEl(r.avatar||'robo'); av.classList.add('rank-av');
+    const av=avatarEl(r.avatar||'robo','',r.avimg); av.classList.add('rank-av');
     row.appendChild(pos); row.appendChild(av);
     row.appendChild(el('div','rank-info',`<b>${esc(r.nick||'Anónimo')}${mine?' <span style="color:var(--brand);font-size:.7rem">(vos)</span>':''}</b><span>Nivel ${r.level||levelInfo(r.xp).level} · ${TITLES[Math.min((r.level||1)-1,TITLES.length-1)]} · ${r.lessons||0} lecciones</span>`));
     row.appendChild(el('div','rank-xp', rankMode==='study' ? fmtStudy(r.study||0) : (r.xp||0)+' XP'));
@@ -17711,7 +19197,7 @@ async function renderArenaRank(list){
   if(!rows.length){ list.appendChild(el('div','rank-empty','Todavía no hay nadie en la tabla. Jugá a la Arena un rato y vas a aparecer acá.')); return; }
   rows.forEach((r,idx)=>{ const mine=r.id===S.uid; const row=el('div','rank-row'+(mine?' me-row':'')+(idx<3?' top'+(idx+1):''));
     row.appendChild(el('div','rank-pos', idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':(idx+1)));
-    const av=avatarEl(r.avatar||'robo'); av.classList.add('rank-av'); row.appendChild(av);
+    const av=avatarEl(r.avatar||'robo','',r.avimg); av.classList.add('rank-av'); row.appendChild(av);
     row.appendChild(el('div','rank-info',`<b>${esc(r.nick||'Anónimo')}${mine?' <span style="color:var(--brand);font-size:.7rem">(vos)</span>':''}</b><span>${esc(r.name||'Héroe')}${r.cls?' · '+esc(r.cls):''} · Nv ${r.lvl||1} · ${r.maps||1} mapa(s)${r.kills?' · '+r.kills+' criaturas':''}</span>`));
     row.appendChild(el('div','rank-xp',(r.score||0)+' pts')); list.appendChild(row); });
 }
@@ -17865,6 +19351,15 @@ function openAvatar(){
     else p.onclick=()=>{ sel=id; $$('.av-pick',grid).forEach(x=>x.classList.remove('sel')); p.classList.add('sel'); };
     grid.appendChild(p); });
   mo.appendChild(grid);
+  /* personajes de la Arena */
+  const arh=el('div','',`<div style="font-size:.82rem;font-weight:600;color:var(--fg-soft);margin:16px 0 8px">Tus personajes de la Arena</div>`); mo.appendChild(arh);
+  const arg=el('div','av-grid'); mo.appendChild(arg);
+  const drawAr=()=>{ arg.innerHTML=''; const L=S.prog.arenaAv||[];
+    if(!L.length){ arg.appendChild(el('p','',`<span style="font-size:.82rem;color:var(--muted)">Todavía no hay personajes acá. Entrá a la Arena con tu sesión iniciada y se cargan solos (también los de otro navegador).</span>`)); return; }
+    L.forEach(c=>{ const id='arena:'+c.id; const p=el('button','av-pick'+(id===sel?' sel':'')); p.type='button'; p.appendChild(avatarEl(id)); p.title=c.name+' · Nv '+c.lvl+(c.cls?' · '+c.cls:'');
+      p.onclick=()=>{ sel=id; $$('.av-pick',mo).forEach(x=>x.classList.remove('sel')); p.classList.add('sel'); };
+      const w=el('div',''); w.style.textAlign='center'; w.appendChild(p); w.appendChild(el('small','',esc(c.name)+' · Nv '+c.lvl)); w.lastChild.style.cssText='display:block;font-size:.68rem;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'; arg.appendChild(w); }); };
+  drawAr(); arenaSend({abg:'avatars?'}); setTimeout(()=>{ if(document.body.contains(mo)) drawAr(); },1200);
   const act=el('div','ex-actions'); act.style.marginTop='18px';
   const save=el('button','btn btn-primary','Guardar'); const cancel=el('button','btn btn-ghost','Cancelar');
   save.onclick=()=>{ S.prog.avatar=sel; S.prog.nick=nk.value.trim(); saveProg(); close(); };
@@ -18200,7 +19695,9 @@ function tlDrafts(){ try{ return JSON.parse(localStorage.getItem(TLK)||'{}')||{}
 function tlSaveDraft(id,code){ try{ const d=tlDrafts(); d[id]=code; localStorage.setItem(TLK,JSON.stringify(d)); }catch(e){} }
 function tlSteps(){ return window.TALLER_STEPS||[]; }
 function tlIdx(id){ return tlSteps().findIndex(s=>s.id===id); }
-function tlUnlocked(i){ const st=tlSteps(); return i===0 || !!tlS().done[st[i-1].id]; }
+function tlUnlocked(i){ const st=tlSteps(); if(st[i]&&st[i].track==='lib') return true; return i===0 || !!tlS().done[st[i-1].id]; }
+function tlTrack(){ const t=tlS(); return t.track==='lib'?'lib':'main'; }
+function tlTrackSteps(trk){ return tlSteps().filter(s=>(s.track||'main')===trk); }
 function tlRich(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\n/g,'<br>'); }
 function tlTheory(step){ return step.theory.map(b=> typeof b==='string' ? '<p>'+tlRich(b)+'</p>' : '<pre class="tl-pre">'+highlight(b.code,'cpp')+'</pre>').join(''); }
 const TL_KIND_RANK={error:6,logic:5,ctx:3,warning:4,comment:2,need:1};
@@ -18210,32 +19707,35 @@ const TL_LABEL={error:'Error',logic:'Resultado incorrecto',ctx:'Posible causa',w
 
 function renderTaller(main){
   tlLeave();
-  const steps=tlSteps(); const T=tlS();
+  const T=tlS(); const trk=tlTrack(); const steps=tlTrackSteps(trk); const LIB=trk==='lib';
   main.appendChild(topbar('Taller de programación','programacion','C++'));
   const v=el('section','view'); const w=el('div','tl-wrap'); v.appendChild(w); main.appendChild(v);
   if(!steps.length || !window.CppLab || !window.TallerCore){ w.appendChild(el('div','callout warn','El taller no se pudo cargar.')); return; }
-  let i=tlIdx(T.cur); if(i<0||!tlUnlocked(i)) i=Math.max(0,steps.findIndex((s,k)=>!T.done[s.id])); if(i<0) i=steps.length-1;
-  const step=steps[i]; T.cur=step.id; TL.cur=step; TL.marks=[]; TL.live=[]; TL.res=null; TL.tab='task'; TL.open={}; TL.solShown=false;
+  T.curBy=T.curBy||{}; let i=steps.findIndex(s=>s.id===(steps.some(q=>q.id===T.cur)?T.cur:T.curBy[trk])); if(i<0||(!LIB&&!tlUnlocked(tlIdx(steps[i].id)))) i=Math.max(0,steps.findIndex((s,k)=>!T.done[s.id])); if(i<0) i=LIB?0:steps.length-1;
+  const step=steps[i]; T.cur=step.id; T.curBy[trk]=step.id; TL.cur=step; TL.marks=[]; TL.live=[]; TL.res=null; TL.tab='task'; TL.open={}; TL.solShown=false;
   const doneN=steps.filter(s=>T.done[s.id]).length;
 
   /* ---- cabecera + progreso + pasos ---- */
   const top=el('div','tl-top');
-  top.innerHTML=`<div><h2>Taller de programación</h2><p>Construí paso a paso el <b>Gestor de Notas</b> en C++: desde un “Hola mundo” hasta una aplicación con menú, vectores, structs, búsqueda, ordenamiento, apareo y corte de control (temas del 2° parcial). Tu código se ejecuta acá mismo y se marcan las líneas con errores.</p></div>
-  <div class="tl-prog"><div class="bar"><i style="width:${Math.round(doneN/steps.length*100)}%"></i></div><small><span>${doneN} de ${steps.length} pasos</span><span>${steps.reduce((a,s)=>a+(T.done[s.id]?(T.done[s.id].xp||0):0),0)} XP</span></small></div>`;
+  top.innerHTML=`<div><h2>Taller de programación</h2><p>${LIB?'<b>27 programas sueltos</b> para practicar los temas del 2° parcial: vectores, matrices, structs, búsqueda, ordenamiento, apareo y corte de control. Elegí el que quieras (sin orden obligatorio): cada uno tiene consigna, teoría, pistas, solución comentada y verificación automática.':'Construí paso a paso el <b>Gestor de Notas</b> en C++: desde un “Hola mundo” hasta una aplicación con menú, vectores, structs, búsqueda, ordenamiento, apareo y corte de control (temas del 2° parcial).'} Tu código se ejecuta acá mismo y se marcan las líneas con errores.</p></div>
+  <div class="tl-prog"><div class="bar"><i style="width:${Math.round(doneN/steps.length*100)}%"></i></div><small><span>${doneN} de ${steps.length} ${LIB?'programas':'pasos'}</span><span>${steps.reduce((a,s)=>a+(T.done[s.id]?(T.done[s.id].xp||0):0),0)} XP</span></small></div>`;
   w.appendChild(top);
-  const chips=el('div','tl-steps');
-  steps.forEach((s,k)=>{ const ok=!!T.done[s.id], lock=!tlUnlocked(k);
+  const nMain=tlTrackSteps('main').length, nLib=tlTrackSteps('lib').length;
+  if(nLib){ const tk=el('div','tl-tracks'); [['main','Proyecto Gestor de Notas ('+nMain+')'],['lib',nLib+' programas']].forEach(([id,lb])=>{ const b=el('button',id===trk?'on':'',lb); b.onclick=()=>{ if(id===trk) return; tlLeave(); T.track=id; saveProg(); go('taller'); }; tk.appendChild(b); }); w.appendChild(tk); }
+  const chips=el('div','tl-steps'+(LIB?' wrap':'')); const chipEls=[]; let lastUnit='';
+  steps.forEach((s,k)=>{ const ok=!!T.done[s.id], lock=!LIB&&!tlUnlocked(k);
+    if(LIB&&s.unit!==lastUnit){ lastUnit=s.unit; chips.appendChild(el('span','tl-unit',esc(s.unit))); }
     const c=el('button','tl-chip'+(ok?' done':'')+(k===i?' cur':'')+(lock?' lock':''),`<b>${ok?'✓':lock?'🔒':s.n}</b>${esc(s.title.split(':')[0].split('(')[0])}`);
     c.title=lock?'Aprobá el paso anterior para desbloquearlo':s.unit+' · '+s.title;
     c.onclick=()=>{ if(lock){ toast('Primero aprobá el paso '+(k)+'.'); return; } tlLeave(); T.cur=s.id; saveProg(); go('taller'); };
-    chips.appendChild(c); });
+    chips.appendChild(c); chipEls.push(c); });
   w.appendChild(chips);
 
   /* ---- grilla: editor | panel lateral ---- */
   const grid=el('div','tl-grid'); w.appendChild(grid);
   const left=el('div','tl-left'); grid.appendChild(left);
   const edCard=el('div','tl-card');
-  const bar=el('div','tl-bar'); bar.innerHTML=`<span class="tl-file"><i></i>gestor_paso${step.n}.cpp</span>`;
+  const bar=el('div','tl-bar'); bar.innerHTML=`<span class="tl-file"><i></i>${LIB?'programa_'+step.n:'gestor_paso'+step.n}.cpp</span>`;
   const bRun=el('button','btn btn-sm btn-c',ICON('play',13)+' Ejecutar'); bRun.title='Ejecutar (Ctrl+Enter)';
   const bFmt=el('button','btn btn-sm btn-ghost','Sangrar'); bFmt.title='Re-indentar el código';
   const bRst=el('button','btn btn-sm btn-ghost','↺ Reiniciar paso');
@@ -18259,7 +19759,7 @@ function renderTaller(main){
   const side=el('aside','tl-side'); grid.appendChild(side);
   const info=el('div','tl-card tl-info');
   const T0=T.done[step.id];
-  info.innerHTML=`<div class="tl-kick"><span>Paso ${step.n} de ${steps.length} · ${esc(step.unit)}</span><span class="xp">${T0?'✓ ':'+'}${step.xp} XP</span></div><h3>${esc(step.title)}</h3><div class="tl-goal">${tlRich(step.goal)}</div>`;
+  info.innerHTML=`<div class="tl-kick"><span>${LIB?'Programa':'Paso'} ${step.n} de ${steps.length} · ${esc(step.unit)}</span><span class="xp">${T0?'✓ ':'+'}${step.xp} XP</span></div><h3>${esc(step.title)}</h3><div class="tl-goal">${tlRich(step.goal)}</div>`;
   const tabs=el('div','tl-tabs'); const tTask=el('button','on','Consigna'); const tTheo=el('button','','Teoría'); tabs.append(tTask,tTheo); info.appendChild(tabs);
   const body=el('div','tl-body'); info.appendChild(body);
   const showTab=t=>{ TL.tab=t; tTask.classList.toggle('on',t==='task'); tTheo.classList.toggle('on',t==='theory'); body.innerHTML = t==='task' ? '<div class="tl-task">'+tlRich(step.task)+'</div>' : tlTheory(step); };
@@ -18368,18 +19868,20 @@ function renderTaller(main){
     const D=T.done[step.id];
     if(res.passed){
       let gain=0;
-      if(!D){ const helped=!!(T.help&&T.help[step.id]); gain=helped?Math.round(step.xp/2):step.xp; T.done[step.id]={xp:gain,at:Date.now(),tries:(T.tries[step.id]||0)+1,helped}; award(gain,'Taller · paso '+step.n); try{ confetti(); }catch(e){}
-        if(steps.every(s=>T.done[s.id]) && !T.finished){ T.finished=true; setTimeout(()=>award(250,'¡Gestor de Notas completo!'),900); }
+      if(!D){ const helped=!!(T.help&&T.help[step.id]); gain=helped?Math.round(step.xp/2):step.xp; T.done[step.id]={xp:gain,at:Date.now(),tries:(T.tries[step.id]||0)+1,helped}; award(gain,LIB?'Taller · programa '+step.n:'Taller · paso '+step.n); try{ confetti(); }catch(e){}
+        if(!LIB && steps.every(s=>T.done[s.id]) && !T.finished){ T.finished=true; setTimeout(()=>award(250,'¡Gestor de Notas completo!'),900); }
+        if(LIB && steps.every(s=>T.done[s.id]) && !T.finishedLib){ T.finishedLib=true; setTimeout(()=>award(300,'¡Los 27 programas resueltos!'),900); }
         saveProg(); }
       const last=i===steps.length-1;
-      const box=el('div','tl-res ok'); box.innerHTML=`<h4>✔ ¡Paso aprobado!</h4>${gain?`<div>Ganaste <b>+${gain} XP</b>${T.help&&T.help[step.id]?' (mitad por haber visto la solución)':''}.</div>`:'<div>Ya lo habías aprobado antes: podés seguir mejorando tu código.</div>'}`;
+      const box=el('div','tl-res ok'); box.innerHTML=`<h4>✔ ¡${LIB?'Programa':'Paso'} aprobado!</h4>${gain?`<div>Ganaste <b>+${gain} XP</b>${T.help&&T.help[step.id]?' (mitad por haber visto la solución)':''}.</div>`:'<div>Ya lo habías aprobado antes: podés seguir mejorando tu código.</div>'}`;
       if(step.trace){ const tr=el('div','tl-trace'); tr.innerHTML=`<b>🧠 Pregunta para pensar</b><pre>${esc(step.trace.q)}</pre>`; const bt=el('button','btn btn-sm btn-ghost','Ver respuesta'); bt.onclick=()=>{ bt.replaceWith(el('div','',tlRich('Respuesta: '+step.trace.a))); }; tr.appendChild(bt); box.appendChild(tr); }
-      const nx=el('button','btn btn-primary btn-sm',last?'🏆 Ver mi progreso':'Siguiente paso →'); nx.style.marginTop='10px';
+      const nx=el('button','btn btn-primary btn-sm',last?'🏆 Ver mi progreso':LIB?'Siguiente programa →':'Siguiente paso →'); nx.style.marginTop='10px';
       nx.onclick=()=>{ tlLeave(); if(last){ go('progreso'); } else { T.cur=steps[i+1].id; saveProg(); go('taller'); } }; box.appendChild(nx);
       resBox.appendChild(box);
-      if(last && T.finished){ box.insertAdjacentHTML('beforeend','<div style="margin-top:8px">🎉 <b>¡Terminaste el Gestor de Notas!</b> Armaste una aplicación completa con menú, struct, vectores, búsqueda y ordenamiento.</div>'); }
+      if(last && LIB && T.finishedLib){ box.insertAdjacentHTML('beforeend','<div style="margin-top:8px">🎉 <b>¡Resolviste los 27 programas!</b> Tenés práctica de sobra para el 2° parcial.</div>'); }
+      if(last && !LIB && T.finished){ box.insertAdjacentHTML('beforeend','<div style="margin-top:8px">🎉 <b>¡Terminaste el Gestor de Notas!</b> Armaste una aplicación completa con menú, struct, vectores, búsqueda y ordenamiento.</div>'); }
       // refresca chips/progreso sin perder el editor
-      try{ const done=steps.filter(s=>T.done[s.id]).length; top.querySelector('.bar i').style.width=Math.round(done/steps.length*100)+'%'; top.querySelector('small').innerHTML=`<span>${done} de ${steps.length} pasos</span><span>${steps.reduce((a,s)=>a+(T.done[s.id]?(T.done[s.id].xp||0):0),0)} XP</span>`; chips.children[i].classList.add('done'); chips.children[i].firstChild.textContent='✓'; if(chips.children[i+1]){ chips.children[i+1].classList.remove('lock'); const b=chips.children[i+1].firstChild; if(b.textContent==='🔒') b.textContent=steps[i+1].n; } }catch(e){}
+      try{ const done=steps.filter(s=>T.done[s.id]).length; top.querySelector('.bar i').style.width=Math.round(done/steps.length*100)+'%'; top.querySelector('small').innerHTML=`<span>${done} de ${steps.length} ${LIB?'programas':'pasos'}</span><span>${steps.reduce((a,s)=>a+(T.done[s.id]?(T.done[s.id].xp||0):0),0)} XP</span>`; chipEls[i].classList.add('done'); chipEls[i].firstChild.textContent='✓'; if(chipEls[i+1]){ chipEls[i+1].classList.remove('lock'); const b=chipEls[i+1].firstChild; if(b.textContent==='🔒') b.textContent=steps[i+1].n; } }catch(e){}
     } else {
       T.tries[step.id]=(T.tries[step.id]||0)+1; saveProg();
       const errs=res.marks.filter(m=>m.kind==='error').length, bad=res.tests.filter(t=>!t.ok).length;
