@@ -4418,11 +4418,29 @@ let MUSCFG={};
 try{ MUSCFG=JSON.parse(lsGet(MUS_KEY)||'{}')||{}; }catch(e){ MUSCFG={}; }
 function mkSong(bpm,wave,scale,len,notes,drum,vol){ return {bpm:bpm,wave:wave,scale:scale,len:len,notes:notes,drum:!!drum,vol:vol||0.5}; }
 const DEF_SONGS=(function(){
-  const city=mkSong(112,'triangle','pent',32,[[0,7,2],[2,9,1],[3,8,1],[4,10,2],[6,9,2],[8,7,2],[10,8,1],[11,9,1],[12,11,2],[14,9,2],[16,10,2],[18,12,1],[19,11,1],[20,9,2],[22,8,2],[24,7,2],[26,9,1],[27,10,1],[28,8,3],[0,0,4],[8,2,4],[16,3,4],[24,1,4]],false,0.5);
-  const cn=[[0,9,1],[3,10,1],[6,9,1],[8,11,2],[12,9,1],[14,8,1],[16,9,1],[19,10,1],[22,12,2],[26,11,1],[28,9,2]];
-  for(let s=0;s<32;s+=2) cn.push([s,(s%8<4)?0:2,1]);
-  const combat=mkSong(150,'square','minor',32,cn,true,0.3);
-  const boss=mkSong(132,'sawtooth','minor',32,[[0,0,4],[4,0,2],[6,1,2],[8,0,4],[12,3,2],[14,2,2],[16,0,4],[20,0,2],[22,1,2],[24,3,4],[28,4,2],[30,2,2],[0,10,2],[2,11,2],[4,12,4],[8,10,2],[10,9,2],[12,8,4],[16,10,2],[18,11,2],[20,13,4],[24,12,2],[26,11,2],[28,9,4]],true,0.28);
+  /* Ciudad: se mantiene la melodía original (pasea, tranquila) y se le suma un bajo cálido que
+     marca el pulso cada 4 pasos y un pad de dos notas cada 8 pasos para rellenar la armonía;
+     bajo y pad van en 'sine' y con velocidad baja (4° y 5° valor de cada nota) para quedar debajo
+     de la melodía, no compitiendo con ella. */
+  const cityLead=[[0,7,2],[2,9,1],[3,8,1],[4,10,2],[6,9,2],[8,7,2],[10,8,1],[11,9,1],[12,11,2],[14,9,2],[16,10,2],[18,12,1],[19,11,1],[20,9,2],[22,8,2],[24,7,2],[26,9,1],[27,10,1],[28,8,3]];
+  const cityBass=[[0,0,3,0.55,'sine'],[4,0,3,0.55,'sine'],[8,2,3,0.55,'sine'],[12,2,3,0.55,'sine'],[16,0,3,0.55,'sine'],[20,0,3,0.55,'sine'],[24,4,3,0.55,'sine'],[28,2,3,0.55,'sine']];
+  const cityPad=[[0,5,7,0.25,'sine'],[0,9,7,0.25,'sine'],[8,5,7,0.25,'sine'],[8,9,7,0.25,'sine'],[16,6,7,0.22,'sine'],[16,10,7,0.22,'sine'],[24,5,7,0.25,'sine'],[24,9,7,0.25,'sine']];
+  const city=mkSong(112,'triangle','pent',32,cityLead.concat(cityBass,cityPad),false,0.5);
+  /* Combate: la línea melódica original queda igual (lo que ya "sonaba a combate"); se reemplaza
+     el bajo repetitivo de antes por una progresión i-VI-VII-i con raíz+quinta cada 4 pasos, y se
+     agregan acentos de power-chord (raíz+octava) en 'sawtooth' al inicio de cada frase de 8 pasos
+     para un golpe más contundente. La batería ahora tiene bombo+redoblante+hi-hat (ver songTick). */
+  const combatLead=[[0,9,1],[3,10,1],[6,9,1],[8,11,2],[12,9,1],[14,8,1],[16,9,1],[19,10,1],[22,12,2],[26,11,1],[28,9,2]];
+  const combatBass=[[0,0,3.5,0.6,'sine'],[4,4,3.5,0.55,'sine'],[8,5,3.5,0.6,'sine'],[12,9,3.5,0.55,'sine'],[16,6,3.5,0.6,'sine'],[20,10,3.5,0.55,'sine'],[24,0,3.5,0.6,'sine'],[28,4,3.5,0.55,'sine']];
+  const combatAccent=[[0,0,1,0.5,'sawtooth'],[0,7,1,0.4,'sawtooth'],[8,5,1,0.5,'sawtooth'],[8,12,1,0.4,'sawtooth'],[16,6,1,0.5,'sawtooth'],[16,13,1,0.4,'sawtooth'],[24,0,1,0.5,'sawtooth'],[24,7,1,0.4,'sawtooth']];
+  const combat=mkSong(150,'square','minor',32,combatLead.concat(combatBass,combatAccent),true,0.3);
+  /* Jefe: se mantiene el ostinato grave y la melodía aguda originales (ya tenían dos voces) y se
+     suma un pad de acordes en el registro medio, en 'triangle', para llenar el hueco entre el bajo
+     y la melodía. Batería más llena, igual que en combate. */
+  const bossBass=[[0,0,4],[4,0,2],[6,1,2],[8,0,4],[12,3,2],[14,2,2],[16,0,4],[20,0,2],[22,1,2],[24,3,4],[28,4,2],[30,2,2]];
+  const bossLead=[[0,10,2],[2,11,2],[4,12,4],[8,10,2],[10,9,2],[12,8,4],[16,10,2],[18,11,2],[20,13,4],[24,12,2],[26,11,2],[28,9,4]];
+  const bossPad=[[0,5,6,0.3,'triangle'],[0,8,6,0.28,'triangle'],[8,5,6,0.3,'triangle'],[8,8,6,0.28,'triangle'],[16,6,6,0.32,'triangle'],[16,9,6,0.3,'triangle'],[24,5,6,0.3,'triangle'],[24,8,6,0.28,'triangle']];
+  const boss=mkSong(132,'sawtooth','minor',32,bossBass.concat(bossLead,bossPad),true,0.28);
   return {city:city,combat:combat,boss:boss};
 })();
 function trackOf(id){ return MUSCFG[id]||(id==='explore'?{type:'default'}:{type:'song',song:DEF_SONGS[id]}); }
@@ -4444,15 +4462,26 @@ function musNote(f,t,d,wave,v){
 function musDrum(t,kind){
   const ac=Mus.ac;
   if(kind==='k'){ const o=ac.createOscillator(), g=ac.createGain(); o.frequency.setValueAtTime(140,t); o.frequency.exponentialRampToValueAtTime(40,t+0.12); g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.15); o.connect(g); g.connect(Mus.mg); o.start(t); o.stop(t+0.18); }
-  else { const len=Math.floor(ac.sampleRate*0.05), b=ac.createBuffer(1,len,ac.sampleRate), d=b.getChannelData(0); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len); const s=ac.createBufferSource(); s.buffer=b; const g=ac.createGain(); g.gain.value=0.14; s.connect(g); g.connect(Mus.mg); s.start(t); }
+  else if(kind==='sn'){
+    const len=Math.floor(ac.sampleRate*0.12), b=ac.createBuffer(1,len,ac.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
+    const s=ac.createBufferSource(); s.buffer=b; const hp=ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=900;
+    const g=ac.createGain(); g.gain.value=0.22; s.connect(hp); hp.connect(g); g.connect(Mus.mg); s.start(t);
+    const o=ac.createOscillator(), og=ac.createGain(); o.type='triangle'; o.frequency.setValueAtTime(190,t);
+    og.gain.setValueAtTime(0.18,t); og.gain.exponentialRampToValueAtTime(0.0001,t+0.1); o.connect(og); og.connect(Mus.mg); o.start(t); o.stop(t+0.12);
+  }
+  else { const len=Math.floor(ac.sampleRate*0.05), b=ac.createBuffer(1,len,ac.sampleRate), d=b.getChannelData(0); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len); const s=ac.createBufferSource(); s.buffer=b; const hp=ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=6000; const g=ac.createGain(); g.gain.value=0.12; s.connect(hp); hp.connect(g); g.connect(Mus.mg); s.start(t); }
 }
 function songTick(){
   const s=Mus.song, ac=Mus.ac; if(!s||!ac) return;
   const sd=60/s.bpm/2;
   while(Mus.nextT<ac.currentTime+0.35){
     const st=Mus.step%s.len;
-    s.notes.forEach(n=>{ if(n[0]===st) musNote(songFreq(s,n[1]),Mus.nextT,(n[2]||1)*sd*0.95,s.wave,(s.vol||0.5)*0.5); });
-    if(s.drum){ if(st%4===0) musDrum(Mus.nextT,'k'); else if(st%4===2) musDrum(Mus.nextT,'h'); }
+    /* cada nota es [paso,grado,duración] y opcionalmente [,,,velocidad,timbre] para capas de
+       bajo/acordes más suaves y con otro color que la melodía, sin romper al editor de canciones
+       (las canciones viejas, de 3 valores, suenan exactamente igual que antes). */
+    s.notes.forEach(n=>{ if(n[0]===st){ const nv=n[3]!=null?n[3]:1, nw=n[4]||s.wave; musNote(songFreq(s,n[1]),Mus.nextT,(n[2]||1)*sd*0.95,nw,(s.vol||0.5)*0.5*nv); } });
+    if(s.drum){ const b=st%8; if(b===0) musDrum(Mus.nextT,'k'); if(b===4) musDrum(Mus.nextT,'sn'); if(st%2===0) musDrum(Mus.nextT,'h'); }
     Mus.nextT+=sd; Mus.step++;
   }
 }
