@@ -440,7 +440,7 @@ header.top::after{
 }
 
 /* ---- marco tipo ítem de loot: dos esquinas en diagonal, como un borde de rareza de RPG ---- */
-.card, #combat .card.arena .qpanel, .imodal, .mapcard, #set-panel, #fx-panel{position:relative}
+.card, #combat .card.arena .qpanel, .imodal, .mapcard{position:relative}
 .card::before, .imodal::before, #fx-panel::before, #set-panel::before,
 .card::after,  .imodal::after,  #fx-panel::after,  #set-panel::after{
   content:"";position:absolute;width:13px;height:13px;pointer-events:none;
@@ -519,6 +519,135 @@ button:active:not(:disabled){
 .admin-btn{border-radius:2px}
 body.is-admin .admin-btn{box-shadow:0 0 10px rgba(93,214,162,.35)}
 
+
+/* ================== TEMA "PREMIUM" (estilo Apple) ================== */
+/* Alternativa opcional de interfaz, activable desde Ajustes → Interfaz.
+   No toca mecánica ni estructura, solo reviste los mismos elementos:
+   tipografía de sistema, vidrio esmerilado, bordes suaves, sombras
+   difusas, acentos de color único, sin pixel-art en el chrome (los
+   sprites del juego siguen pixelados, son contenido, no interfaz). */
+body.theme-premium {
+  --bg:#000; --panel:#1c1c1e; --panel-2:#2c2c2e; --edge:rgba(255,255,255,.12);
+  --fg:#f5f5f7; --muted:#98989d; --accent:#0a84ff;
+  --hp:#ff453a; --xp:#30d158; --ok:#30d158; --bad:#ff453a;
+  --bg2:#000; --edge-dim:rgba(255,255,255,.08); --accent-2:#5e5ce6; --glow:rgba(10,132,255,.35);
+}
+body.theme-premium {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  background:
+    radial-gradient(1100px 650px at 50% -10%, rgba(10,132,255,.10), transparent 60%),
+    radial-gradient(900px 600px at 85% 100%, rgba(94,92,230,.08), transparent 62%),
+    #000;
+  background-attachment:fixed;
+}
+body.theme-premium * {scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent}
+body.theme-premium ::-webkit-scrollbar {width:9px;height:9px}
+body.theme-premium ::-webkit-scrollbar-track {background:transparent}
+body.theme-premium ::-webkit-scrollbar-thumb {background:rgba(255,255,255,.2);border:2px solid transparent;background-clip:padding-box;border-radius:8px}
+body.theme-premium ::-webkit-scrollbar-thumb:hover {background:rgba(255,255,255,.32);background-clip:padding-box}
+body.theme-premium ::selection {background:var(--accent);color:#fff}
+
+/* ---- título: tipografía de sistema, sin glow pixelado ---- */
+body.theme-premium header.top h1 {
+  font-family:inherit;font-weight:700;font-size:28px;letter-spacing:-.02em;
+  color:var(--fg);text-shadow:none;animation:pHeroIn .5s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes pHeroIn {0% {opacity:0;transform:translateY(-6px)}100% {opacity:1;transform:none}}
+body.theme-premium header.top::after {
+  background:linear-gradient(90deg, var(--accent), transparent 75%);box-shadow:none;opacity:.55;height:2px;
+}
+body.theme-premium .hint {color:var(--muted);font-family:inherit}
+
+/* ---- sin esquineros de loot: paneles de vidrio esmerilado, bordes finos, radios grandes ---- */
+body.theme-premium .card::before, body.theme-premium .imodal::before, body.theme-premium #fx-panel::before, body.theme-premium #set-panel::before,
+body.theme-premium .card::after,  body.theme-premium .imodal::after,  body.theme-premium #fx-panel::after,  body.theme-premium #set-panel::after,
+body.theme-premium .mapcard::before, body.theme-premium .mapcard::after {
+  content:none;
+}
+body.theme-premium .card, body.theme-premium #combat .card, body.theme-premium .imodal, body.theme-premium #fx-panel, body.theme-premium #set-panel, body.theme-premium #invwin {
+  background:rgba(28,28,30,.72);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--edge);border-radius:18px;
+  box-shadow:0 20px 50px -18px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.06);
+}
+body.theme-premium #set-panel {border-radius:20px}
+body.theme-premium .card h2, body.theme-premium #combat h3 {
+  font-family:inherit;font-weight:600;font-size:15px;letter-spacing:0;text-transform:none;color:var(--fg);
+}
+body.theme-premium .card h2::before {content:none}
+body.theme-premium .npc .nhead {background:rgba(28,28,30,.85);border-bottom:1px solid var(--edge)}
+
+/* ---- botones: planos, translúcidos, sin bisel de consola ---- */
+body.theme-premium button {
+  font-family:inherit;font-size:15px;font-weight:500;line-height:1.3;
+  background:rgba(118,118,128,.24);color:var(--fg);border:1px solid transparent;
+  border-radius:10px;padding:8px 14px;
+  box-shadow:none;transition:background .15s ease, transform .1s ease, box-shadow .15s ease;
+}
+body.theme-premium button:hover:not(:disabled) {background:rgba(118,118,128,.34);box-shadow:none}
+body.theme-premium button:active:not(:disabled) {transform:scale(.97);box-shadow:none}
+body.theme-premium button:focus-visible {outline:2px solid var(--accent);outline-offset:2px}
+body.theme-premium button:disabled {opacity:.4}
+body.theme-premium button.sel, body.theme-premium .slot.sel {
+  background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(10,132,255,.45);
+}
+body.theme-premium button.locked {opacity:.4}
+body.theme-premium .primary {
+  background:var(--accent);color:#fff;font-weight:600;box-shadow:0 4px 16px rgba(10,132,255,.4);
+}
+body.theme-premium .primary:hover:not(:disabled) {background:#2b96ff;box-shadow:0 4px 20px rgba(10,132,255,.55)}
+body.theme-premium .admin-btn {border-radius:999px}
+
+/* ---- barras de vida/xp: trazo limpio, sin pips segmentados ---- */
+body.theme-premium .bar {background:rgba(118,118,128,.24);border-radius:999px;border:none;box-shadow:none;overflow:hidden;height:10px}
+body.theme-premium .bar>span {border-radius:999px;transition:width .3s ease}
+body.theme-premium .bar>span {background-image:none!important;box-shadow:none!important}
+body.theme-premium .bar.hp>span {background-color:var(--hp)!important}
+body.theme-premium .bar.xp>span {background-color:var(--xp)!important}
+body.theme-premium .lvlbadge {
+  background:var(--panel-2);border:1px solid var(--edge);box-shadow:none;
+  font-family:inherit;font-weight:700;color:var(--fg);
+}
+
+/* ---- mundo del juego: sin scanlines, viñeta muy suave ---- */
+body.theme-premium .world {border:1px solid var(--edge);border-radius:14px;box-shadow:0 20px 44px -20px rgba(0,0,0,.6)}
+body.theme-premium .world::after {
+  background:radial-gradient(ellipse at center, transparent 62%, rgba(0,0,0,.28) 100%);
+  mix-blend-mode:normal;
+}
+
+/* ---- tarjetas de mapa ---- */
+body.theme-premium .mapcard {background:rgba(44,44,46,.6);border:1px solid var(--edge);border-radius:14px}
+body.theme-premium .mapcard.cur {box-shadow:0 0 0 2px var(--accent), 0 6px 18px rgba(10,132,255,.25)}
+
+/* ---- combate ---- */
+body.theme-premium #combat {background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+body.theme-premium #combat .qpanel {box-shadow:0 20px 50px -18px rgba(0,0,0,.6)}
+body.theme-premium .hb {box-shadow:none;background:rgba(118,118,128,.24);border-radius:999px;height:10px;overflow:hidden}
+body.theme-premium .timer {background:rgba(118,118,128,.24);border:none;border-radius:999px;overflow:hidden;height:6px}
+body.theme-premium .timer>span {background:var(--accent)}
+body.theme-premium pre {background:rgba(0,0,0,.55);border:1px solid var(--edge);border-radius:10px}
+
+/* ---- ajustes: acordeones limpios ---- */
+body.theme-premium details.sdet {background:rgba(118,118,128,.14);border:1px solid var(--edge);border-radius:12px}
+body.theme-premium details.sdet>summary {color:var(--fg);font-family:inherit;font-weight:600;font-size:14px;letter-spacing:0}
+body.theme-premium details.sdet>summary::before {color:var(--muted)}
+body.theme-premium details.sdet>summary:hover {background:rgba(255,255,255,.05);border-radius:12px}
+
+/* ---- inputs, swatches, varios ---- */
+body.theme-premium input:not([type=range]):not([type=checkbox]):not([type=radio]) {
+  background:rgba(118,118,128,.18);color:var(--fg);border:1px solid var(--edge);border-radius:8px;
+}
+body.theme-premium input[type=range] {accent-color:var(--accent)}
+body.theme-premium .swatch, body.theme-premium .swt {border-radius:50%;border-color:var(--edge)}
+body.theme-premium .swatch.sel, body.theme-premium .swt.sel {border-color:var(--accent);box-shadow:0 0 0 2px rgba(10,132,255,.3)}
+body.theme-premium #mini {border:1px solid var(--edge);border-radius:10px}
+body.theme-premium #cr-prev {border:1px solid var(--edge);border-radius:12px;background:var(--panel-2)}
+body.theme-premium #log {text-shadow:0 1px 3px rgba(0,0,0,.8)}
+body.theme-premium .coins {color:#ffd60a}
+body.theme-premium .fb {border-top:1px solid var(--edge)}
+body.theme-premium #fs-hud {background:rgba(28,28,30,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--edge);border-radius:12px}
+body.theme-premium #fs-btn, body.theme-premium #fx-btn, body.theme-premium #bag-btn {background:rgba(28,28,30,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:10px}
 </style>
 
 <div class="wrap">
@@ -4422,11 +4551,12 @@ function openMusicEditor(){
 /*@@/music*/
 /*@@extra*/
 /* ---------- Extras v43: repaso espaciado, pistas, interfaz, copias de seguridad, posada, tablón, ambiente ---------- */
-const UI_KEY='academia-byte-arena-ui', UI={tags:true,hc:false,big:false,focus:false};
+const UI_KEY='academia-byte-arena-ui', UI={tags:true,hc:false,big:false,focus:false,theme:'original'};
 try{ Object.assign(UI,JSON.parse(lsGet(UI_KEY)||'{}')); }catch(e){}
 if(UI.rm===undefined){ try{ UI.rm=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches); }catch(e){ UI.rm=false; } }
 function applyUI(save){
   document.body.classList.toggle('hc',!!UI.hc); document.body.classList.toggle('big',!!UI.big); document.body.classList.toggle('rm',!!UI.rm); $('#game').classList.toggle('focus',!!UI.focus);
+  document.body.classList.toggle('theme-premium',UI.theme==='premium');
   if(save) lsSet(UI_KEY,JSON.stringify(UI));
 }
 /* --- Repaso espaciado: una pregunta fallada vuelve a los 2 min, 10 min, 1 día y 3 días; cada acierto la aleja hasta que se "aprende" --- */
@@ -4592,6 +4722,10 @@ function extraSettings(p,h,row){
   v48Settings(p,h,row);
   h('👁 INTERFAZ');
   let d=row();
+  d.appendChild(textBtn('🕹 Original',UI.theme!=='premium',()=>{ UI.theme='original'; applyUI(true); renderSettings(); }));
+  d.appendChild(textBtn('✨ Premium',UI.theme==='premium',()=>{ UI.theme='premium'; applyUI(true); renderSettings(); }));
+  { const t=document.createElement('div'); t.className='hint'; t.textContent='Premium cambia todo el aspecto del juego a un estilo limpio y minimal, sin tocar cómo se juega.'; p.appendChild(t); }
+  d=row();
   d.appendChild(textBtn('Etiquetas de nombre: '+(UI.tags?'sí':'no'),UI.tags,()=>{ UI.tags=!UI.tags; applyUI(true); renderSettings(); }));
   d.appendChild(textBtn('Alto contraste: '+(UI.hc?'sí':'no'),UI.hc,()=>{ UI.hc=!UI.hc; applyUI(true); renderSettings(); }));
   d.appendChild(textBtn('Texto grande: '+(UI.big?'sí':'no'),UI.big,()=>{ UI.big=!UI.big; applyUI(true); renderSettings(); }));
