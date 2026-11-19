@@ -1091,6 +1091,18 @@ function saveDelObjs(){ lsSet(DEL_OBJS_KEY,JSON.stringify(Array.from(DEL_OBJS)))
 function loadObjs(){ loadDelObjs(); try{ OBJS=JSON.parse(lsGet(OBJS_KEY)||'[]')||[]; }catch(e){ OBJS=[]; } if(!Array.isArray(OBJS)) OBJS=[]; OBJS=OBJS.filter(o=>o&&!o.pk&&!DEL_OBJS.has(o.id)); const mine=new Set(OBJS.map(o=>o.id)); OBJS=JSON.parse(JSON.stringify(PK_OBJS.filter(o=>!mine.has(o.id)&&!DEL_OBJS.has(o.id)))).concat(OBJS); }
 function saveObjs(){ lsSet(OBJS_KEY,JSON.stringify(OBJS.filter(o=>!o.pk))); catDirty(); }   /* los objetos del pack vienen con el juego: no se guardan en el navegador */
 function objById(id){ return OBJS.find(o=>o.id===id)||null; }
+/* Biblioteca de MIDIs/audios compartidos del admin: viajan como base64 dentro del mismo
+   "mundo" que items/criaturas/mapas, así se sincronizan entre dispositivos sin inventar un
+   almacenamiento aparte. Para no inflar demasiado ese paquete, cada archivo queda limitado
+   a ~300 KB (de sobra para un MIDI; para un mp3/ogg largo conviene seguir usando "Subir
+   archivo de audio" local, que no tiene ese límite pero no se comparte). */
+const MIDIS_KEY='academia-byte-arena-midis';
+const MIDI_MAX=300*1024;
+let MIDIS=[];
+function loadMidis(){ try{ const a=JSON.parse(lsGet(MIDIS_KEY)||'[]'); MIDIS=Array.isArray(a)?a:[]; }catch(e){ MIDIS=[]; } }
+function saveMidis(){ lsSet(MIDIS_KEY,JSON.stringify(MIDIS)); catDirty(); }
+function midiById(id){ return MIDIS.find(m=>m.id===id)||null; }
+function midiDataUrl(m){ return 'data:'+(m.mime||'audio/midi')+';base64,'+m.b64; }
 /* Borra un ítem PARA SIEMPRE (aunque sea de fábrica) y lo saca de todos lados: del catálogo, de los ajustes
    (nombre/precio/oculto), de los personajes guardados en este navegador y, si hay sesión en la nube, del
    personaje actual también allá (al guardarlo de nuevo sin ese ítem puesto). */
@@ -2048,6 +2060,7 @@ function parseMaps(text){
     if(species!==null && (!Array.isArray(species)||species.some(s=>!NAMES[s]))) throw new Error(w+': especie desconocida en "species"');
     return enlarge({name:m.name.trim(), floor:m.floor, road:m.road||'dirt', prop:m.prop, rock:m.rock, pool:m.pool,
       species:species, pathTown:!!m.pathTown, hpMul:Number(m.hpMul)||1, atkMul:Number(m.atkMul)||1,
+      midi:(typeof m.midi==='string'&&m.midi)?m.midi:null,
       boss:!!m.boss, pools:pools, seed:Number.isInteger(m.seed)?m.seed:undefined, w:(Number.isInteger(m.w)&&m.w>=12)?Math.min(160,m.w):0, h:(Number.isInteger(m.h)&&m.h>=10)?Math.min(110,m.h):0,
       cells:Array.isArray(m.cells)?m.cells.filter(c=>Array.isArray(c)&&c.length===3&&c.every(Number.isInteger)&&c[2]>=0&&c[2]<=5):[],
       sprites:(m.sprites&&typeof m.sprites==='object'&&!Array.isArray(m.sprites))?m.sprites:{},
@@ -4535,19 +4548,39 @@ function idbPut(k,v){ return idb().then(db=>new Promise((res,rej)=>{ const t=db.
 function idbGet(k){ return idb().then(db=>new Promise((res,rej)=>{ const q=db.transaction('f').objectStore('f').get(k); q.onsuccess=()=>res(q.result||null); q.onerror=()=>rej(q.error); })); }
 /* escena actual -> pista */
 let musScene=null;
-function musicScene(){ if(!playing) return 'explore'; if(combat) return (combat.m&&combat.m.boss)?'boss':'combat'; return mapIdx===CITY?'city':'explore'; }
+/* "sc" sigue siendo la categoría de siempre (explore/combat/boss/city), para combate y jefe;
+   fuera de combate se le suma el mapa (y la casa, si estás adentro de una) para poder
+   distinguir "explorando el mapa 2" de "explorando el mapa 5": cada mapa puede tener su
+   propio MIDI asignado por el admin, y antes toda exploración caía en la misma categoría. */
+function musicScene(){
+  if(!playing) return 'explore';
+  if(combat) return (combat.m&&combat.m.boss)?'boss':'combat';
+  if(mapIdx===CITY) return 'city';
+  if(mapIdx===HOUSE) return 'house:'+(HOUSE_CUR||'');
+  return 'map:'+mapIdx;
+}
+/* MIDI asignado al mapa/ciudad donde estás ahora (o null si no tiene uno propio) */
+function mapMidiNow(){
+  try{ const cfg=cfgOf(mapIdx); const id=cfg&&cfg.midi; return id?midiById(id):null; }catch(e){ return null; }
+}
 function musicSync(force){
   if(!musicOn){ BGM.pause(); songStop(); musScene=null; return; }
   const sc=musicScene(); if(sc===musScene&&!force) return;
-  musScene=sc; const t=trackOf(sc);
+  musScene=sc;
   if(Mus.editing) return;
+  if(sc!=='combat'&&sc!=='boss'){
+    const m=mapMidiNow();
+    if(m){ songStop(); BGM.src=midiDataUrl(m); Mus.key='midi:'+m.id; const p=BGM.play(); if(p&&p.catch) p.catch(()=>{}); return; }
+  }
+  const scKey=(sc==='city'||sc==='combat'||sc==='boss')?sc:'explore';
+  const t=trackOf(scKey);
   if(t.type==='song'){ BGM.pause(); songPlay(t.song); }
   else if(t.type==='file'){
     songStop();
-    idbGet('trk-'+sc).then(b=>{
+    idbGet('trk-'+scKey).then(b=>{
       if(musScene!==sc) return;
       if(!b){ useDefaultFile(); return; }
-      if(Mus.url) URL.revokeObjectURL(Mus.url); Mus.url=URL.createObjectURL(b); BGM.src=Mus.url; Mus.key='file:'+sc; const p=BGM.play(); if(p&&p.catch) p.catch(()=>{});
+      if(Mus.url) URL.revokeObjectURL(Mus.url); Mus.url=URL.createObjectURL(b); BGM.src=Mus.url; Mus.key='file:'+scKey; const p=BGM.play(); if(p&&p.catch) p.catch(()=>{});
     }).catch(()=>useDefaultFile());
   } else { songStop(); useDefaultFile(); }
 }
@@ -4614,6 +4647,52 @@ function openMusicEditor(){
     b.appendChild(textBtn('Cerrar (Esc)',false,closeMusicEditor));
     box.appendChild(b);
     const note=document.createElement('div'); note.className='hint'; note.textContent='Las canciones y archivos se guardan en ESTE navegador (no se comparten con otros jugadores de la página).'; box.appendChild(note);
+    renderSharedMidis();
+  }
+  function renderSharedMidis(){
+    const sec=document.createElement('div'); sec.id='mus-shared-midis'; sec.style.cssText='margin-top:14px;padding-top:10px;border-top:1px solid #3b2a16'; box.appendChild(sec);
+    const h2=document.createElement('h3'); h2.textContent='🎵 MIDIs compartidos (se ven en todos los dispositivos)'; sec.appendChild(h2);
+    const up=document.createElement('div'); up.className='btns';
+    const fi2=document.createElement('input'); fi2.type='file'; fi2.accept='audio/*'; fi2.hidden=true;
+    const hint2=document.createElement('div'); hint2.className='hint'; hint2.textContent='Hasta '+Math.round(MIDI_MAX/1024)+' KB por archivo. Se guardan junto con los items/criaturas/mapas y llegan a todos los dispositivos. Para archivos más pesados, usá "📁 Subir archivo de audio" de arriba (queda solo en este navegador).';
+    fi2.addEventListener('change',()=>{
+      const f=fi2.files&&fi2.files[0]; if(!f) return;
+      if(f.size>MIDI_MAX){ hint2.textContent='Pesa '+Math.round(f.size/1024)+' KB; el máximo compartido es '+Math.round(MIDI_MAX/1024)+' KB. Para este archivo usá "📁 Subir archivo de audio" de arriba (queda solo en este navegador).'; return; }
+      const fr=new FileReader();
+      fr.onload=()=>{
+        const res=String(fr.result||''), comma=res.indexOf(','), b64=comma>=0?res.slice(comma+1):'';
+        if(!b64){ hint2.textContent='No se pudo leer ese archivo.'; return; }
+        const id='mid_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+        MIDIS.push({id:id,name:String(f.name||'audio').slice(0,60),mime:f.type||'audio/mpeg',b64:b64,at:Date.now()});
+        saveMidis(); render();
+      };
+      fr.onerror=()=>{ hint2.textContent='No se pudo leer ese archivo.'; };
+      fr.readAsDataURL(f);
+    });
+    up.appendChild(textBtn('📁 Subir MIDI/audio compartido',false,()=>fi2.click())); up.appendChild(fi2);
+    sec.appendChild(up); sec.appendChild(hint2);
+    if(!MIDIS.length){ const e=document.createElement('div'); e.className='hint'; e.textContent='Todavía no subieron ninguno.'; sec.appendChild(e); }
+    MIDIS.forEach(m=>{
+      const row=document.createElement('div'); row.className='krow';
+      const a=document.createElement('b'); a.textContent=m.name+' ('+Math.max(1,Math.round(m.b64.length*0.75/1024))+' KB)';
+      const acts=document.createElement('span');
+      acts.appendChild(textBtn('▶',false,()=>{ try{ new Audio(midiDataUrl(m)).play().catch(()=>{}); }catch(e){} }));
+      acts.appendChild(textBtn('✕ Borrar',false,()=>{ MIDIS=MIDIS.filter(x=>x.id!==m.id); saveMidis(); render(); }));
+      row.append(a,acts); sec.appendChild(row);
+    });
+    const h3=document.createElement('div'); h3.className='lbl'; h3.textContent='Asignar un MIDI a cada mapa (reemplaza la música de exploración de ese mapa)'; sec.appendChild(h3);
+    const assignRow=(label,getId,setId)=>{
+      const d=document.createElement('div'); d.className='krow';
+      const l=document.createElement('span'); l.textContent=label;
+      const sel2=document.createElement('select'); sel2.setAttribute('aria-label','MIDI de '+label);
+      const none=document.createElement('option'); none.value=''; none.textContent='(música por defecto)'; sel2.appendChild(none);
+      MIDIS.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.name; sel2.appendChild(o); });
+      sel2.value=getId()||'';
+      sel2.addEventListener('change',()=>{ setId(sel2.value||null); });
+      d.append(l,sel2); sec.appendChild(d);
+    };
+    assignRow('🏙 Ciudad',()=>(cityCfg()||{}).midi,id=>{ try{ const o=cityRawCfg(); o.midi=id; applyCityObj(o,true); }catch(e){} });
+    MAPS.forEach((m,i)=>{ assignRow((i+1)+'. '+m.name,()=>MAPS[i].midi,id=>{ MAPS[i].midi=id; try{ applyMapsText(JSON.stringify(MAPS),true); }catch(e){ log('⚠ No se pudo guardar: '+e.message,'tag-bad'); } }); });
   }
   function saveCfg(){ lsSet(MUS_KEY,JSON.stringify(MUSCFG)); }
   loadDraft(); render();
@@ -6517,7 +6596,7 @@ const WHIST_KEY='academia-byte-arena-whist';
 let WHIST=[];
 try{ const r=JSON.parse(lsGet(WHIST_KEY)||'[]'); if(Array.isArray(r)) WHIST=r; }catch(e){ WHIST=[]; }
 function worldSnapshotState(){
-  return { npcov:NPCOV, creats:CREATS, objs:OBJS, iovr:IOVR, delobjs:Array.from(DEL_OBJS), city: lsGet(CITY_KEY)||null, maps: lsGet(MAPS_KEY)||null };
+  return { npcov:NPCOV, creats:CREATS, objs:OBJS, iovr:IOVR, delobjs:Array.from(DEL_OBJS), city: lsGet(CITY_KEY)||null, maps: lsGet(MAPS_KEY)||null, midis:MIDIS };
 }
 function worldPushHistory(label){
   try{
@@ -6537,6 +6616,7 @@ function worldUndo(){
   IOVR=(s.iovr&&typeof s.iovr==='object')?s.iovr:{}; saveIovr();
   if(s.city) lsSet(CITY_KEY,s.city); else try{ localStorage.removeItem(CITY_KEY); }catch(e){}
   if(s.maps) lsSet(MAPS_KEY,s.maps); else try{ localStorage.removeItem(MAPS_KEY); }catch(e){}
+  MIDIS=Array.isArray(s.midis)?s.midis:[]; saveMidis();
   return last.label;
 }
 function worldExportAll(){ return JSON.stringify(Object.assign({v:1,at:Date.now()},worldSnapshotState()),null,2); }
@@ -6556,6 +6636,7 @@ function worldImportAll(obj){
     if(obj.maps){ try{ applyMapsText(obj.maps,true); }catch(e){ log('⚠ Los mapas del mundo importado tienen un error ('+e.message+'); se dejaron los actuales.','tag-bad'); } }
     else try{ localStorage.removeItem(MAPS_KEY); }catch(e){}
   }
+  if(Array.isArray(obj.midis)){ MIDIS=obj.midis; saveMidis(); }
 }
 
 /* --- A1.2: "🌐 Editor de Mundo" — pestaña nueva que centraliza todos los editores de admin --- */
@@ -8097,6 +8178,7 @@ function worldImportAllQuiet(obj){
   if(obj.iovr&&typeof obj.iovr==='object'){ IOVR=obj.iovr; saveIovr(); }
   if(obj.city!==undefined){ if(obj.city){ try{ applyCityObj(JSON.parse(obj.city),true); }catch(e){} } else resetCityObj(); }
   if(obj.maps!==undefined){ if(obj.maps){ try{ applyMapsText(obj.maps,true); }catch(e){} } else try{ localStorage.removeItem(MAPS_KEY); }catch(e){} }
+  if(Array.isArray(obj.midis)){ MIDIS=obj.midis; saveMidis(); }
   loadObjs();
 }
 function chScore(c){ const l=Math.max(1,c.lvl|0); return 20*l*(l-1)+(c.xp|0); }
@@ -8356,6 +8438,7 @@ window.ABG={
 window.ABG.isAdmin=()=>ADMIN;
 window.ABG.fixFace=c=>setGender(c,c.gender);
 loadObjs();
+loadMidis();
 draft=newDraft();
 document.body.classList.toggle('is-admin',ADMIN); { const ab=$('#admin-btn'); if(ab){ ab.textContent=ADMIN?'🔓 Admin activo':'🔐 Admin'; ab.addEventListener('click',openAdmin); } }
 if(ADMIN) loadAdminTools();
