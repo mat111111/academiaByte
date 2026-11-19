@@ -1082,10 +1082,30 @@ function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; 
 function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 /* Catálogo de objetos (accesorios) hechos en el Editor de personaje: se equipan desde el menú */
 const OBJS_KEY='academia-byte-arena-objs';
-let OBJS=[];
-function loadObjs(){ try{ OBJS=JSON.parse(lsGet(OBJS_KEY)||'[]')||[]; }catch(e){ OBJS=[]; } if(!Array.isArray(OBJS)) OBJS=[]; OBJS=OBJS.filter(o=>o&&!o.pk); const mine=new Set(OBJS.map(o=>o.id)); OBJS=JSON.parse(JSON.stringify(PK_OBJS.filter(o=>!mine.has(o.id)))).concat(OBJS); }
+/* Ítems borrados "para siempre" (incluye los que vienen con el juego): sin esta lista, al recargar
+   un ítem de fábrica volvía a aparecer porque loadObjs() siempre lo re-agrega desde PK_OBJS. */
+const DEL_OBJS_KEY='academia-byte-arena-delobjs';
+let OBJS=[], DEL_OBJS=new Set();
+function loadDelObjs(){ try{ const a=JSON.parse(lsGet(DEL_OBJS_KEY)||'[]'); DEL_OBJS=new Set(Array.isArray(a)?a:[]); }catch(e){ DEL_OBJS=new Set(); } }
+function saveDelObjs(){ lsSet(DEL_OBJS_KEY,JSON.stringify(Array.from(DEL_OBJS))); }
+function loadObjs(){ loadDelObjs(); try{ OBJS=JSON.parse(lsGet(OBJS_KEY)||'[]')||[]; }catch(e){ OBJS=[]; } if(!Array.isArray(OBJS)) OBJS=[]; OBJS=OBJS.filter(o=>o&&!o.pk&&!DEL_OBJS.has(o.id)); const mine=new Set(OBJS.map(o=>o.id)); OBJS=JSON.parse(JSON.stringify(PK_OBJS.filter(o=>!mine.has(o.id)&&!DEL_OBJS.has(o.id)))).concat(OBJS); }
 function saveObjs(){ lsSet(OBJS_KEY,JSON.stringify(OBJS.filter(o=>!o.pk))); }   /* los objetos del pack vienen con el juego: no se guardan en el navegador */
 function objById(id){ return OBJS.find(o=>o.id===id)||null; }
+/* Borra un ítem PARA SIEMPRE (aunque sea de fábrica) y lo saca de todos lados: del catálogo, de los ajustes
+   (nombre/precio/oculto), de los personajes guardados en este navegador y, si hay sesión en la nube, del
+   personaje actual también allá (al guardarlo de nuevo sin ese ítem puesto). */
+function purgeItem(id){
+  DEL_OBJS.add(id); saveDelObjs();
+  OBJS=OBJS.filter(o=>o.id!==id); saveObjs();
+  if(IOVR[id]){ delete IOVR[id]; saveIovr(); }
+  [CUR,draft].forEach(q=>{ if(q&&Array.isArray(q.equip)&&q.equip.includes(id)){ q.equip=q.equip.filter(e=>e!==id); } });
+  listIds().forEach(cid=>{
+    if(CUR&&CUR.id===cid) return;   /* el actual ya se limpió arriba y se guarda con persist()/saveChar */
+    const c=readChar(cid); if(!c||!Array.isArray(c.equip)||!c.equip.includes(id)) return;
+    c.equip=c.equip.filter(e=>e!==id); lsSet(chKey(cid),JSON.stringify(c));
+  });
+  if(CUR) persist();
+}
 
 
 /* ---------- Administrador ----------
@@ -1510,7 +1530,7 @@ function objPanel(slot,L,c,after){
     const r2=document.createElement('div'); r2.className='row';
     r2.appendChild(textBtn('✎ Editar',false,()=>{ if(window.__ce&&window.__ce.openObj) window.__ce.openObj(o.id); }));
     r2.appendChild(textBtn('🖼 Imagen',false,()=>pickObjImage(o.id,after)));
-    const del=textBtn('✕',false,()=>{ if(del._arm){ clearTimeout(del._arm); OBJS=OBJS.filter(x=>x.id!==o.id); saveObjs(); [CUR,draft].forEach(q=>{ if(q&&q.equip) q.equip=q.equip.filter(e=>e!==o.id); }); after(); return; } del.textContent='¿Borrar?'; del._arm=setTimeout(()=>{ del._arm=null; del.textContent='✕'; },2500); });
+    const del=textBtn('✕',false,()=>{ if(del._arm){ clearTimeout(del._arm); purgeItem(o.id); after(); return; } del.textContent='¿Borrar?'; del._arm=setTimeout(()=>{ del._arm=null; del.textContent='✕'; },2500); });
     del.title='Borrar este objeto'; r2.appendChild(del);
     card.append(objThumb(o,64),nm,r1,r2); box.appendChild(card);
   });
@@ -1677,7 +1697,7 @@ function openItemModal(key){
     const hint=document.createElement('div'); hint.className='hint'; hint.textContent='X: derecha (+) / izquierda (−). Y: abajo (+) / arriba (−). "Todas" mueve las 4 vistas; luego afiná cada vista por separado. Se ve cómo queda en las 4 vistas. Capa: "Sobre todo" dibuja la pieza encima de la mano y de la ropa que hayas creado vos (sirve para que el báculo no quede detrás de la mano); elegila por vista.'; box.appendChild(hint);
     draw();
   }
-  const note=document.createElement('div'); note.className='hint'; note.textContent='Precio 0 = gratis para todos. Ocultar lo saca de la tienda y del menú (se puede mostrar de nuevo).'; box.appendChild(note);
+  const note=document.createElement('div'); note.className='hint'; note.textContent='Precio 0 = gratis para todos. Ocultar lo saca de la tienda y del menú, pero se puede mostrar de nuevo. Borrar para siempre lo saca del catálogo para todos (aunque sea de fábrica), le quita el equipo a los personajes que lo tengan puesto y no se puede deshacer.'; box.appendChild(note);
   const done=()=>{ closeItemModal(); refreshAll(); };
   const btns=document.createElement('div'); btns.className='btns'; box.appendChild(btns);
   btns.appendChild(textBtn('Guardar',true,()=>{
@@ -1703,7 +1723,7 @@ function openItemModal(key){
     btns.appendChild(textBtn('✎ Editar objeto',false,()=>{ closeItemModal(); if(window.__ce&&window.__ce.openObj) window.__ce.openObj(key); }));
     btns.appendChild(textBtn('🖼 Cambiar imagen',false,()=>{ pickObjImage(key,done); }));
     const del=textBtn('✕ Borrar para siempre',false,()=>{
-      if(del._arm){ clearTimeout(del._arm); OBJS=OBJS.filter(x=>x.id!==key); saveObjs(); delete IOVR[key]; saveIovr(); [CUR,draft].forEach(q=>{ if(q&&q.equip) q.equip=q.equip.filter(e=>e!==key); }); done(); return; }
+      if(del._arm){ clearTimeout(del._arm); purgeItem(key); done(); return; }
       del.textContent='¿Seguro? Tocá otra vez'; del._arm=setTimeout(()=>{ del._arm=null; del.textContent='✕ Borrar para siempre'; },2500); });
     btns.appendChild(del);
   }
@@ -8197,7 +8217,7 @@ window.ABG={
   objs:()=>OBJS,
   saveObj:o=>{ const i=OBJS.findIndex(x=>x.id===o.id); if(i>=0) OBJS[i]=o; else OBJS.push(o); saveObjs(); if(playing) renderInventory(); else renderCreate(); },
   replaceObjImage:replaceObjImage,
-  delObj:id=>{ OBJS=OBJS.filter(o=>o.id!==id); saveObjs(); if(playing) renderInventory(); else renderCreate(); },
+  delObj:id=>{ purgeItem(id); if(playing) renderInventory(); else renderCreate(); },
   creats:()=>CREATS,
   builtins:()=>Object.keys(BASE_NAMES).map(id=>({id:id,name:BASE_NAMES[id],boss:id==='dragon'})),
   saveCreat:c=>{ const i=CREATS.list.findIndex(x=>x.id===c.id); if(i>=0) CREATS.list[i]=c; else CREATS.list.push(c); saveCreats(); },
