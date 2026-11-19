@@ -17508,6 +17508,31 @@ async function supaInsert(tabla, row){
     headers:{ 'apikey':SUPA.key, 'Authorization':'Bearer '+SUPA.key, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
     body: JSON.stringify([row]) }); return r.ok; }catch(e){ return false; }
 }
+/* ---- Catálogo compartido de la Arena (criaturas/objetos/ciudad/mapas que edita el admin) ----
+   En la versión del artifact de claude.ai se guarda en la base del artifact (solo el dueño puede
+   escribir ahí, por regla del lado del servidor). En la versión self-hosted (sin claude.ai) se usa
+   Supabase con una función que exige un token aparte (ver write_catalog en la base). */
+async function supaCatalogRead(){
+  if(!SUPA) return null;
+  try{ const r=await fetch(SUPA.url+'/rest/v1/catalog?select=data&key=eq.admin',
+    { headers:{ 'apikey':SUPA.key, 'Authorization':'Bearer '+SUPA.key } });
+    if(!r.ok) return null; const rows=await r.json(); return (rows&&rows[0]&&rows[0].data&&rows[0].data.world)||null; }catch(e){ return null; }
+}
+async function supaCatalogWrite(world, token){
+  if(!SUPA||!token) return false;
+  try{ const r=await fetch(SUPA.url+'/rest/v1/rpc/write_catalog', { method:'POST',
+    headers:{ 'apikey':SUPA.key, 'Authorization':'Bearer '+SUPA.key, 'Content-Type':'application/json' },
+    body: JSON.stringify({ p_key:'admin', p_data:{world:world}, p_token:token }) }); return r.ok; }catch(e){ return false; }
+}
+async function catalogRead(){
+  if(S.db){ try{ const snap=await S.db.doc('arena/catalog').get(); if(snap.exists){ const d=snap.data(); return (d&&d.world)||null; } }catch(e){} return null; }
+  if(S.useSupa) return await supaCatalogRead();
+  return null;
+}
+async function catalogWrite(world){
+  if(S.db){ try{ await S.db.doc('arena/catalog').set({world:world,updated:Date.now()}); }catch(e){} return; }
+  if(S.useSupa){ const tok=LS.get('c8_cat_token',''); if(tok) await supaCatalogWrite(world,tok); }
+}
 
 /* ---------- estado ---------- */
 const S = {
@@ -17705,6 +17730,9 @@ window.addEventListener('message',ev=>{
   else if(d.abg==='del') accDel(d.id,d.at);
   else if(d.abg==='rank') accRank(d.rank);
   else if(d.abg==='avatars') arenaAvatars(d.list);
+  else if(d.abg==='catGet') (async()=>{ await window.__capsP; const world=await catalogRead(); arenaSend({abg:'catData',world:world}); })();
+  else if(d.abg==='catSave'&&typeof d.world==='string') (async()=>{ await window.__capsP; catalogWrite(d.world); })();
+  else if(d.abg==='catToken'&&typeof d.token==='string') LS.set('c8_cat_token', d.token.trim().slice(0,200));
 });
 function arenaAvatars(list){
   if(!Array.isArray(list)) return;

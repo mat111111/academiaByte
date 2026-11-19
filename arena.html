@@ -1089,7 +1089,7 @@ let OBJS=[], DEL_OBJS=new Set();
 function loadDelObjs(){ try{ const a=JSON.parse(lsGet(DEL_OBJS_KEY)||'[]'); DEL_OBJS=new Set(Array.isArray(a)?a:[]); }catch(e){ DEL_OBJS=new Set(); } }
 function saveDelObjs(){ lsSet(DEL_OBJS_KEY,JSON.stringify(Array.from(DEL_OBJS))); }
 function loadObjs(){ loadDelObjs(); try{ OBJS=JSON.parse(lsGet(OBJS_KEY)||'[]')||[]; }catch(e){ OBJS=[]; } if(!Array.isArray(OBJS)) OBJS=[]; OBJS=OBJS.filter(o=>o&&!o.pk&&!DEL_OBJS.has(o.id)); const mine=new Set(OBJS.map(o=>o.id)); OBJS=JSON.parse(JSON.stringify(PK_OBJS.filter(o=>!mine.has(o.id)&&!DEL_OBJS.has(o.id)))).concat(OBJS); }
-function saveObjs(){ lsSet(OBJS_KEY,JSON.stringify(OBJS.filter(o=>!o.pk))); }   /* los objetos del pack vienen con el juego: no se guardan en el navegador */
+function saveObjs(){ lsSet(OBJS_KEY,JSON.stringify(OBJS.filter(o=>!o.pk))); catDirty(); }   /* los objetos del pack vienen con el juego: no se guardan en el navegador */
 function objById(id){ return OBJS.find(o=>o.id===id)||null; }
 /* Borra un ítem PARA SIEMPRE (aunque sea de fábrica) y lo saca de todos lados: del catálogo, de los ajustes
    (nombre/precio/oculto), de los personajes guardados en este navegador y, si hay sesión en la nube, del
@@ -1372,7 +1372,7 @@ function applyIovr(){
   [['o',OUTFITS],['w',WEAPONS],['s',SHIELDS],['t',TRAILS]].forEach(([p,L])=>L.forEach((it,i)=>{ if(it.dn==null) it.dn=it.name; const v=IOVR[p+':'+i]; it.name=(v&&v.name)||it.dn; }));
 }
 function loadIovr(){ try{ const o=JSON.parse(lsGet(IOVR_KEY)||'{}'); IOVR=(o&&typeof o==='object'&&!Array.isArray(o))?o:{}; }catch(e){ IOVR={}; } applyIovr(); }
-function saveIovr(){ lsSet(IOVR_KEY,JSON.stringify(IOVR)); applyIovr(); }
+function saveIovr(){ lsSet(IOVR_KEY,JSON.stringify(IOVR)); applyIovr(); catDirty(); }
 loadIovr();
 function faceName(i){ const v=IOVR['f:'+i]; return (v&&v.name)||'Cara '+(i+1); }
 function defPrice(key){
@@ -1453,7 +1453,7 @@ function loadCreats(){
   try{ const o=JSON.parse(lsGet(CREATS_KEY)||'null'); if(o&&Array.isArray(o.list)) CREATS={list:o.list.filter(c=>c&&typeof c.id==='string'&&typeof c.img==='string'),ovr:(o.ovr&&typeof o.ovr==='object')?o.ovr:{}}; }catch(e){}
   applyCreatNames();
 }
-function saveCreats(){ lsSet(CREATS_KEY,JSON.stringify(CREATS)); applyCreatNames(); }
+function saveCreats(){ lsSet(CREATS_KEY,JSON.stringify(CREATS)); applyCreatNames(); catDirty(); }
 loadCreats();
 function creatOf(id){ return CREATS.list.find(c=>c.id===id)||CREATS.ovr[id]||null; }
 function creatMod(id){ const c=creatOf(id)||{}; return {hpMul:+c.hpMul>0?+c.hpMul:1, atkMul:+c.atkMul>0?+c.atkMul:1, xpMul:+c.xpMul>0?+c.xpMul:1, dif:Math.round(+c.dif||0)}; }
@@ -2076,6 +2076,7 @@ function applyMapsText(text,store){
   MAPS=arr;
   if(store) lsSet(MAPS_KEY,JSON.stringify(arr));
   else { try{ localStorage.removeItem(MAPS_KEY); }catch(e){} }
+  catDirty();
   if(maxMap>MAPS.length-1) maxMap=MAPS.length-1;
   if(mapIdx!==CITY&&mapIdx>MAPS.length-1) mapIdx=0;
   mapSel=-1;
@@ -2227,12 +2228,14 @@ function applyCityObj(o,quiet){
   const def=buildCity(), cfg=parseCity(o,def);
   try{ localStorage.setItem(CITY_KEY,JSON.stringify(cityStoreForm(cfg,def))); }
   catch(e){ log('El navegador no pudo guardar la ciudad (imágenes muy pesadas). Queda solo en esta sesión.','tag-bad'); }
+  catDirty();
   CITYC=cityFinish(cfg);
   if(!quiet&&playing&&mapIdx===CITY) loadMap(CITY);
 }
 function resetCityObj(){
   if(combat||transitioning) throw new Error('terminá el combate o esperá antes de cambiar la ciudad');
   try{ localStorage.removeItem(CITY_KEY); }catch(e){}
+  catDirty();
   CITYC=null; cityCfg();
   if(playing&&mapIdx===CITY) loadMap(CITY);
 }
@@ -6264,7 +6267,7 @@ HOUSES.forEach(H=>{ const d=HSZ[H.id]; H.h=Math.max(1,Math.round(d[1]*H.w/d[0]))
 const NPCOV_KEY='academia-byte-arena-npcov';
 let NPCOV={};
 try{ const r=JSON.parse(localStorage.getItem(NPCOV_KEY)||'{}'); if(r&&typeof r==='object') NPCOV=r; }catch(e){ NPCOV={}; }
-function saveNpcOv(){ try{ localStorage.setItem(NPCOV_KEY,JSON.stringify(NPCOV)); }catch(e){} }
+function saveNpcOv(){ try{ localStorage.setItem(NPCOV_KEY,JSON.stringify(NPCOV)); }catch(e){} catDirty(); }
 /* Combina la casa de fábrica (H) con lo que el admin haya personalizado: si no hay ajuste, se usa el original */
 function houseData(H){
   const ov=NPCOV[H.id]||{};
@@ -6495,7 +6498,7 @@ const WHIST_KEY='academia-byte-arena-whist';
 let WHIST=[];
 try{ const r=JSON.parse(lsGet(WHIST_KEY)||'[]'); if(Array.isArray(r)) WHIST=r; }catch(e){ WHIST=[]; }
 function worldSnapshotState(){
-  return { npcov:NPCOV, creats:CREATS, objs:OBJS, city: lsGet(CITY_KEY)||null };
+  return { npcov:NPCOV, creats:CREATS, objs:OBJS, iovr:IOVR, delobjs:Array.from(DEL_OBJS), city: lsGet(CITY_KEY)||null, maps: lsGet(MAPS_KEY)||null };
 }
 function worldPushHistory(label){
   try{
@@ -6510,20 +6513,29 @@ function worldUndo(){
   const s=last.state;
   NPCOV=(s.npcov&&typeof s.npcov==='object')?s.npcov:{}; saveNpcOv();
   CREATS=(s.creats&&Array.isArray(s.creats.list))?s.creats:{list:[],ovr:{}}; saveCreats();
+  DEL_OBJS=new Set(Array.isArray(s.delobjs)?s.delobjs:[]); saveDelObjs();
   OBJS=Array.isArray(s.objs)?s.objs:[]; saveObjs();
+  IOVR=(s.iovr&&typeof s.iovr==='object')?s.iovr:{}; saveIovr();
   if(s.city) lsSet(CITY_KEY,s.city); else try{ localStorage.removeItem(CITY_KEY); }catch(e){}
+  if(s.maps) lsSet(MAPS_KEY,s.maps); else try{ localStorage.removeItem(MAPS_KEY); }catch(e){}
   return last.label;
 }
-function worldExportAll(){ return JSON.stringify({ v:1, at:Date.now(), npcov:NPCOV, creats:CREATS, objs:OBJS, city: lsGet(CITY_KEY)||null },null,2); }
+function worldExportAll(){ return JSON.stringify(Object.assign({v:1,at:Date.now()},worldSnapshotState()),null,2); }
 function worldImportAll(obj){
   if(!obj||typeof obj!=='object') throw new Error('No es un objeto de mundo válido.');
   worldPushHistory('antes de importar un mundo');
   if(obj.npcov&&typeof obj.npcov==='object'){ NPCOV=obj.npcov; saveNpcOv(); }
   if(obj.creats&&Array.isArray(obj.creats.list)){ CREATS=obj.creats; saveCreats(); }
+  if(Array.isArray(obj.delobjs)){ DEL_OBJS=new Set(obj.delobjs); saveDelObjs(); }
   if(Array.isArray(obj.objs)){ OBJS=obj.objs; saveObjs(); }
+  if(obj.iovr&&typeof obj.iovr==='object'){ IOVR=obj.iovr; saveIovr(); }
   if(obj.city!==undefined){
     if(obj.city){ try{ applyCityObj(JSON.parse(obj.city),true); }catch(e){ log('⚠ La Ciudad del mundo importado tiene un error ('+e.message+'); se dejó la actual.','tag-bad'); } }
     else resetCityObj();
+  }
+  if(obj.maps!==undefined){
+    if(obj.maps){ try{ applyMapsText(obj.maps,true); }catch(e){ log('⚠ Los mapas del mundo importado tienen un error ('+e.message+'); se dejaron los actuales.','tag-bad'); } }
+    else try{ localStorage.removeItem(MAPS_KEY); }catch(e){}
   }
 }
 
@@ -6558,6 +6570,19 @@ function openWorldEditor(){
       try{ worldImportAll(obj); impErr.textContent=''; log('📥 Mundo importado.','tag-good'); FX.banner('📥 Mundo importado','#5dd6a2'); m50Overlay('m200-world'); openWorldEditor(); }
       catch(e){ impErr.textContent='⚠ '+e.message; }
     }));
+    const syH=document.createElement('h4'); syH.textContent='☁ Sincronizar entre dispositivos'; syH.style.cssText='color:#f2b84b;margin:14px 0 4px'; bx.appendChild(syH);
+    const syHint=document.createElement('div'); syHint.className='hint';
+    syHint.textContent='Todo lo de arriba (criaturas, objetos, ciudad y mapas) ya se manda solo a la nube cuando lo guardás, para que se vea igual en cualquier dispositivo que abra el juego. Si jugás la versión que hosteás vos (no el artifact de Claude), hace falta pegar acá una sola vez el token de sincronización.';
+    bx.appendChild(syHint);
+    const syRow=document.createElement('div'); syRow.style.cssText='display:flex;gap:8px;margin:6px 0;flex-wrap:wrap';
+    const syIn=document.createElement('input'); syIn.type='password'; syIn.placeholder='Token de sincronización'; syIn.style.cssText='flex:1;min-width:200px;background:#0e0905;color:#dfe7ef;border:2px solid #5a4326;border-radius:6px;padding:6px;box-sizing:border-box';
+    syRow.appendChild(syIn);
+    const syMsg=document.createElement('span'); syMsg.className='hint';
+    syRow.appendChild(textBtn('💾 Guardar token',false,()=>{
+      const t=syIn.value.trim(); if(!t){ syMsg.textContent='Pegá el token primero.'; return; }
+      syncSend({abg:'catToken',token:t}); syMsg.textContent='Guardado. Probando a sincronizar…'; syIn.value=''; catPush();
+    }));
+    bx.appendChild(syRow); bx.appendChild(syMsg);
     const hH=document.createElement('h4'); hH.textContent='↺ Historial de cambios (últimos '+WHIST.length+'/20)'; hH.style.cssText='color:#f2b84b;margin:14px 0 4px'; bx.appendChild(hH);
     const hList=document.createElement('div'); hList.className='hint';
     hList.textContent=WHIST.length? WHIST.slice().reverse().slice(0,5).map(w=>'· '+w.label).join('\n') : 'Todavía no hay cambios guardados en el historial.';
@@ -8027,6 +8052,34 @@ function herbCraft(g){
 /* ====== v50: cuenta — guardado automático de personajes y ranking en la nube (solo incrustado en Academia Byte) ====== */
 const SYNC={on:false,uid:null,nick:'',writer:true,timer:0,dirty:new Map(),status:'',lastOk:0,asked:false};
 function syncSend(m){ try{ window.parent.postMessage(m,'*'); }catch(e){} }
+/* ====== Catálogo compartido (admin): items, criaturas, mapas y ciudad editados se mandan a la página
+   (que los guarda en la nube — Supabase o la base del artifact) para que CUALQUIER dispositivo que abra
+   el juego vea lo mismo, no solo el navegador donde el admin editó. Solo el admin empuja cambios; cualquiera
+   los recibe al entrar. */
+const CAT={timer:0,applying:false,havePull:false};
+function catDirty(){ if(!ADMIN||CAT.applying) return; clearTimeout(CAT.timer); CAT.timer=setTimeout(catPush,1200); }
+function catPush(){ CAT.timer=0; if(!ADMIN) return; try{ syncSend({abg:'catSave',world:worldExportAll()}); }catch(e){} }
+function catApply(world){
+  if(!world) return;
+  let obj=null; try{ obj=JSON.parse(world); }catch(e){ return; }
+  CAT.applying=true;
+  try{ worldImportAllQuiet(obj); }catch(e){}
+  CAT.applying=false;
+  try{ if(playing) renderInventory(); else refreshAll(); }catch(e){}
+}
+/* Igual que worldImportAll, pero sin historial de deshacer (esto no es una acción del admin local,
+   es la foto que ya está guardada en la nube) y sin re-disparar un catPush al aplicarla. */
+function worldImportAllQuiet(obj){
+  if(!obj||typeof obj!=='object') return;
+  if(obj.npcov&&typeof obj.npcov==='object'){ NPCOV=obj.npcov; saveNpcOv(); }
+  if(obj.creats&&Array.isArray(obj.creats.list)){ CREATS=obj.creats; saveCreats(); }
+  if(Array.isArray(obj.delobjs)){ DEL_OBJS=new Set(obj.delobjs); saveDelObjs(); }
+  if(Array.isArray(obj.objs)){ OBJS=obj.objs; saveObjs(); }
+  if(obj.iovr&&typeof obj.iovr==='object'){ IOVR=obj.iovr; saveIovr(); }
+  if(obj.city!==undefined){ if(obj.city){ try{ applyCityObj(JSON.parse(obj.city),true); }catch(e){} } else resetCityObj(); }
+  if(obj.maps!==undefined){ if(obj.maps){ try{ applyMapsText(obj.maps,true); }catch(e){} } else try{ localStorage.removeItem(MAPS_KEY); }catch(e){} }
+  loadObjs();
+}
 function chScore(c){ const l=Math.max(1,c.lvl|0); return 20*l*(l-1)+(c.xp|0); }
 function syncDirty(id){ if(!SYNC.on||!id) return; SYNC.dirty.set(id,Date.now()); if(!SYNC.timer) SYNC.timer=setTimeout(syncFlush,6000); }
 function syncDel(id){ SYNC.dirty.delete(id); if(SYNC.on){ syncSend({abg:'del',id,at:Date.now()}); setTimeout(syncRank,400); } }
@@ -8117,10 +8170,11 @@ if(EMBED&&window.parent!==window){
     if(m.abg==='session') syncSession(m);
     else if(m.abg==='avatars?'){ SYNC.avSig=''; syncAvatars(); }
     else if(m.abg==='status'){ if(m.ok){ SYNC.lastOk=m.at||Date.now(); SYNC.status='ok'; } else if(m.reason==='readonly'){ SYNC.writer=false; } else SYNC.status='error'; syncUi(); }
+    else if(m.abg==='catData'){ CAT.havePull=true; catApply(m.world); }
   });
   window.addEventListener('pagehide',()=>{ if(SYNC.timer){ clearTimeout(SYNC.timer); syncFlush(); } });
   document.addEventListener('visibilitychange',()=>{ if(document.hidden&&SYNC.timer){ clearTimeout(SYNC.timer); syncFlush(); } });
-  syncUi(); syncSend({abg:'hello'});
+  syncUi(); syncSend({abg:'hello'}); syncSend({abg:'catGet'});
 }
 /*@@/v50*/
 /*@@ai*/
