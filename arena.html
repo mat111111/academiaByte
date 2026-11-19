@@ -3608,10 +3608,22 @@ let miniBase=null;
 let frameT=0;
 /* Gráficos propios del editor de mapas (imágenes PNG/JPG en el JSON del mapa) */
 const OBJ_IMG={};
+/* Cuando cargan MUCHAS imágenes juntas (al abrir el juego hay cientos del catálogo),
+   antes esto reconstruía TODO el panel (personajes/crear/inventario) una vez por CADA
+   imagen que terminaba de cargar: con 400-500 objetos eso eran 400-500 reconstrucciones
+   completas del DOM en pocos segundos, y era la causa principal de la traba al abrir el
+   juego (no tiene nada que ver con los FPS del combate). Ahora se juntan todas las cargas
+   en una sola reconstrucción, un rato después de la última imagen que llegó. */
+let _imgRefreshT=null;
+function _imgRefreshNow(){
+  _imgRefreshT=null;
+  if(!playing){ renderSlots(); renderCreate(); } else { renderInventory(); try{ if(cfgOf(mapIdx)&&(cfgOf(mapIdx).objects||[]).some(o=>o.gr)){ buildBackground(); } }catch(e){} }
+}
+function scheduleImgRefresh(){ if(_imgRefreshT) clearTimeout(_imgRefreshT); _imgRefreshT=setTimeout(_imgRefreshNow,150); }
 function objImg(src){
   if(!src) return null;
   let im=OBJ_IMG[src];
-  if(!im){ im=new Image(); im.onload=()=>{ if(!playing){ renderSlots(); renderCreate(); } else { renderInventory(); try{ if(cfgOf(mapIdx)&&(cfgOf(mapIdx).objects||[]).some(o=>o.gr)){ buildBackground(); } }catch(e){} } if(window.ABG&&window.ABG.onimg) window.ABG.onimg(); }; im.src=src; OBJ_IMG[src]=im; }
+  if(!im){ im=new Image(); im.onload=()=>{ scheduleImgRefresh(); if(window.ABG&&window.ABG.onimg) window.ABG.onimg(); }; im.src=src; OBJ_IMG[src]=im; }
   return (im.complete&&im.naturalWidth)?im:null;
 }
 function drawObjects(g,cfg,top){
@@ -4005,8 +4017,15 @@ const FX=(()=>{
   }
   function shake(ms){ if(on.sk) shakeUntil=now()+ms; }
 
-  /* ----- día y noche ----- */
-  function phase(){ return ((now()-t0)/1000/DAY+phase0)%1; }
+  /* ----- día y noche -----
+     "Hora del fondo" en Ajustes (M50.p.tod) antes solo cambiaba el fondo del COMBATE
+     (m50Night()); el mapa de afuera seguía su propio reloj interno sin importar lo que
+     elegías, por eso forzar día/noche "no hacía nada". Ahora el mismo forzado también
+     manda sobre la luz de afuera. */
+  function phase(){
+    if(typeof M50!=='undefined'&&M50.p){ if(M50.p.tod==='day') return 0; if(M50.p.tod==='night') return 0.5; }
+    return ((now()-t0)/1000/DAY+phase0)%1;
+  }
   function dark(){
     let d=0;
     if(on.dn){ const p=phase(); const v=0.5-0.5*Math.cos(2*Math.PI*p); d=Math.max(0,Math.min(1,(v-0.42)/0.33)); }
@@ -8134,10 +8153,16 @@ function syncUi(){
   else msg='☁ Conectando con tu cuenta…';
   if(SYNC.status==='error') msg+=' ⚠ El último guardado falló; se reintenta con el próximo cambio.';
   bar.textContent=msg;
-  if(SYNC.on){ const b=document.createElement('button'); b.type='button'; b.textContent='Sincronizar ahora'; b.onclick=()=>{ syncSend({abg:'hello'}); }; bar.appendChild(document.createTextNode(' ')); bar.appendChild(b); }
+  if(SYNC.on){ const b=document.createElement('button'); b.type='button'; b.textContent='Sincronizar ahora'; b.onclick=()=>{
+    /* Antes este botón no daba ninguna señal al tocarlo (ni "cargando" ni confirmación),
+       así que aunque funcionaba, se sentía roto. Ahora avisa mientras espera y confirma al terminar. */
+    b.disabled=true; b.textContent='Sincronizando…'; SYNC._manual=true;
+    syncSend({abg:'hello'});
+    setTimeout(()=>{ if(SYNC._manual){ SYNC._manual=false; try{ FX.banner('☁ No hubo respuesta de la nube; probá de nuevo.','#ff8a6a'); }catch(e){} syncUi(); } },6000);
+  }; bar.appendChild(document.createTextNode(' ')); bar.appendChild(b); }
 }
 function syncSession(m){
-  if(!m.uid){ SYNC.on=false; SYNC.status='nosession'; syncUi(); return; }
+  if(!m.uid){ SYNC.on=false; SYNC.status='nosession'; SYNC._manual=false; syncUi(); return; }
   SYNC.on=true; SYNC.uid=m.uid; SYNC.nick=String(m.nick||'Jugador/a').slice(0,24); SYNC.writer=m.writer!==false; SYNC.status='ok';
   const cloud={}; (m.chars||[]).forEach(x=>{ if(x&&typeof x.id==='string') cloud[x.id]=x; });
   const ids=listIds(); let changed=false;
@@ -8162,6 +8187,7 @@ function syncSession(m){
   if(SYNC.dirty.size&&SYNC.writer){ if(SYNC.timer) clearTimeout(SYNC.timer); syncFlush(); } else { SYNC.dirty.clear(); syncRank(); }
   if(changed&&!playing) renderSlots();
   syncUi();
+  if(SYNC._manual){ SYNC._manual=false; try{ FX.banner(changed?'☁ Sincronizado: había novedades de otro dispositivo.':'☁ Sincronizado: ya estabas al día.','#5dd6a2'); }catch(e){} }
   setTimeout(syncAvatars,2500);   /* las imágenes de los objetos ya cargaron */
 }
 if(EMBED&&window.parent!==window){
