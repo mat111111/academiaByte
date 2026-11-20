@@ -1100,10 +1100,10 @@ function objById(id){ return OBJS.find(o=>o.id===id)||null; }
 /* Biblioteca de MIDIs/audios compartidos del admin: viajan como base64 dentro del mismo
    "mundo" que items/criaturas/mapas, así se sincronizan entre dispositivos sin inventar un
    almacenamiento aparte. Para no inflar demasiado ese paquete, cada archivo queda limitado
-   a ~300 KB (de sobra para un MIDI; para un mp3/ogg largo conviene seguir usando "Subir
+   a ~1 MB (de sobra para un MIDI; para un mp3/ogg largo conviene seguir usando "Subir
    archivo de audio" local, que no tiene ese límite pero no se comparte). */
 const MIDIS_KEY='academia-byte-arena-midis';
-const MIDI_MAX=300*1024;
+const MIDI_MAX=1024*1024;
 let MIDIS=[];
 function loadMidis(){ try{ const a=JSON.parse(lsGet(MIDIS_KEY)||'[]'); MIDIS=Array.isArray(a)?a:[]; }catch(e){ MIDIS=[]; } }
 function saveMidis(){ lsSet(MIDIS_KEY,JSON.stringify(MIDIS)); catDirty(); }
