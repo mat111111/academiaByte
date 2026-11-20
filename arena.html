@@ -1,5 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Academia Byte Arena</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
@@ -27,7 +28,7 @@ canvas{display:block;width:100%;height:auto;cursor:pointer;image-rendering:pixel
 /* Pantalla completa: el mapa ocupa toda la ventana y la vida se ve en un cuadro flotante */
 #fs-btn{position:absolute;top:8px;right:8px;z-index:6;padding:3px 9px;font-size:17px;background:rgba(20,14,8,.8)}
 #fx-btn{position:absolute;top:44px;right:8px;z-index:6;padding:3px 9px;font-size:17px;background:rgba(20,14,8,.8)}
-#fx-panel{position:absolute;top:116px;right:8px;z-index:7;width:310px;max-height:calc(100% - 132px);overflow:auto;background:rgba(14,10,6,.94);border:2px solid var(--edge);padding:8px 10px;font-size:17px}
+#fx-panel{position:absolute;top:116px;right:8px;z-index:7;width:min(310px,calc(100vw - 16px));max-height:calc(100% - 132px);overflow:auto;background:rgba(14,10,6,.94);border:2px solid var(--edge);padding:8px 10px;font-size:17px}
 #fx-panel h4{margin:8px 0 4px;color:#f2b84b;font-size:18px;letter-spacing:1px}
 #fx-panel .fxg{display:grid;grid-template-columns:1fr;gap:1px}
 #fx-panel .fxg label{cursor:pointer;line-height:1.15}
@@ -348,6 +349,11 @@ body.m100fs #cmb-q,body.m100fs #cmb-opts button,body.m100fs #cmb-fb p{font-size:
 #bt-bg{position:absolute;left:0;top:0;width:100%;height:100%;display:block;image-rendering:auto}
 #bt-cv{position:absolute;left:0;top:0;width:640px;height:420px;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
 #combat .stage #cmb-float{position:absolute;right:auto;left:0;top:0;width:640px;height:420px;z-index:3}
+/* En pantallas angostas (celulares) el fondo de combate de 640x420 quedaba cortado por el
+   overflow:hidden del escenario; se achica manteniendo la proporción en vez de recortarse. */
+@media (max-width:700px){
+  #bt-cv,#combat .stage #cmb-float{ width:100%!important; height:auto!important; aspect-ratio:640/420; }
+}
 #combat .qpanel{position:absolute;right:14px;top:14px;bottom:14px;width:var(--pw,460px);overflow-y:auto;background:rgba(22,15,9,var(--pa,.84));border:3px solid var(--edge);padding:16px;z-index:4;backdrop-filter:blur(4px);box-shadow:0 8px 40px rgba(0,0,0,.6)}
 @media (max-width:859px){#combat .qpanel{left:0;right:0;top:auto;bottom:0;width:auto;height:var(--ph,50%);border-width:3px 0 0;padding:10px 12px}}
 body.hc #combat .card.arena{background:none!important;border:0!important}body.hc #combat .qpanel{background:#000;border-color:#fff}
@@ -1522,11 +1528,18 @@ function toggleEquip(c,id){
 }
 /* Objetos guardados de una sección: vista chica (5 miniaturas) o "Ver más" = tarjetas grandes con Editar / Cambiar imagen / Borrar */
 const OBJ_OPEN={};
-function objBtns(slot,c,after){
-  const L=OBJS.filter(o=>oslot(o)===slot&&(EDIT_ITEMS||!isHidden(o.id))&&((slot!=='face'&&slot!=='body')||fitsG(c,o.id)));
-  const on=o=>(c.equip||[]).includes(o.id);
-  return L.map(o=>shopBtn(c,o.id,objThumb(o,64),o.name,on(o),()=>{ toggleEquip(c,o.id); after(); },after)).filter(Boolean);
+function isNewbie(key){ return !!(IOVR[key]&&IOVR[key].newbie); }
+/* Ordena una lista de {key,btn} poniendo primero los que el admin marcó como "para
+   principiantes" (manteniendo el orden relativo dentro de cada grupo: sort es estable). */
+function appendSortedByNewbie(box,entries){
+  entries.slice().sort((a,b)=>(isNewbie(b.key)?1:0)-(isNewbie(a.key)?1:0)).forEach(e=>{ if(e.btn) box.appendChild(e.btn); });
 }
+function objBtnsKV(slot,c,after,showAll){
+  const L=OBJS.filter(o=>oslot(o)===slot&&(EDIT_ITEMS||!isHidden(o.id))&&(showAll||((slot!=='face'&&slot!=='body')||fitsG(c,o.id))));
+  const on=o=>(c.equip||[]).includes(o.id);
+  return L.map(o=>({key:o.id,btn:shopBtn(c,o.id,objThumb(o,64),o.name,on(o),()=>{ toggleEquip(c,o.id); after(); },after)})).filter(e=>e.btn);
+}
+function objBtns(slot,c,after,showAll){ return objBtnsKV(slot,c,after,showAll).map(e=>e.btn); }
 let OBJ_FILE=null;
 function pickObjImage(id,after){
   if(!OBJ_FILE){ OBJ_FILE=document.createElement('input'); OBJ_FILE.type='file'; OBJ_FILE.accept='image/*'; OBJ_FILE.style.display='none'; document.body.appendChild(OBJ_FILE); }
@@ -1581,6 +1594,7 @@ function faceChoices(c){
 }
 function faceKeyOf(c){ const o=OBJS.find(x=>oslot(x)==='face'&&(c.equip||[]).includes(x.id)); return o?o.id:(c.face>=0?'f:'+c.face:null); }
 function cycleFace(c,d){
+  if(c===CUR&&!EDIT_ITEMS&&!CUR.faceUnlock){ log('🔒 Ya elegiste tu cara; usá una 🧪 poción de cambio de cara.','tag-bad'); return; }
   const L=faceChoices(c); if(!L.length) return;
   const k=faceKeyOf(c); let idx=L.findIndex(f=>f.key===k);
   const nx=L[idx<0?(d>0?0:L.length-1):(idx+d+L.length)%L.length];
@@ -1709,7 +1723,7 @@ function openItemModal(key){
     const hint=document.createElement('div'); hint.className='hint'; hint.textContent='X: derecha (+) / izquierda (−). Y: abajo (+) / arriba (−). "Todas" mueve las 4 vistas; luego afiná cada vista por separado. Se ve cómo queda en las 4 vistas. Capa: "Sobre todo" dibuja la pieza encima de la mano y de la ropa que hayas creado vos (sirve para que el báculo no quede detrás de la mano); elegila por vista.'; box.appendChild(hint);
     draw();
   }
-  const note=document.createElement('div'); note.className='hint'; note.textContent='Precio 0 = gratis para todos. Ocultar lo saca de la tienda y del menú, pero se puede mostrar de nuevo. Borrar para siempre lo saca del catálogo para todos (aunque sea de fábrica), le quita el equipo a los personajes que lo tengan puesto y no se puede deshacer.'; box.appendChild(note);
+  const note=document.createElement('div'); note.className='hint'; note.textContent='Precio 0 = gratis para todos. Ocultar lo saca de la tienda y del menú, pero se puede mostrar de nuevo. "Para principiantes" lo pone primero en la pantalla de crear personaje. Borrar para siempre lo saca del catálogo para todos (aunque sea de fábrica), le quita el equipo a los personajes que lo tengan puesto y no se puede deshacer.'; box.appendChild(note);
   const done=()=>{ closeItemModal(); refreshAll(); };
   const btns=document.createElement('div'); btns.className='btns'; box.appendChild(btns);
   btns.appendChild(textBtn('Guardar',true,()=>{
@@ -1730,6 +1744,8 @@ function openItemModal(key){
   }));
   btns.appendChild(textBtn(isHidden(key)?'👁 Mostrar de nuevo':'🙈 Ocultar (eliminar de la tienda)',false,()=>{
     const v=IOVR[key]=IOVR[key]||{}; if(v.hide) delete v.hide; else v.hide=1; if(!Object.keys(v).length) delete IOVR[key]; saveIovr(); done(); }));
+  btns.appendChild(textBtn(isNewbie(key)?'⭐ Quitar de "para principiantes"':'⭐ Marcar "para principiantes"',false,()=>{
+    const v=IOVR[key]=IOVR[key]||{}; if(v.newbie) delete v.newbie; else v.newbie=1; if(!Object.keys(v).length) delete IOVR[key]; saveIovr(); done(); }));
   if(!info.custom) btns.appendChild(textBtn('↺ Restaurar original',false,()=>{ delete IOVR[key]; saveIovr(); done(); }));
   if(info.custom){
     btns.appendChild(textBtn('✎ Editar objeto',false,()=>{ closeItemModal(); if(window.__ce&&window.__ce.openObj) window.__ce.openObj(key); }));
@@ -1816,17 +1832,27 @@ function renderCreate(){
   const gb=$('#cr-gender'); gb.textContent='';
   [['m','Hombre'],['f','Mujer']].forEach(([v,l])=>gb.appendChild(textBtn(l,draft.gender===v,()=>{ setGender(draft,v); renderCreate(); })));
   const fb=$('#cr-face'); fb.textContent='';
-  for(let s=0;s<FACE_COUNT;s++) if(faceFits(draft,s)) put(fb,shopBtn(draft,'f:'+s,faceThumb(s),faceName(s),draft.face===s&&!hasSlot(draft,'face'),()=>{ draft.face=s; clearSlot(draft,'face'); renderCreate(); },renderCreate));
-  objBtns('face',draft,renderCreate).forEach(b=>fb.appendChild(b));
+  /* En la creación se muestran TODAS las caras (de los dos sexos), para que el jugador elija
+     con libertad; una vez creado el personaje, la cara queda fija salvo que uses una poción.
+     Las marcadas "para principiantes" (Editor de ítems) van primero. */
+  { const es=[]; for(let s=0;s<FACE_COUNT;s++) es.push({key:'f:'+s,btn:shopBtn(draft,'f:'+s,faceThumb(s),faceName(s),draft.face===s&&!hasSlot(draft,'face'),()=>{ draft.face=s; clearSlot(draft,'face'); renderCreate(); },renderCreate)});
+    objBtnsKV('face',draft,renderCreate,true).forEach(e=>es.push(e));
+    appendSortedByNewbie(fb,es); }
   const ob=$('#cr-outfit'); ob.textContent='';
   ob.appendChild(textBtn('Sin vestimenta',draft.outfit<0&&!hasSlot(draft,'body'),()=>{ draft.outfit=-1; clearSlot(draft,'body'); renderCreate(); }));
-  OUTFITS.forEach((o,i)=>fitsG(draft,'o:'+i)&&put(ob,shopBtn(draft,'o:'+i,outfitThumb(i),o.name,draft.outfit===i&&!hasSlot(draft,'body'),()=>{ draft.outfit=i; clearSlot(draft,'body'); renderCreate(); },renderCreate)));
-  objBtns('body',draft,renderCreate).forEach(b=>ob.appendChild(b));
+  { const es=[]; OUTFITS.forEach((o,i)=>{ if(fitsG(draft,'o:'+i)) es.push({key:'o:'+i,btn:shopBtn(draft,'o:'+i,outfitThumb(i),o.name,draft.outfit===i&&!hasSlot(draft,'body'),()=>{ draft.outfit=i; clearSlot(draft,'body'); renderCreate(); },renderCreate)}); });
+    objBtnsKV('body',draft,renderCreate).forEach(e=>es.push(e));
+    appendSortedByNewbie(ob,es); }
   const wb=$('#cr-weapon'); wb.textContent='';
   wb.appendChild(textBtn('Sin arma',draft.weapon<0&&!hasSlot(draft,'weapon'),()=>{ draft.weapon=-1; clearSlot(draft,'weapon'); renderCreate(); }));
-  WEAPONS.forEach((wp,i)=>put(wb,shopBtn(draft,'w:'+i,weaponThumb(i),wp.name,draft.weapon===i&&!hasSlot(draft,'weapon'),()=>{ draft.weapon=i; clearSlot(draft,'weapon'); renderCreate(); },renderCreate)));
-  objBtns('weapon',draft,renderCreate).forEach(b=>wb.appendChild(b));
-  const xb=$('#cr-objs'); if(xb) renderObjSlots(xb,draft,renderCreate,['helmet','shield']);
+  { const es=[]; WEAPONS.forEach((wp,i)=>es.push({key:'w:'+i,btn:shopBtn(draft,'w:'+i,weaponThumb(i),wp.name,draft.weapon===i&&!hasSlot(draft,'weapon'),()=>{ draft.weapon=i; clearSlot(draft,'weapon'); renderCreate(); },renderCreate)}));
+    objBtnsKV('weapon',draft,renderCreate).forEach(e=>es.push(e));
+    appendSortedByNewbie(wb,es); }
+  const xb=$('#cr-objs'); if(xb){ xb.textContent='';
+    const any=OBJS.some(o=>['helmet','shield'].includes(oslot(o)));
+    if(!any){ const h=document.createElement('span'); h.className='hint'; h.textContent='Los cascos y escudos que guardes en el Editor de personaje aparecen acá.'; xb.appendChild(h); }
+    else ['helmet','shield'].forEach(sl=>appendSortedByNewbie(xb,objBtnsKV(sl,draft,renderCreate)));
+  }
 }
 function refreshAll(){
   if(!playing){ renderSlots(); renderCreate(); } else { renderInventory(); }
@@ -1848,14 +1874,27 @@ function renderInventory(){
   const FL=faceChoices(CUR), fk=faceKeyOf(CUR), fi=FL.findIndex(f=>f.key===fk), fcur=fi>=0?FL[fi]:null;
   const lbl=document.createElement('span'); lbl.textContent=!fk?'Sin cara':(fcur?fcur.name+' ('+(fi+1)+'/'+FL.length+')':'Cara no disponible')+(fk&&isHidden(fk)?' · oculta':'');
   const fthumb=fk?(fk[0]==='f'&&fk[1]===':'?faceThumb(CUR.face):objThumb(OBJS.find(o=>o.id===fk))):faceThumb(-1);
-  row.append(
-    textBtn('◀',false,()=>{ cycleFace(CUR,-1); afterChange(); }),
-    fthumb,
-    textBtn('▶',false,()=>{ cycleFace(CUR,1); afterChange(); }),
-    lbl);
+  const faceCanChange=EDIT_ITEMS||!!CUR.faceUnlock;
+  const faceAfterChange=()=>{ if(!EDIT_ITEMS) CUR.faceUnlock=false; afterChange(); };
+  if(faceCanChange){
+    row.append(
+      textBtn('◀',false,()=>{ cycleFace(CUR,-1); faceAfterChange(); }),
+      fthumb,
+      textBtn('▶',false,()=>{ cycleFace(CUR,1); faceAfterChange(); }),
+      lbl);
+  } else {
+    row.append(fthumb,lbl,document.createTextNode(' 🔒'));
+  }
   if(EDIT_ITEMS&&fk) row.appendChild(textBtn('✎ Editar esta cara',false,()=>openItemModal(fk)));
   sec('Cara'); box.appendChild(row);
-  if(OBJS.some(o=>oslot(o)==='face')){ const fg=document.createElement('div'); fg.className='inv-grid'; objBtns('face',CUR,afterChange).forEach(b=>fg.appendChild(b)); box.appendChild(fg); }
+  if(!faceCanChange){
+    const lock=document.createElement('div'); lock.className='hint';
+    lock.textContent=(CUR.facePotions>0)?'🔒 Ya elegiste tu cara al crear el personaje. Tenés '+CUR.facePotions+' 🧪 poción/es de cambio de cara.':'🔒 Ya elegiste tu cara al crear el personaje. Conseguí una 🧪 poción de cambio de cara (la vende el boticario) para volver a cambiarla.';
+    box.appendChild(lock);
+    if(CUR.facePotions>0) box.appendChild(textBtn('🧪 Usar poción de cambio de cara',false,()=>{ CUR.facePotions--; CUR.faceUnlock=true; log('🧪 Ya podés elegir una nueva cara.','tag-good'); persist(); afterChange(); }));
+  } else if(OBJS.some(o=>oslot(o)==='face')){
+    const fg=document.createElement('div'); fg.className='inv-grid'; objBtns('face',CUR,faceAfterChange).forEach(b=>fg.appendChild(b)); box.appendChild(fg);
+  }
   sec('Vestimenta');
   const og=document.createElement('div'); og.className='inv-grid';
   og.appendChild(textBtn('Ninguna',CUR.outfit<0&&!hasSlot(CUR,'body'),()=>{ CUR.outfit=-1; clearSlot(CUR,'body'); afterChange(); }));
@@ -2496,9 +2535,16 @@ function renderNpc(){
   const k=n.kind;
   if(['ai','quiz','tip','travel','title','fame','inn','board','exam','farm','wheel','mage'].includes(k)){ pv.hidden=true; pvt.hidden=true; }
   if(k==='outfit'){
-    sec('Caras (según tu sexo)'); const fg=grid();
-    for(let i=0;i<FACE_COUNT;i++) if(faceFits(CUR,i)) put(fg,shopBtn(CUR,'f:'+i,faceThumb(i),faceName(i),CUR.face===i&&!hasSlot(CUR,'face'),()=>{ CUR.face=i; clearSlot(CUR,'face'); refresh(); },refresh));
-    objBtns('face',CUR,refresh).forEach(b=>fg.appendChild(b));
+    sec('Caras');
+    if(EDIT_ITEMS||CUR.faceUnlock){
+      const fg=grid();
+      const faceRefresh=()=>{ if(!EDIT_ITEMS) CUR.faceUnlock=false; refresh(); };
+      for(let i=0;i<FACE_COUNT;i++) if(faceFits(CUR,i)) put(fg,shopBtn(CUR,'f:'+i,faceThumb(i),faceName(i),CUR.face===i&&!hasSlot(CUR,'face'),()=>{ CUR.face=i; clearSlot(CUR,'face'); faceRefresh(); },faceRefresh));
+      objBtns('face',CUR,faceRefresh).forEach(b=>fg.appendChild(b));
+    } else {
+      const lk=document.createElement('div'); lk.className='hint'; lk.textContent='🔒 Ya elegiste tu cara al crear el personaje.'+(CUR.facePotions>0?' Tenés '+CUR.facePotions+' 🧪 poción/es de cambio de cara.':' Conseguí una 🧪 poción de cambio de cara para volver a cambiarla.'); box.appendChild(lk);
+      if(CUR.facePotions>0) box.appendChild(textBtn('🧪 Usar poción de cambio de cara',false,()=>{ CUR.facePotions--; CUR.faceUnlock=true; log('🧪 Ya podés elegir una nueva cara.','tag-good'); persist(); refresh(); }));
+    }
     sec('Vestimentas');
     const og=grid(); og.appendChild(textBtn('Ninguna',CUR.outfit<0&&!hasSlot(CUR,'body'),()=>{ CUR.outfit=-1; clearSlot(CUR,'body'); refresh(); }));
     OUTFITS.forEach((o,i)=>fitsG(CUR,'o:'+i)&&put(og,shopBtn(CUR,'o:'+i,outfitThumb(i),o.name,CUR.outfit===i,()=>{ CUR.outfit=(CUR.outfit===i)?-1:i; clearSlot(CUR,'body'); refresh(); },refresh)));
@@ -2521,6 +2567,7 @@ function renderNpc(){
     buy(g,'🧪×5 Pack',90,()=>{ CUR.potions=(CUR.potions|0)+5; log('🧪 Compraste 5 pociones.','tag-gold'); });
     buy(g,'🧪 Poción grande (vida completa)',45,()=>{ CUR.bigPot=(CUR.bigPot|0)+1; log('🧪 Compraste una Poción grande.','tag-gold'); });
     buy(g,'⚗ Elixir de XP (+25% 5 min)',60,()=>{ CUR.elixir=(CUR.elixir|0)+1; log('⚗ Compraste un Elixir de XP.','tag-gold'); });
+    buy(g,'🧪 Poción de cambio de cara',150,()=>{ CUR.facePotions=(CUR.facePotions|0)+1; log('🧪 Compraste una poción de cambio de cara. Usala desde la Mochila o en la peluquería.','tag-gold'); });
     buy(g,'📜 Pergamino de pista ×3',25,()=>{ CUR.scroll=(CUR.scroll|0)+3; log('📜 Compraste 3 pergaminos de pista.','tag-gold'); });
     const up=CUR.hpUp|0;
     if(up<HPUP_MAX) buy(g,'❤ Frasco de vida +5 ('+up+'/'+HPUP_MAX+')',hpUpCost(up),()=>{ buyHpUp(); });
