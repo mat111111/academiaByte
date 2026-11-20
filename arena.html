@@ -6680,7 +6680,14 @@ function openWorldEditor(){
     const syMsg=document.createElement('span'); syMsg.className='hint';
     syRow.appendChild(textBtn('💾 Guardar token',false,()=>{
       const t=syIn.value.trim(); if(!t){ syMsg.textContent='Pegá el token primero.'; return; }
-      syncSend({abg:'catToken',token:t}); syMsg.textContent='Guardado. Probando a sincronizar…'; syIn.value=''; catPush();
+      syncSend({abg:'catToken',token:t}); syMsg.textContent='Guardado. Probando a sincronizar…'; syIn.value='';
+      let done=false;
+      const to=setTimeout(()=>{ if(done) return; done=true; window.ABG.onCatStatus=null; syMsg.textContent='⚠ No hubo respuesta de la página en 8s (revisá la consola del navegador con F12, o si estás en el artifact de Claude no hace falta token).'; },8000);
+      window.ABG.onCatStatus=()=>{
+        if(done) return; done=true; clearTimeout(to); window.ABG.onCatStatus=null;
+        syMsg.textContent=CAT.lastOk?'✔ Sincronizado con éxito.':('⚠ Falló: '+CAT.lastErr);
+      };
+      catPush();
     }));
     bx.appendChild(syRow); bx.appendChild(syMsg);
     const hH=document.createElement('h4'); hH.textContent='↺ Historial de cambios (últimos '+WHIST.length+'/20)'; hH.style.cssText='color:#f2b84b;margin:14px 0 4px'; bx.appendChild(hH);
@@ -8279,6 +8286,7 @@ if(EMBED&&window.parent!==window){
     else if(m.abg==='avatars?'){ SYNC.avSig=''; syncAvatars(); }
     else if(m.abg==='status'){ if(m.ok){ SYNC.lastOk=m.at||Date.now(); SYNC.status='ok'; } else if(m.reason==='readonly'){ SYNC.writer=false; } else SYNC.status='error'; syncUi(); }
     else if(m.abg==='catData'){ CAT.havePull=true; catApply(m.world); }
+    else if(m.abg==='catStatus'){ CAT.lastOk=!!m.ok; CAT.lastErr=m.ok?'':(m.error||'Error desconocido.'); CAT.lastAt=Date.now(); if(window.ABG&&window.ABG.onCatStatus) window.ABG.onCatStatus(); }
   });
   window.addEventListener('pagehide',()=>{ if(SYNC.timer){ clearTimeout(SYNC.timer); syncFlush(); } });
   document.addEventListener('visibilitychange',()=>{ if(document.hidden&&SYNC.timer){ clearTimeout(SYNC.timer); syncFlush(); } });
